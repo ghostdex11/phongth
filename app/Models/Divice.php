@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Divice extends Model
 {
     use HasFactory;
+    public $table = "device";
+    protected $primaryKey = 'id';
+    public function history()
+    {
+       return $this->hasMany('App\Models\History','id_device','id');
+    }
+    public function typedevice()
+    {
+        return $this->belongsTo('App\Models\Typedevice','id_type_device','id');
+    }
 }
