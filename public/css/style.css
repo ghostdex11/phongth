@@ -1,0 +1,13 @@
+.footer {
+    position: fixed;
+    padding: 15px 20px;
+    bottom: 0%;
+    left: 45%;
+}
+.container-fluid{
+    height: 100%;
+}
+.logo-ht{    
+    width: 87%;
+    margin-top: 10px;
+}     
