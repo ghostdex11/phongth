@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Divice extends Model
+class Device extends Model
 {
-    use HasFactory;
+    // use HasFactory;
     public $table = "device";
     protected $primaryKey = 'id';
     public function history()

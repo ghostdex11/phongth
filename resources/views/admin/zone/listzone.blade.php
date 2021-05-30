@@ -1,4 +1,4 @@
-@extends('admin/index')
+@extends('admin/layouts/index')
 @section('Admin', 'listrooms')
 @section('content')
 <div class="container-fluid">

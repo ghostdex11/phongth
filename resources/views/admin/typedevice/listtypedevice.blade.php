@@ -1,5 +1,5 @@
 @extends('admin/layouts/index')
-@section('Admin', 'listrooms')
+@section('Admin', 'type device')
 @section('content')
     <div class="container-fluid">
         <div class="col-12">

@@ -7,16 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Typedevice extends Model
 {
-    use HasFactory;
+    // use HasFactory;
     public $table ="typedevice";
     protected $primaryKey = 'id';
-    public function divice()
+    
+    public function device()
     {
-        return $this->hasMany('App\Models\Divice','id_type_device','id');
-    }
-    public function history()
-    {
-    return $this->hasManyThrough('App\Models\History','App\Models\Divice',
-        'id_type_device','id_device','id');
+        return $this->hasMany('App\Models\Device','id_type_device','id');
     }
 }

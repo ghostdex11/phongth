@@ -26,13 +26,25 @@
                                 @foreach($typedevice['device'] as $de)
                                     <tr>
                                         <td>{{$de->name}}</td>
-                                        <td>{{$de->typedevice->name}}</td>
-                                        <td>{{$de->activity}}</td>
-                                        <td>{{$de->status}}</td>
+                                        <td>{{$de->typename}}</td>
                                         <td>
-                                            <button type="button" class="btn btn-white" onclick="detailZone({{$de->id}})">
+                                            @if($de->activity == 1)
+                                                Sử dụng được
+                                            @else
+                                                hỏng
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($de->status == 1)
+                                                Đang được sử dụng
+                                            @else
+                                                Chưa được sử dụng
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-white" onclick="detailDevice({{$de->id}})">
                                                 <i class="fas fa-edit"></i></button>
-                                            <button type="button" class="btn btn-white" onclick="deleteZone({{$de->id}})"><i
+                                            <button type="button" class="btn btn-white" onclick="deleteDevice({{$de->id}})"><i
                                                     class="fas fa-trash"></i></button>
                                         </td>
                                     </tr>
@@ -102,8 +114,28 @@
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Location:</div>
-                            <input type="text" name="location" id="locationzone" class="form-control">
+                            <div class="form-title">Type Device:</div>
+                            <select class="form-control" name="id_type_device" id="typedevice">
+                                @foreach($typedevice['typedevice'] as $td)
+                                    <option  value="{{$td->id}}">{{$td->name}}</option>
+                                @endforeach
+                            </select>
+                            <span class="error-slide"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-title">Activity:</div>
+                            <select class="form-control" name="activity" id="activity">
+                                <option value="1">Sử dụng được</option>
+                                <option value="0">Hỏng</option>
+                            </select>
+                            <span class="error-slide"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-title">Status:</div>
+                            <select class="form-control" name="status" id="status">
+                                <option value="1">Đang được sử dụng</option>
+                                <option value="0" selected>Chưa được sử dụng</option>
+                            </select>
                             <span class="error-slide"></span>
                         </div>
                         <div class="modal-footer">
@@ -136,12 +168,11 @@
                 contentType: false,
                 processData: false,
                 success:function(data){
-
                     window.location.reload(1000);
                 }
             });
         }
-        function detailZone(id){
+        function detailDevice(id){
             event.preventDefault();
             openModalEdit();
             $.ajaxSetup({
@@ -150,23 +181,24 @@
                 }
             });
             $.ajax({
-                url: 'zone/detailzone/'+id,
+                url: 'device/detaildevice/'+id,
                 method: 'GET',
                 contentType: false,
                 processData: false,
                 success:function(data){
                     console.log(data);
                     $("#id").val(data.id);
-                    $("#namezone").val(data.name);
-                    $("#locationzone").val(data.location);
+                    $("#namedevice").val(data.name);
+                    $("#activity").val(data.activity);
+                    $("#status").val(data.status);
                 }
             });
         }
-        function deleteZone(id){
+        function deleteDevice(id){
             event.preventDefault();
             if(confirm("Bạn có chắc muốn xóa sản phẩm này?")){
                 $.ajax({
-                    url: 'zone/deletezone/'+id,
+                    url: 'device/deletedevice/'+id,
                     method: 'GET',
                     contentType: false,
                     processData: false,
@@ -177,12 +209,12 @@
                 });
             }
         }
-        function submitEditZone(){
+        function submitEditDevice(){
             event.preventDefault();
             $.ajax({
-                url: 'zone/editzone',
+                url: 'device/editdevice',
                 method: 'POST',
-                data: new FormData($("#editzone form")[0]),
+                data: new FormData($("#editdevice form")[0]),
                 contentType: false,
                 processData: false,
                 success:function(data){
