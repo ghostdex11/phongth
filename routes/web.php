@@ -42,5 +42,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminCheck'], function () {
         Route::GET('deletedevice/{id}','App\Http\Controllers\deviceController@deleteDevice');
         Route::POST('editdevice','App\Http\Controllers\deviceController@editDevice');
     });
+    Route::group(['prefix' => 'computer'], function () {
+        Route::GET('/','App\Http\Controllers\computerController@index');
+        Route::POST('addcomputer','App\Http\Controllers\computerController@addComputer');
+        Route::GET('detailcomputer/{id}','App\Http\Controllers\computerController@detailComputer');
+        Route::GET('deletecomputer/{id}','App\Http\Controllers\computerController@deleteComputer');
+        Route::POST('editcomputer','App\Http\Controllers\computerController@editComputer');
+    });
 });
 
