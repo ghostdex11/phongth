@@ -1,4 +1,4 @@
-@extends('admin/index')
+@extends('admin/layouts/index')
 @section('Admin', 'listrooms')
 @section('content')
 <div class="container-fluid">
@@ -110,7 +110,7 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/3.5.1/js/toastr.min.js">
 </script>
 <script>
-	
+
 	function openModalAdd(){
 		$("#addzone").modal('show');
 	}

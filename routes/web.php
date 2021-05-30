@@ -21,7 +21,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminCheck'], function () {
 		Route::GET('deletezone/{id}','App\Http\Controllers\zoneController@deleteZone');
 		Route::POST('editzone','App\Http\Controllers\zoneController@editZone');
 	});
-    Route::group(['prefix' => 'admin/typedevice'], function () {
+    Route::group(['prefix' => 'typedevice'], function () {
         Route::GET('/','App\Http\Controllers\typedeviceController@index');
 
         Route::POST('addtypedevice','App\Http\Controllers\typedeviceController@addtypedevice');
@@ -29,7 +29,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminCheck'], function () {
         Route::GET('deletetypedevice/{id}','App\Http\Controllers\typedeviceController@deleteTypedevice');
         Route::POST('edittypedevice','App\Http\Controllers\typedeviceController@edittypedevice');
     });
-    Route::group(['prefix' => 'admin/device'], function () {
+    Route::group(['prefix' => 'device'], function () {
         Route::GET('/','App\Http\Controllers\diviceController@index');
 
         Route::POST('adddevice','App\Http\Controllers\diviceController@adddevice');

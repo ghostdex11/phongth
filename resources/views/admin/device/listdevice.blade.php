@@ -26,7 +26,7 @@
                                 @foreach($typedevice['device'] as $de)
                                     <tr>
                                         <td>{{$de->name}}</td>
-                                        <td>{{$de->typedevice->name}}</td>
+                                        <td>{{$de->id_type_device}}</td>
                                         <td>{{$de->activity}}</td>
                                         <td>{{$de->status}}</td>
                                         <td>
