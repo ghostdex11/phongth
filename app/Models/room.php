@@ -9,5 +9,5 @@ class room extends Model
 {
     use HasFactory;
     public $table="room";
-
+    protected $primaryKey = 'id';
 }

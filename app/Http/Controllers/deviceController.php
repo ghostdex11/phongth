@@ -38,7 +38,7 @@ class deviceController extends Controller
             'activity'=>$request->activity,
             'status'=>$request->status
             ]);
-        return redirect('admin/typedevice');
+        return redirect('admin/device');
     }
     public function deleteDevice($id){
         Device::find($id)->delete();

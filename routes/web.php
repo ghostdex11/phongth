@@ -12,7 +12,7 @@ Route::get('/home','App\Http\Controllers\userController@index');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'adminCheck'], function () {
     Route::get('/',function(){
-		return view('admin.layouts.index');     
+		return view('admin.layouts.index');
 	});
 	Route::group(['prefix' => 'zone'], function () {
 		Route::GET('/','App\Http\Controllers\zoneController@index');
@@ -21,6 +21,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminCheck'], function () {
 		Route::GET('deletezone/{id}','App\Http\Controllers\zoneController@deleteZone');
 		Route::POST('editzone','App\Http\Controllers\zoneController@editZone');
 	});
+    Route::group(['prefix' => 'room'], function () {
+        Route::GET('/','App\Http\Controllers\roomController@index');
+        Route::POST('addroom','App\Http\Controllers\roomController@addRoom');
+        Route::GET('detailroom/{id}','App\Http\Controllers\roomController@detailRoom');
+        Route::GET('deleteroom/{id}','App\Http\Controllers\roomController@deleteRoom');
+        Route::POST('editroom','App\Http\Controllers\roomController@editRoom');
+    });
     Route::group(['prefix' => 'typedevice'], function () {
         Route::GET('/','App\Http\Controllers\typedeviceController@index');
         Route::POST('addtypedevice','App\Http\Controllers\typedeviceController@addtypedevice');
