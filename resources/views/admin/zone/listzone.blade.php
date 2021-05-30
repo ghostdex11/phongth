@@ -110,7 +110,7 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/3.5.1/js/toastr.min.js">
 </script>
 <script>
-	
+
 	function openModalAdd(){
 		$("#addzone").modal('show');
 	}
