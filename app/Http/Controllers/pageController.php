@@ -10,7 +10,7 @@ class pageController extends Controller
     {
         return view('user.index');
     }
-    public function page()
+    public function gethome()
     {
         return view('user.page');
     }
