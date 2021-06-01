@@ -31,7 +31,13 @@
                                         <td>{{$ro->name}}</td>
                                         <td>{{$ro->namezone}}</td>
                                         <td>{{$ro->floor}}</td>
-                                        <td>{{$ro->description}}</td>
+                                        <td>
+                                            @if($ro->description == null)
+                                                Không có mô tả
+                                            @else
+                                                {{$ro->description}}
+                                            @endif
+                                        </td>
                                         <td>
                                             @if($ro->clean_up == 1)
                                                 Đã dọn dẹp
