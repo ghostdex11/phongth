@@ -59,5 +59,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminCheck'], function () {
 });
 
 
-Route::get('page','App\Http\Controllers\pageController@page');
+Route::get('home','App\Http\Controllers\pageController@page');
 
