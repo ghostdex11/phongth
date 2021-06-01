@@ -31,7 +31,8 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
+    public $table="users";
+    protected $primaryKey = 'id';
     /**
      * The attributes that should be cast to native types.
      *

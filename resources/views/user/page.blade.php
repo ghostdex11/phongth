@@ -1,4 +1,4 @@
-@extends('admin/layouts/index')
+@extends('user/index')
 @section('Admin', 'listrooms')
 @section('content')
     <div class="container-fluid">
@@ -25,43 +25,43 @@
                                     <th>function</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                @foreach($room['room'] as $ro)
-                                    <tr>
-                                        <td>{{$ro->name}}</td>
-                                        <td>{{$ro->namezone}}</td>
-                                        <td>{{$ro->floor}}</td>
-                                        <td>{{$ro->description}}</td>
-                                        <td>
-                                            @if($ro->clean_up == 1)
-                                                Đã dọn dẹp
-                                            @else
-                                                Chưa dọn dẹp
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if($ro->status == 1)
-                                                Đang được sử dụng
-                                            @else
-                                                Không được sử dụng
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if($ro->activity == 1)
-                                                Sử dụng được
-                                            @else
-                                                Không sử dụng được
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-white" onclick="detailRoom({{$ro->id}})">
-                                                <i class="fas fa-edit"></i></button>
-                                            <button type="button" class="btn btn-white" onclick="deleteRoom({{$ro->id}})"><i
-                                                    class="fas fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                                </tbody>
+{{--                                <tbody>--}}
+{{--                                @foreach($room['room'] as $ro)--}}
+{{--                                    <tr>--}}
+{{--                                        <td>{{$ro->name}}</td>--}}
+{{--                                        <td>{{$ro->namezone}}</td>--}}
+{{--                                        <td>{{$ro->floor}}</td>--}}
+{{--                                        <td>{{$ro->description}}</td>--}}
+{{--                                        <td>--}}
+{{--                                            @if($ro->clean_up == 1)--}}
+{{--                                                Đã dọn dẹp--}}
+{{--                                            @else--}}
+{{--                                                Chưa dọn dẹp--}}
+{{--                                            @endif--}}
+{{--                                        </td>--}}
+{{--                                        <td>--}}
+{{--                                            @if($ro->status == 1)--}}
+{{--                                                Đang được sử dụng--}}
+{{--                                            @else--}}
+{{--                                                Không được sử dụng--}}
+{{--                                            @endif--}}
+{{--                                        </td>--}}
+{{--                                        <td>--}}
+{{--                                            @if($ro->activity == 1)--}}
+{{--                                                Sử dụng được--}}
+{{--                                            @else--}}
+{{--                                                Không sử dụng được--}}
+{{--                                            @endif--}}
+{{--                                        </td>--}}
+{{--                                        <td>--}}
+{{--                                            <button type="button" class="btn btn-white" onclick="detailRoom({{$ro->id}})">--}}
+{{--                                                <i class="fas fa-edit"></i></button>--}}
+{{--                                            <button type="button" class="btn btn-white" onclick="deleteRoom({{$ro->id}})"><i--}}
+{{--                                                    class="fas fa-trash"></i></button>--}}
+{{--                                        </td>--}}
+{{--                                    </tr>--}}
+{{--                                @endforeach--}}
+{{--                                </tbody>--}}
                             </table>
                         </form>
                     </div>
@@ -91,11 +91,11 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <div class="form-title">Name zone:</div>
-                            <select class="form-control" name="zone">
-                                @foreach($room['zone'] as $zo)
-                                    <option  value="{{$zo->id}}">{{$zo->name}}</option>
-                                @endforeach
-                            </select>
+{{--                            <select class="form-control" name="zone">--}}
+{{--                                @foreach($room['zone'] as $zo)--}}
+{{--                                    <option  value="{{$zo->id}}">{{$zo->name}}</option>--}}
+{{--                                @endforeach--}}
+{{--                            </select>--}}
                             <span class="error-slide"></span>
                         </div>
                     </div>
@@ -141,11 +141,11 @@
                         </div>
                         <div class="form-group">
                             <div class="form-title">Name zone:</div>
-                            <select class="form-control" name="id_zone" id="namezone">
-                                @foreach($room['zone'] as $ro)
-                                    <option  value="{{$ro->id}}">{{$ro->name}}</option>
-                                @endforeach
-                            </select>
+{{--                            <select class="form-control" name="id_zone" id="namezone">--}}
+{{--                                @foreach($room['zone'] as $ro)--}}
+{{--                                    <option  value="{{$ro->id}}">{{$ro->name}}</option>--}}
+{{--                                @endforeach--}}
+{{--                            </select>--}}
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">

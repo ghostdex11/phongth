@@ -8,7 +8,7 @@ Route::get('logout','App\Http\Controllers\LoginController@getdangxuatAdmin');
 Route::get('register','App\Http\Controllers\LoginController@getDangky');
 Route::post('register','App\Http\Controllers\LoginController@postDangky');
 Route::get('admin/logout','App\Http\Controllers\LoginController@getdangxuatAdmin');
-Route::get('/home','App\Http\Controllers\userController@index');
+Route::get('/','App\Http\Controllers\pageController@index');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'adminCheck'], function () {
     Route::get('/',function(){
@@ -49,5 +49,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminCheck'], function () {
         Route::GET('deletecomputer/{id}','App\Http\Controllers\computerController@deleteComputer');
         Route::POST('editcomputer','App\Http\Controllers\computerController@editComputer');
     });
+    Route::group(['prefix' => 'user'], function () {
+        Route::GET('/','App\Http\Controllers\userController@index');
+        Route::POST('adduser','App\Http\Controllers\userController@adduser');
+        Route::GET('detailuser/{id}','App\Http\Controllers\userController@detailUser');
+        Route::GET('deleteuser/{id}','App\Http\Controllers\userController@deleteUser');
+        Route::POST('edituser','App\Http\Controllers\userController@editUser');
+    });
 });
+
+
+Route::get('page','App\Http\Controllers\pageController@page');
 

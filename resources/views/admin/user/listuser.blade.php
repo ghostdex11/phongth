@@ -1,13 +1,13 @@
 @extends('admin/layouts/index')
-@section('Admin', 'listrooms')
+@section('Admin', 'Computer')
 @section('content')
     <div class="container-fluid">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title" style="float: left;margin-right: 15px;padding: 7px 0px;">List room</h5>
+                    <h5 class="card-title" style="float: left;margin-right: 15px;padding: 7px 0px;">List User</h5>
                     <button type="button" class="btn btn-primary" onclick="openModalAdd()">
-                        Add room
+                        Add User
                     </button>
                     <div class="table-responsive">
                         <form action="/" method="get">
@@ -15,48 +15,34 @@
                             <table id="zero_config" class="table table-striped table-bordered">
                                 <thead>
                                 <tr>
-                                    <th>Name room</th>
-                                    <th>Name zone</th>
-                                    <th>Floor</th>
-                                    <th>Description</th>
-                                    <th>Clean_up</th>
-                                    <th>Activity</th>
-                                    <th>Status</th>
+                                    <th>Name</th>
+                                    <th>Student code</th>
+                                    <th>Class</th>
+                                    <th>Faculty</th>
+                                    <th>Email</th>
+                                    <th>Type</th>
                                     <th>function</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @foreach($room['room'] as $ro)
+                                @foreach($user as $us)
                                     <tr>
-                                        <td>{{$ro->name}}</td>
-                                        <td>{{$ro->namezone}}</td>
-                                        <td>{{$ro->floor}}</td>
-                                        <td>{{$ro->description}}</td>
+                                        <td>{{$us->name}}</td>
+                                        <td>{{$us->msv}}</td>
+                                        <td>{{$us->class}}</td>
+                                        <td>{{$us->faculty}}</td>
+                                        <td>{{$us->email}}</td>
                                         <td>
-                                            @if($ro->clean_up == 1)
-                                                Đã dọn dẹp
+                                            @if($us->type == 1)
+                                                Admin
                                             @else
-                                                Chưa dọn dẹp
+                                                user
                                             @endif
                                         </td>
                                         <td>
-                                            @if($ro->status == 1)
-                                                Đang được sử dụng
-                                            @else
-                                                Không được sử dụng
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if($ro->activity == 1)
-                                                Sử dụng được
-                                            @else
-                                                Không sử dụng được
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <button type="button" class="btn btn-white" onclick="detailRoom({{$ro->id}})">
+                                            <button type="button" class="btn btn-white" onclick="detailUser({{$us->id}})">
                                                 <i class="fas fa-edit"></i></button>
-                                            <button type="button" class="btn btn-white" onclick="deleteRoom({{$ro->id}})"><i
+                                            <button type="button" class="btn btn-white" onclick="deleteUser({{$us->id}})"><i
                                                     class="fas fa-trash"></i></button>
                                         </td>
                                     </tr>
@@ -70,11 +56,11 @@
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade" id="addroom" tabindex="-1" role="dialog" aria-labelledby="addroom" aria-hidden="true">
+    <div class="modal fade" id="adduser" tabindex="-1" role="dialog" aria-labelledby="adduser" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="tt">Add room</h5>
+                    <h5 class="modal-title" id="tt">Add User</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -83,49 +69,63 @@
                     <div class="modal-body">
                         @csrf
                         <div class="form-group">
-                            <div class="form-title">Name Room:</div>
+                            <div class="form-title">Name:</div>
                             <input type="text" name="name" class="form-control">
                             <span class="error-slide"></span>
                         </div>
-                    </div>
-                    <div class="modal-body">
                         <div class="form-group">
-                            <div class="form-title">Name zone:</div>
-                            <select class="form-control" name="zone">
-                                @foreach($room['zone'] as $zo)
-                                    <option  value="{{$zo->id}}">{{$zo->name}}</option>
-                                @endforeach
-                            </select>
+                            <div class="form-title">Student code:</div>
+                            <input type="text" name="msv" class="form-control">
                             <span class="error-slide"></span>
                         </div>
-                    </div>
-                    <div class="modal-body">
                         <div class="form-group">
-                            <div class="form-title">Floor:</div>
-                            <input type="text" name="floor" class="form-control">
+                            <div class="form-title">Class:</div>
+                            <input type="text" name="class" class="form-control">
                             <span class="error-slide"></span>
                         </div>
-                    </div>
-                    <div class="modal-body">
                         <div class="form-group">
-                            <div class="form-title">Description:</div>
-                            <input type="text" name="description" class="form-control">
+                            <div class="form-title">Faculty:</div>
+                            <input type="text" name="faculty" class="form-control">
                             <span class="error-slide"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-title">Email:</div>
+                            <input type="text" name="email" class="form-control">
+                            <span class="error-slide"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-title">Password:</div>
+                            <input type="password" name="password" class="form-control">
+                            <span class="error-slide"></span>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-title">PasswordAgain:</div>
+                            <input type="password" name="passwordagain" class="form-control">
+                            <span class="error-slide"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Type:</label>
+                            <label class="radio-inline">
+                                <input name="type" value="0" checked="" type="radio">:User
+                            </label>
+                            <label class="radio-inline">
+                                <input name="type" value="1" type="radio">:Admin
+                            </label>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" onclick="addRoom()" class="btn btn-primary">Thêm</button>
+                        <button type="button" onclick="addUser()" class="btn btn-primary">Thêm</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="editroom" tabindex="-1" role="dialog" aria-labelledby="editroom" aria-hidden="true">
+    <div class="modal fade" id="edituser" tabindex="-1" role="dialog" aria-labelledby="edituser" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editroom">Edit room</h5>
+                    <h5 class="modal-title">Edit User</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -135,55 +135,52 @@
                         @csrf
                         <input type="text" id="id" name="id" hidden>
                         <div class="form-group">
-                            <div class="form-title">Name Room:</div>
-                            <input type="text" name="name" id="nameroom" class="form-control">
+                            <div class="form-title">Name:</div>
+                            <input type="text" id="name"  name="name" class="form-control">
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Name zone:</div>
-                            <select class="form-control" name="id_zone" id="namezone">
-                                @foreach($room['zone'] as $ro)
-                                    <option  value="{{$ro->id}}">{{$ro->name}}</option>
-                                @endforeach
-                            </select>
+                            <div class="form-title">Student code:</div>
+                            <input type="text" name="msv" id="msv" class="form-control">
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Floor:</div>
-                            <input type="text" name="floor" id="floor" class="form-control">
+                            <div class="form-title">Class:</div>
+                            <input type="text" name="class" id="class" class="form-control">
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Clean_up:</div>
-                            <select class="form-control" name="clean_up" id="clean_up">
-                                <option value="1">Đã dọn dẹp</option>
-                                <option value="0">Chưa dọn dẹp</option>
-                            </select>
+                            <div class="form-title">Faculty:</div>
+                            <input type="text" name="faculty" id="faculty" class="form-control">
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Activity:</div>
-                            <select class="form-control" name="activity" id="activity">
-                                <option value="1">Sử dụng được</option>
-                                <option value="0">Không sử dụng được</option>
-                            </select>
+                            <div class="form-title">Email:</div>
+                            <input type="text" name="email" id="email" readonly="" class="form-control">
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Status:</div>
-                            <select class="form-control" name="status" id="status">
-                                <option value="1">Đang được sử dụng</option>
-                                <option value="0" selected>Không được sử dụng</option>
-                            </select>
+                            <input type="checkbox" id="changePassword" name="changePassword">
+                            <label>Change Password</label>
+                            <input type="password" name="password" class="form-control password" disabled="" >
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Description:</div>
-                            <textarea name="description" id="description" cols="40" rows="5"></textarea>
+                            <div class="form-title">PasswordAgain:</div>
+                            <input type="password" name="passwordagain" class="form-control password" disabled="" >
                             <span class="error-slide"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Type:</label>
+                            <label class="radio-inline">
+                                <input name="type" value="0" checked="" id="type"  type="radio">:User
+                            </label>
+                            <label class="radio-inline">
+                                <input name="type" value="1" id="type" type="radio">:Admin
+                            </label>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" onclick="submitEditRoom()" class="btn btn-primary">Sửa</button>
+                            <button type="button" onclick="submitEditUser()" class="btn btn-primary">Sửa</button>
                             <button type="button" data-dismiss="modal" class="btn btn-danger">Hủy</button>
                         </div>
                     </div>
@@ -198,17 +195,17 @@
     <script>
 
         function openModalAdd(){
-            $("#addroom").modal('show');
+            $("#adduser").modal('show');
         }
         function openModalEdit(){
-            $("#editroom").modal('show');
+            $("#edituser").modal('show');
         }
-        function addRoom(){
+        function addUser(){
             event.preventDefault();
             $.ajax({
-                url: 'room/addroom',
+                url: 'user/adduser',
                 method: 'POST',
-                data: new FormData($("#addroom form")[0]),
+                data: new FormData($("#adduser form")[0]),
                 contentType: false,
                 processData: false,
                 success:function(data){
@@ -216,7 +213,7 @@
                 }
             });
         }
-        function detailRoom(id){
+        function detailUser(id){
             event.preventDefault();
             openModalEdit();
             $.ajaxSetup({
@@ -225,27 +222,27 @@
                 }
             });
             $.ajax({
-                url: 'room/detailroom/'+id,
+                url: 'user/detailuser/'+id,
                 method: 'GET',
                 contentType: false,
                 processData: false,
                 success:function(data){
                     console.log(data);
                     $("#id").val(data.id);
-                    $("#nameroom").val(data.name);
-                    $("#floor").val(data.floor);
-                    $("#clean_up").val(data.clean_up);
-                    $("#activity").val(data.activity);
-                    $("#status").val(data.status);
-                    $("#editcomputer textarea[name=description]").val(data.description);
+                    $("#name").val(data.name);
+                    $("#msv").val(data.msv);
+                    $("#class").val(data.class);
+                    $("#faculty").val(data.faculty);
+                    $("#email").val(data.email);
+                    $("#type").val(data.type);
                 }
             });
         }
-        function deleteRoom(id){
+        function deleteUser(id){
             event.preventDefault();
             if(confirm("Bạn có chắc muốn xóa sản phẩm này?")){
                 $.ajax({
-                    url: 'room/deleteroom/'+id,
+                    url: 'user/deleteuser/'+id,
                     method: 'GET',
                     contentType: false,
                     processData: false,
@@ -256,12 +253,12 @@
                 });
             }
         }
-        function submitEditRoom(){
+        function submitEditUser(){
             event.preventDefault();
             $.ajax({
-                url: 'room/editroom',
+                url: 'user/edituser',
                 method: 'POST',
-                data: new FormData($("#editroom form")[0]),
+                data: new FormData($("#edituser form")[0]),
                 contentType: false,
                 processData: false,
                 success:function(data){
@@ -270,6 +267,20 @@
                 }
             });
         }
+    </script>
+    <script>
+        $(document).ready(function (){
+            $("#changePassword").change(function (){
+                if($(this).is(":checked"))
+                {
+                    $(".password").removeAttr('disabled');
+                }
+                else
+                {
+                    $(".password").attr('disabled','');
+                }
+            });
+        });
     </script>
 @endsection
 @section('script')

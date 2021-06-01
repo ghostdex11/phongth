@@ -12,6 +12,7 @@
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('/admin/approval')}}" aria-expanded="false"><i class="mdi mdi-chart-bubble"></i><span class="hide-menu">Xét duyệt</span></a></li>
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('/admin/statistic')}}" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">History</span></a></li>
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('/admin/computer')}}" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">Computer</span></a></li>
+                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('/admin/user')}}" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">User</span></a></li>
             </ul>
         </nav>
 
