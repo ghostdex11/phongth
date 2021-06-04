@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Computer;
 use App\Models\Room;
-use Illuminate\Support\Facades\DB;
+    use Illuminate\Support\Facades\DB;
 class computerController extends Controller
 {
     public function index(){

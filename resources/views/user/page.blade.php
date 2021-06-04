@@ -5,9 +5,9 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title" style="float: left;margin-right: 15px;padding: 7px 0px;">List room</h5>
+                    <h5 class="card-title" style="float: left;margin-right: 15px;padding: 7px 0px;">Room List</h5>
                     <button type="button" class="btn btn-primary" onclick="openModalAdd()">
-                        Add room
+                        Room Registration
                     </button>
                     <div class="table-responsive">
                         <form action="/" method="get">
@@ -15,13 +15,11 @@
                             <table id="zero_config" class="table table-striped table-bordered">
                                 <thead>
                                 <tr>
-                                    <th>Name room</th>
+                                    <th>Name</th>
                                     <th>Name zone</th>
                                     <th>Floor</th>
-                                    <th>Description</th>
-                                    <th>Clean_up</th>
-                                    <th>Activity</th>
-                                    <th>Status</th>
+                                   <th>Name Room</th>
+                                    <th>Name device</th>
                                     <th>function</th>
                                 </tr>
                                 </thead>
@@ -74,49 +72,55 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="tt">Add room</h5>
+                    <h5 class="modal-title" id="tt">Room Registration</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <form method="post" enctype="multipart/form-data">
+                        <div class="modal-body">
+                            @csrf
+                                <div class="form-group">
+                                    <div class="form-title">Name Zone:</div>
+                                    <select class="form-control" name="zone" id="Zone">
+                                        @foreach($home['zone'] as $zo)
+                                            <option  value="{{$zo->id}}">{{$zo->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="error-slide"></span>
+                                </div>
+                            <div class="form-group">
+                                <div class="form-title">Name Room:</div>
+                                <select class="form-control" name="room" id="Room">
+                                    @foreach($home['room'] as $ro)
+                                        <option  value="{{$ro->id}}">{{$ro->name}}</option>
+                                    @endforeach
+                                </select>
+                                <span class="error-slide"></span>
+                            </div>
+                                <div class="form-group">
+                                    <div class="form-title">Floor:</div>
+                                    <select class="form-control" name="floor" id="Floor">
+                                        @foreach($home['room'] as $ro)
+                                            <option  value="{{$ro->id}}">{{$ro->floor}}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="error-slide"></span>
+                                </div>
                     <div class="modal-body">
-                        @csrf
                         <div class="form-group">
-                            <div class="form-title">Name Room:</div>
-                            <input type="text" name="name" class="form-control">
+                            <div class="form-title">Name Device:</div>
+                                @foreach($home['device'] as $de)
+                                <input type="checkbox" id="changePassword" value="{{$de->id}}" name="device">:{{$de->name}}</input>
+                                @endforeach
                             <span class="error-slide"></span>
-                        </div>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <div class="form-title">Name zone:</div>
-{{--                            <select class="form-control" name="zone">--}}
-{{--                                @foreach($room['zone'] as $zo)--}}
-{{--                                    <option  value="{{$zo->id}}">{{$zo->name}}</option>--}}
-{{--                                @endforeach--}}
-{{--                            </select>--}}
-                            <span class="error-slide"></span>
-                        </div>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <div class="form-title">Floor:</div>
-                            <input type="text" name="floor" class="form-control">
-                            <span class="error-slide"></span>
-                        </div>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <div class="form-title">Description:</div>
-                            <input type="text" name="description" class="form-control">
-                            <span class="error-slide"></span>
-                        </div>
+                            </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" onclick="addRoom()" class="btn btn-primary">Thêm</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                     </div>
+                        </div>
                 </form>
             </div>
         </div>
@@ -206,13 +210,13 @@
         function addRoom(){
             event.preventDefault();
             $.ajax({
-                url: 'room/addroom',
+                url: 'dangky',
                 method: 'POST',
                 data: new FormData($("#addroom form")[0]),
                 contentType: false,
                 processData: false,
                 success:function(data){
-                    window.location.reload(1000);
+                    // window.location.reload(1000);
                 }
             });
         }
@@ -273,4 +277,24 @@
     </script>
 @endsection
 @section('script')
+    <script>
+        $(document).ready(function (){
+           $("#Zone").change(function (){
+            var id_zone = $(this).val();
+            $.get("ajax/room/"+id_zone,function (data){
+                $("#Room").html(data);
+            });
+           });
+        });
+    </script>
+    <script>
+        $(document).ready(function (){
+            $("#Room").change(function (){
+                var room = $(this).val();
+                $.get("ajax/floor/"+room,function (data){
+                    $("#Floor").html(data);
+                });
+            });
+        });
+    </script>
 @endsection

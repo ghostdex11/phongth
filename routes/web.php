@@ -56,8 +56,18 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminCheck'], function () {
         Route::GET('deleteuser/{id}','App\Http\Controllers\userController@deleteUser');
         Route::POST('edituser','App\Http\Controllers\userController@editUser');
     });
+    Route::group(['prefix' => 'history'], function () {
+        Route::GET('/','App\Http\Controllers\historyController@index');
+        Route::GET('detailhistory/{id}','App\Http\Controllers\historyController@detailHistory');
+        Route::GET('deletehistory/{id}','App\Http\Controllers\historyController@deleteHistory');
+        Route::POST('edithistory','App\Http\Controllers\historyController@editHistory');
+    });
 });
 
 
 Route::get('home','App\Http\Controllers\pageController@gethome');
-
+Route::post('dangky','App\Http\Controllers\pageController@adddangky');
+Route::group(['prefix'=>'ajax'],function (){
+   Route::get('room/{id}','App\Http\Controllers\AjaxController@getroom');
+    Route::get('floor/{id}','App\Http\Controllers\AjaxController@getfloor');
+});
