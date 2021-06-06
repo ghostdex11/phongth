@@ -5,7 +5,7 @@
             <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
                     class="ti-menu ti-close"></i></a>
         
-            <a class="navbar-brand" href="{{url('/admin')}}">
+            <a class="navbar-brand" href="{{url('/home')}}">
                 <img src="{{asset('img/logo.jpg')}}" alt="homepage" class="logo-ht" style="" />
             </a>
          

@@ -8,7 +8,7 @@ Route::get('logout','App\Http\Controllers\LoginController@getdangxuatAdmin');
 Route::get('register','App\Http\Controllers\LoginController@getDangky');
 Route::post('register','App\Http\Controllers\LoginController@postDangky');
 Route::get('admin/logout','App\Http\Controllers\LoginController@getdangxuatAdmin');
-Route::get('/','App\Http\Controllers\pageController@index');
+// Route::get('/','App\Http\Controllers\pageController@index');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'adminCheck'], function () {
     Route::get('/',function(){
@@ -64,10 +64,18 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminCheck'], function () {
     });
 });
 
-
-Route::get('home','App\Http\Controllers\pageController@gethome');
-Route::post('dangky','App\Http\Controllers\pageController@adddangky');
-Route::group(['prefix'=>'ajax'],function (){
-   Route::get('room/{id}','App\Http\Controllers\AjaxController@getroom');
-    Route::get('floor/{id}','App\Http\Controllers\AjaxController@getfloor');
+Route::group(['prefix' => '/', 'middleware' => 'userCheck'], function () {
+    Route::get('/','App\Http\Controllers\pageController@index');
+    Route::get('home','App\Http\Controllers\pageController@index');
+    Route::group(['prefix'=>'ajax'],function (){
+        Route::get('room/{id}','App\Http\Controllers\AjaxController@getroom');
+        Route::get('floor/{id}','App\Http\Controllers\AjaxController@getfloor');
+    });
+    Route::group(['prefix' => 'regisroom'], function () {
+        Route::GET('/','App\Http\Controllers\pageController@gethome');
+        Route::post('addroom','App\Http\Controllers\pageController@regisRoom');
+        Route::GET('detailroom/{id}','App\Http\Controllers\pageController@detailRoom');
+        Route::GET('deleteroom/{id}','App\Http\Controllers\pageController@deleteRoom');
+        Route::POST('editroom','App\Http\Controllers\pageController@editRoom');
+    });
 });
