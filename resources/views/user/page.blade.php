@@ -31,7 +31,9 @@
                                     <td>{{$ro->nameuser}}</td>
                                     <td>{{$ro->namezone}}</td>
                                     <td>{{$ro->nameroom}}</td>
-                                    <td>{{$ro->namedevice}}</td>
+                                    <td> @foreach(explode(",", $ro->id_device) as $deviceId)
+                                            {{ Str::of(\App\Models\Device::getDeviceUser($deviceId) . ', ')->rtrim(',') }}
+                                        @endforeach</td>
                                     <td>{{$ro->description}}
                                     @if($ro->description == null)
                                         k có mô tả
@@ -204,7 +206,7 @@
                 method: 'POST',
                 data: new FormData($("#addroom form")[0]),
                 contentType: false,
-                processData: false, 
+                processData: false,
                 success:function(data){
                     window.location.reload(1000);
                 }

@@ -10,4 +10,8 @@ class Zone extends Model
     // use HasFactory;
     public $table = "zone";
     protected $primaryKey = 'id';
+    public static function getNameZone($id) {
+        $zone = Zone::findOrFail($id)->name;
+        return $zone ? $zone : "";
+    }
 }

@@ -41,4 +41,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function getNameUser($id) {
+        $name = User::findOrFail($id)->name;
+        return $name ? $name : "";
+    }
 }

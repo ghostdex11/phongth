@@ -10,4 +10,8 @@ class Room extends Model
     use HasFactory;
     public $table="room";
     protected $primaryKey = 'id';
+    public static function getNameRoom($id) {
+        $room = Room::findOrFail($id)->name;
+        return $room ? $room : "";
+    }
 }

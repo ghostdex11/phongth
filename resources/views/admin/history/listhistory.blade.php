@@ -13,6 +13,7 @@
                                 <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Zone</th>
                                     <th>Room</th>
                                     <th>Device</th>
                                     <th>Clean_up</th>
@@ -24,9 +25,14 @@
                                 <tbody>
                                 @foreach($history['history'] as $his)
                                     <tr>
-                                        <td>{{$his->nameuser}}</td>
-                                        <td>{{$his->nameroom}}</td>
-                                        <td>{{$his->namedevice}}</td>
+                                        <td>{{\App\Models\User::getNameUser($his->id_user)}}</td>
+                                        <td>{{\App\Models\Zone::getNameZone($his->id_zone)}}</td>
+                                        <td>{{\App\Models\Room::getNameRoom($his->id_room)}}</td>
+                                        <td>
+                                            @foreach(explode(",", $his->id_device) as $deviceId)
+                                            {{ Str::of(\App\Models\Device::getDeviceUser($deviceId) . ', ')->rtrim(',') }}
+                                            @endforeach
+                                        </td>
                                         <td>
                                             @if($his->clean_up == 1)
                                                 Đã dọn dẹp

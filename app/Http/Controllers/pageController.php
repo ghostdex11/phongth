@@ -42,9 +42,9 @@ class pageController extends Controller
         $history->id_zone=$request->zone;
         $history->id_user=Auth::user()->id;
         $history->id_room=$request->room;
-        $str_json = json_encode($request->device);
+        $str_json = implode(",",$request->device);
         $history->id_device=$str_json;
-        $history->save();        
+        $history->save();
         return redirect('/regisroom');
     }
 }

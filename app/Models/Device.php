@@ -18,4 +18,9 @@ class Device extends Model
     {
         return $this->belongsTo('App\Models\Typedevice','id_type_device','id');
     }
+
+    public static function getDeviceUser($id) {
+        $device = Device::findOrFail($id)->name;
+        return $device ? $device : "";
+    }
 }
