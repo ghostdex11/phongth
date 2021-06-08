@@ -105,7 +105,7 @@
                     <div class="form-group">
                         <div class="form-title">Name Device:</div>
                         @foreach($home['device'] as $de)
-                        <input type="checkbox" id="changePassword" value="{{$de->id}}" name="device[]"> :{{$de->name}}
+                        <input type="checkbox"  value="{{$de->id}}" name="device[]"> :{{$de->name}}
                         @endforeach
                         <span class="error-slide"></span>
                     </div>
@@ -132,51 +132,28 @@
                     @csrf
                     <input type="text" id="id" name="id" hidden>
                     <div class="form-group">
+                        <div class="form-title">Name Zone:</div>
+                        <select class="form-control" name="zone" id="zone">
+                            @foreach($home['zone'] as $zo)
+                                <option value="{{$zo->id}}">{{$zo->name}}</option>
+                            @endforeach
+                        </select>
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="form-group">
                         <div class="form-title">Name Room:</div>
-                        <input type="text" name="name" id="nameroom" class="form-control">
-                        <span class="error-slide"></span>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-title">Name zone:</div>
-                        {{--                            <select class="form-control" name="id_zone" id="namezone">--}}
-                        {{--                                @foreach($room['zone'] as $ro)--}}
-                        {{--                                    <option  value="{{$ro->id}}">{{$ro->name}}</option>--}}
-                        {{--                                @endforeach--}}
-                        {{--                            </select>--}}
-                        <span class="error-slide"></span>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-title">Floor:</div>
-                        <input type="text" name="floor" id="floor" class="form-control">
-                        <span class="error-slide"></span>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-title">Clean_up:</div>
-                        <select class="form-control" name="clean_up" id="clean_up">
-                            <option value="1">Đã dọn dẹp</option>
-                            <option value="0">Chưa dọn dẹp</option>
+                        <select class="form-control" name="room" id="room">
+                            @foreach($home['room'] as $ro)
+                                <option value="{{$ro->id}}">{{$ro->name}}</option>
+                            @endforeach
                         </select>
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Activity:</div>
-                        <select class="form-control" name="activity" id="activity">
-                            <option value="1">Sử dụng được</option>
-                            <option value="0">Không sử dụng được</option>
-                        </select>
-                        <span class="error-slide"></span>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-title">Status:</div>
-                        <select class="form-control" name="status" id="status">
-                            <option value="1">Đang được sử dụng</option>
-                            <option value="0" selected>Không được sử dụng</option>
-                        </select>
-                        <span class="error-slide"></span>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-title">Description:</div>
-                        <textarea name="description" id="description" cols="40" rows="5"></textarea>
+                        <div class="form-title">Name Device:</div>
+                        @foreach($home['device'] as $de)
+                            <input type="checkbox" id="device" value="{{$de->id}}"  name="device[]"> :{{$de->name}}
+                        @endforeach
                         <span class="error-slide"></span>
                     </div>
                     <div class="modal-footer">
@@ -228,12 +205,9 @@
                 success:function(data){
                     console.log(data);
                     $("#id").val(data.id);
-                    $("#nameroom").val(data.name);
-                    $("#floor").val(data.floor);
-                    $("#clean_up").val(data.clean_up);
-                    $("#activity").val(data.activity);
-                    $("#status").val(data.status);
-                    $("#editcomputer textarea[name=description]").val(data.description);
+                    $("#zone").val(data.id_zone);
+                    $("#room").val(data.id_room);
+                    $("#device").val(data.id_device);
                 }
             });
         }
@@ -241,7 +215,7 @@
             event.preventDefault();
             if(confirm("Bạn có chắc muốn xóa phòng này?")){
                 $.ajax({
-                    url: 'room/deleteroom/'+id,
+                    url: 'regisroom/deleteroom/'+id,
                     method: 'GET',
                     contentType: false,
                     processData: false,
@@ -288,5 +262,15 @@
                 });
             });
         });
+</script>
+<script>
+    $(document).ready(function (){
+        $("#zone").change(function (){
+            var id_zone = $(this).val();
+            $.get("ajax/editroom/"+id_zone,function (data){
+                $("#room").html(data);
+            });
+        });
+    });
 </script>
 @endsection

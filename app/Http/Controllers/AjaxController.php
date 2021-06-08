@@ -24,5 +24,13 @@ class AjaxController extends Controller
             echo "<option  value='".$ro->id."'>".$ro->floor."</option>";
         }
     }
+    public function geteditroom($id)
+    {
+        $editroom=Room::where('id_zone',$id)->get();
+        foreach($editroom as $ed)
+        {
+            echo "<option  value='".$ed->id."'>".$ed->name."</option>";
+        }
+    }
 }
 ?>
