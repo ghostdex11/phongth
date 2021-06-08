@@ -80,6 +80,7 @@
                             <div class="form-group">
                                 <div class="p-t-20">
                                     <button class="btn btn-info" id="to-recover" type="button"><i class="fa fa-lock m-r-5"></i> Lost password?</button>
+                                    <a class="btn btn-primary" href="{{url('register')}}" >Đăng ký</a>
                                     <button class="btn btn-success float-right" type="submit">Đăng nhập</button>
                                 </div>
                             </div>
