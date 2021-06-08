@@ -24,7 +24,28 @@ class historyController extends Controller
         $history['device']=DB::table('device')->get();
         return view('admin/history/listhistory',['history'=>$history]);
     }
-    public function detailHistory(){
-        
+    public function detailHistory($id)
+    {
+        return $history = History::find($id);
+    }
+    public function editHistory(Request $request)
+    {
+        $id=$request->id;
+        History::where('id',$id)->update([
+            'id_zone'=>$request->zone,
+            'id_room'=>$request->room,
+            'id_device'=>implode(",",$request->device)
+        ]);
+        return redirect('/admin/history');
+    }
+    public function deleteHistory($id){
+        History::find($id)->delete();
+    }
+    public function Approval($id)
+    {
+        History::where('id',$id)->update([
+            'admin_check'=> 1,
+        ]);
+        return redirect('/admin/history');
     }
 }

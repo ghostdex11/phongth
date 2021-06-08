@@ -61,6 +61,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminCheck'], function () {
         Route::GET('detailhistory/{id}','App\Http\Controllers\historyController@detailHistory');
         Route::GET('deletehistory/{id}','App\Http\Controllers\historyController@deleteHistory');
         Route::POST('edithistory','App\Http\Controllers\historyController@editHistory');
+        Route::POST('approval/{id}','App\Http\Controllers\historyController@Approval');
     });
 });
 
