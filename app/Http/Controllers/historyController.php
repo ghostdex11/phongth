@@ -13,8 +13,9 @@ class historyController extends Controller
     public function index()
     {
         $history=[];
-        $history['history'] = History::select('history.*', 'users.name as nameuser','room.name as nameroom','device.name as namedevice')
+        $history['history'] = History::select('history.*', 'users.name as nameuser','zone.name as zoneroom','room.name as nameroom')
             ->join('users','users.id','=','history.id_user')
+            ->join('zone','zone.id','=','history.id_zone')
             ->join('room','room.id','=','history.id_room')
             ->join('device','device.id','=','history.id_device')->get();
         $history['history'] = History::all();
@@ -22,5 +23,8 @@ class historyController extends Controller
         $history['room']=DB::table('room')->get();
         $history['device']=DB::table('device')->get();
         return view('admin/history/listhistory',['history'=>$history]);
+    }
+    public function detailHistory(){
+        
     }
 }

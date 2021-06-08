@@ -201,16 +201,16 @@
         }
         function addRoom(){
             event.preventDefault();
-            $.ajax({
-                url: 'regisroom/addroom',
-                method: 'POST',
-                data: new FormData($("#addroom form")[0]),
-                contentType: false,
-                processData: false,
-                success:function(data){
-                    window.location.reload(1000);
-                }
-            });
+                $.ajax({
+                    url: 'regisroom/addroom',
+                    method: 'POST',
+                    data: new FormData($("#addroom form")[0]),
+                    contentType: false,
+                    processData: false,
+                    success:function(data){
+                        window.location.reload(1000);
+                    }
+                });
         }
         function detailRoom(id){
             event.preventDefault();

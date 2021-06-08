@@ -57,6 +57,8 @@
                                         <td>
                                             <button type="button" class="btn btn-white" onclick="detailHistory({{$his->id}})">
                                                 <i class="fas fa-edit"></i></button>
+                                            <button type="button" class="btn btn-white" onclick="detailHistory({{$his->id}})">
+                                                <i class="fas fa-edit"></i></button>
                                             <button type="button" class="btn btn-white" onclick="deleteHistory({{$his->id}})"><i
                                                     class="fas fa-trash"></i></button>
                                         </td>
