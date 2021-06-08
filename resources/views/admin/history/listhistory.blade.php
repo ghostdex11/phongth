@@ -30,7 +30,7 @@
                                     <td>{{\App\Models\Room::getNameRoom($his->id_room)}}</td>
                                     <td>
                                         @foreach(explode(",", $his->id_device) as $deviceId)
-                                        {{ Str::of(\App\Models\Device::getDeviceUser($deviceId) . ', ')->rtrim(',') }}
+                                        {{ Str::of(\App\Models\Device::getDeviceUser($deviceId) . ', ')->rtrim('.') }}
                                         @endforeach
                                     </td>
                                     <td>
