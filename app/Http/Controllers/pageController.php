@@ -42,9 +42,25 @@ class pageController extends Controller
         $history->id_zone=$request->zone;
         $history->id_user=Auth::user()->id;
         $history->id_room=$request->room;
-        $str_json = implode(",",$request->device);
-        $history->id_device=$str_json;
+        $history->id_device=implode(",",$request->device);
         $history->save();
         return redirect('/regisroom');
+    }
+    public function detailRoom($id)
+    {
+        return $history = History::find($id);
+    }
+    public function editRoom(Request $request)
+    {
+        $id=$request->id;
+        History::where('id',$id)->update([
+            'id_zone'=>$request->zone,
+            'id_room'=>$request->room,
+            'id_device'=>implode(",",$request->device)
+        ]);
+        return redirect('/regisroom');
+    }
+    public function deleteRoom($id){
+        History::find($id)->delete();
     }
 }

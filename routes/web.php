@@ -70,6 +70,7 @@ Route::group(['prefix' => '/', 'middleware' => 'userCheck'], function () {
     Route::group(['prefix'=>'ajax'],function (){
         Route::get('room/{id}','App\Http\Controllers\AjaxController@getroom');
         Route::get('floor/{id}','App\Http\Controllers\AjaxController@getfloor');
+        Route::get('editroom/{id}','App\Http\Controllers\AjaxController@geteditroom');
     });
     Route::group(['prefix' => 'regisroom'], function () {
         Route::GET('/','App\Http\Controllers\pageController@gethome');
