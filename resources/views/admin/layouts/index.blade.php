@@ -9,8 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/images/favicon.png')}}">
-    <title>Quản lý phòng thực hành</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('img/logo.jpg')}}">
+    <title>Quản Lý Phòng Thực Hành</title>
     <!-- Custom CSS -->
     <link href="{{asset('assets/libs/flot/css/float-chart.css')}}" rel="stylesheet">
     <!-- Custom CSS -->

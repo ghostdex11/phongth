@@ -9,8 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/images/favicon.png')}}">
-    <title>Matrix Template - The Ultimate Multipurpose admin template</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('img/logo.jpg')}}">
+    <title>Trường Cao Đẳng Nghề Bách Khoa Hà Nội</title>
     <!-- Custom CSS -->
     <link href="{{asset('dist/css/style.min.css')}}" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -41,7 +41,7 @@
         <div class="auth-box bg-dark border-top border-secondary">
             <div id="loginform">
                 <div class="text-center p-t-20 p-b-20">
-                    <span class="db"><img src="{{asset('assets/images/logo.png')}}" alt="logo" /></span>
+                    <span class="db"><img src="{{asset('img/logo.jpg')}}" alt="logo" /></span>
                 </div>
                 <!-- Form -->
                 @if(count($errors)>0)
@@ -80,8 +80,8 @@
                             <div class="form-group">
                                 <div class="p-t-20">
                                     <button class="btn btn-info" id="to-recover" type="button"><i class="fa fa-lock m-r-5"></i> Lost password?</button>
-                                    <a class="btn btn-primary" href="{{url('register')}}" >Đăng ký</a>
-                                    <button class="btn btn-success float-right" type="submit">Đăng nhập</button>
+                                    <a class="btn btn-primary" href="{{url('register')}}" >Registration</a>
+                                    <button class="btn btn-success float-right" type="submit">Login</button>
                                 </div>
                             </div>
                         </div>
