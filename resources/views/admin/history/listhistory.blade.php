@@ -6,13 +6,16 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title" style="float: left;margin-right: 15px;padding: 7px 0px;">List History</h5>
+                <button type="button" class="btn btn-primary" onclick="openModalAdd()">
+                    Room Registration
+                </button>
                 <div class="table-responsive" id="approval">
                     <form action="/" method="get">
                         @csrf
                         <table id="zero_config" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
+                                    <th>Name user</th>
                                     <th>Zone</th>
                                     <th>Room</th>
                                     <th>Device</th>
@@ -74,6 +77,62 @@
     </div>
 </div>
 <!-- Modal -->
+<div class="modal fade" id="addhistory" tabindex="-1" role="dialog" aria-labelledby="addhistory" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tt">Room Registration</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    @csrf
+                    <div class="form-group">
+                        <div class="form-title">MS:</div>
+                        <input type="text" name="ms" class="form-control">
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-title">Phone:</div>
+                        <input type="text" name="phone" class="form-control">
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-title">Name Zone:</div>
+                        <select class="form-control" name="zone" id="Zone">
+                            @foreach($history['zone'] as $zo)
+                                <option value="{{$zo->id}}">{{$zo->name}}</option>
+                            @endforeach
+                        </select>
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-title">Name Room:</div>
+                        <select class="form-control" name="room" id="Room">
+                            @foreach($history['room'] as $ro)
+                                <option value="{{$ro->id}}">{{$ro->name}}</option>
+                            @endforeach
+                        </select>
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-title">Name Device:</div>
+                        @foreach($history['device'] as $de)
+                            <input type="checkbox"  value="{{$de->id}}" name="device[]"> :{{$de->name}}
+                        @endforeach
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" onclick="addRoom()" class="btn btn-primary">Thêm</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="edithistory" tabindex="-1" role="dialog" aria-labelledby="edithistory" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -145,6 +204,9 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/3.5.1/js/toastr.min.js">
 </script>
 <script>
+    function openModalAdd(){
+        $("#addhistory").modal('show');
+    }
     function openModalEdit(){
             $("#edithistory").modal('show');
         }

@@ -115,7 +115,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <div class="form-title">Description:</div>
-                            <input type="text" name="description" class="form-control">
+                            <textarea name="description"  cols="40" rows="5"></textarea>
                             <span class="error-slide"></span>
                         </div>
                     </div>
