@@ -119,6 +119,7 @@
                     <div class="form-group">
                         <div class="form-title">Name Zone:</div>
                         <select class="form-control" name="zone" id="Zone">
+                            <option value="">--Chọn khu vực--</option>
                             @foreach($home['zone'] as $zo)
                             <option value="{{$zo->id}}">{{$zo->name}}</option>
                             @endforeach
@@ -128,6 +129,7 @@
                     <div class="form-group">
                         <div class="form-title">Name Room:</div>
                         <select class="form-control" name="room" id="Room">
+                            <option value="">--Chọn phòng--</option>
                             @foreach($home['room'] as $ro)
                             <option value="{{$ro->id}}">{{$ro->name}}</option>
                             @endforeach
