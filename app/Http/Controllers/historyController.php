@@ -13,7 +13,7 @@ class historyController extends Controller
     public function index()
     {
         $history=[];
-        $history['history'] = History::select('history.*', 'users.name as nameuser','zone.name as zoneroom','room.name as nameroom')
+        $history['history'] = History::select('history.*', 'users.name as nameuser','zone.name as namezone','room.name as nameroom')
             ->join('users','users.id','=','history.id_user')
             ->join('zone','zone.id','=','history.id_zone')
             ->join('room','room.id','=','history.id_room')
@@ -42,6 +42,13 @@ class historyController extends Controller
         History::find($id)->delete();
     }
     public function Approval($id)
+    {
+        History::where('id',$id)->update([
+            'admin_check'=> 1,
+        ]);
+        return redirect('/admin/history');
+    }
+    public function checkOut($id)
     {
         History::where('id',$id)->update([
             'admin_check'=> 1,

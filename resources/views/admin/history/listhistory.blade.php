@@ -55,8 +55,13 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-white" onclick="approval({{$his->id}})">
+                                        @if($his->admin_check == 0)
+                                            <button type="button" class="btn btn-white" onclick="approval({{$his->id}})">
                                             Duyệt</button>
+                                        @else
+                                        <button type="button" class="btn btn-white" onclick="checkout({{$his->id}})">
+                                            Duyệt</button>
+                                        @endif
                                         <button type="button" class="btn btn-white"
                                             onclick="detailHistory({{$his->id}})">
                                             <i class="fas fa-edit"></i></button>
@@ -88,49 +93,35 @@
                     @csrf
                     <input type="text" id="id" name="id" hidden>
                     <div class="form-group">
-                        <div class="form-title">Name computer:</div>
-                        <input type="text" name="name" id="name" class="form-control">
+                        <div class="form-title">User name:</div>
+                        <input type="text" name="nameuser" id="nameuser" class="form-control" disabled>
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Type Device:</div>
-                        {{--                            <select class="form-control" name="id_room">--}}
-                        {{--                                @foreach($computer['room'] as $td)--}}
-                        {{--                                    <option  value="{{$td->id}}">{{$td->name}}</option>--}}
-                        {{--                                @endforeach--}}
-                        {{--                            </select>--}}
+                        <div class="form-title">Zone:</div>
+                        
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Mouse:</div>
-                        <select class="form-control" name="mouse" id="mouse">
-                            <option value="1">Sử dụng được</option>
-                            <option value="0">Hỏng</option>
+                        <div class="form-title">Room:</div>
+                        
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-title">Name Device:</div>
+                        @foreach($history   ['device'] as $de)
+                            <input type="checkbox" id="device" value="{{$de->id}}"  name="device[]"> :{{$de->name}}
+                        @endforeach
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-title">Approval:</div>
+                        <select class="form-control" name="admin_check" id="admin_check">
+                            <option value="1">Đã duyệt</option>
+                            <option value="0" selected>Chưa duyệt</option>
                         </select>
                         <span class="error-slide"></span>
                     </div>
-                    <div class="form-group">
-                        <div class="form-title">Keyboard:</div>
-                        <select class="form-control" name="keyboard" id="keyboard">
-                            <option value="1">Sử dụng được</option>
-                            <option value="0">Hỏng</option>
-                        </select>
-                        <span class="error-slide"></span>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-title">Description:</div>
-                        <textarea name="description" id="description" cols="40" rows="5"></textarea>
-                        <span class="error-slide"></span>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-title">Activity:</div>
-                        <select class="form-control" name="activity" id="activity">
-                            <option value="1">Sử dụng được</option>
-                            <option value="0">Hỏng</option>
-                        </select>
-                        <span class="error-slide"></span>
-                    </div>
-
                     <div class="modal-footer">
                         <button type="button" onclick="submitEditHistory()" class="btn btn-primary">Sửa</button>
                         <button type="button" data-dismiss="modal" class="btn btn-danger">Hủy</button>
@@ -205,6 +196,22 @@
             if(confirm("Bạn có chắc muốn duyệt phòng này?")){
                 $.ajax({
                     url: 'history/approval/'+id,
+                    method: 'POST',
+                    data: new FormData($("#approval form")[0]),
+                    contentType: false,
+                    processData: false,
+                    success:function(data){
+
+                        window.location.reload(1000);
+                    }
+                });
+            }
+        }
+        function checkout(id){
+            event.preventDefault();
+            if(confirm("Bạn có chắc muốn trả phòng này?")){
+                $.ajax({
+                    url: 'history/checkout/'+id,
                     method: 'POST',
                     data: new FormData($("#approval form")[0]),
                     contentType: false,

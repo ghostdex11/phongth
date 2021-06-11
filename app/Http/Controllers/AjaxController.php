@@ -10,7 +10,7 @@ class AjaxController extends Controller
 {
     public function getroom($id)
     {
-        $floor=Room::where('id_zone',$id)->get();
+        $floor=Room::where('id_zone',$id)->where(['activity' => 0])->get();
         foreach($floor as $fl)
         {
             echo "<option  value='".$fl->id."'>".$fl->name."</option>";
