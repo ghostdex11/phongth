@@ -19,46 +19,60 @@
                                     <th>Name zone</th>
                                     <th>Name Room</th>
                                     <th>Name device</th>
+                                    <th>MS</th>
+                                    <th>Phone</th>
+                                    <th>Session</th>
                                     <th>description</th>
                                     <th>clean up</th>
                                     <th>approve</th>
+                                    <th>Registration Date</th>
                                     <th>function</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($home['history'] as $ro)
+                                @foreach($home['history'] as $hom)
                                 <tr>
-                                    <td>{{$ro->nameuser}}</td>
-                                    <td>{{$ro->namezone}}</td>
-                                    <td>{{$ro->nameroom}}</td>
-                                    <td> @foreach(explode(",", $ro->id_device) as $deviceId)
+                                    <td>{{\App\Models\User::getNameUser($hom->id_user)}}</td>
+                                    <td>{{\App\Models\Zone::getNameZone($hom->id_zone)}}</td>
+                                    <td>{{\App\Models\Room::getNameRoom($hom->id_room)}}</td>
+                                    <td> @foreach(explode(",", $hom->id_device) as $deviceId)
                                             {{ Str::of(\App\Models\Device::getDeviceUser($deviceId) . ', ')->rtrim(',') }}
                                         @endforeach</td>
-                                    <td>{{$ro->description}}
-                                    @if($ro->description == null)
+                                    <td>{{$hom->ms}}</td>
+                                    <td>{{$hom->phone}}</td>
+                                    <td>
+                                        @if($hom->session == 1)
+                                            Chiều
+                                        @else
+                                            Sáng
+                                        @endif
+                                    </td>
+                                    <td>{{$hom->description}}
+                                    @if($hom->description == null)
                                         k có mô tả
                                         @else
-                                        $ro->description
+                                        {{$hom->description}}
                                         @endif
                                     </td>
                                     <td>
-                                        @if($ro->clean_up == 1)
+                                        @if($hom->clean_up == 1)
                                         Đã dọn dẹp
                                         @else
                                         Chưa dọn dẹp
                                         @endif
                                     </td>
                                     <td>
-                                        @if($ro->admincheck == 1)
+                                        @if($hom->admin_check == 1)
                                         Đang được sử dụng
                                         @else
                                         Không được sử dụng
                                         @endif
                                     </td>
+                                    <td>{{$hom->created_at}}</td>
                                     <td>
-                                        <button type="button" class="btn btn-white" onclick="detailRoom({{$ro->id}})">
+                                        <button type="button" class="btn btn-white" onclick="detailRoom({{$hom->id}})">
                                             <i class="fas fa-edit"></i></button>
-                                        <button type="button" class="btn btn-white" onclick="deleteRoom({{$ro->id}})"><i
+                                        <button type="button" class="btn btn-white" onclick="deleteRoom({{$hom->id}})"><i
                                                 class="fas fa-trash"></i></button>
                                     </td>
                                 </tr>
@@ -84,6 +98,24 @@
             <form method="post" enctype="multipart/form-data">
                 <div class="modal-body">
                     @csrf
+                    <div class="form-group">
+                        <div class="form-title">MS:</div>
+                        <input type="text" name="ms" class="form-control">
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-title">Phone:</div>
+                        <input type="text" name="phone" class="form-control">
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-title">Session:</div>
+                        <select class="form-control" name="sesion" >
+                            <option value="0">Sáng</option>
+                            <option value="1">Chiều</option>
+                        </select>
+                        <span class="error-slide"></span>
+                    </div>
                     <div class="form-group">
                         <div class="form-title">Name Zone:</div>
                         <select class="form-control" name="zone" id="Zone">

@@ -30,6 +30,7 @@ class pageController extends Controller
             ->join('device','device.id','=','history.id_device')
             ->where(['users.id' => Auth::user()->id])
             ->get();
+        $home['history']=History::all();
         $home['user']=DB::table('users')->get();
         $home['room']=DB::table('room')->get();
         $home['device']=DB::table('device')->get();

@@ -16,11 +16,15 @@
                             <thead>
                                 <tr>
                                     <th>Name user</th>
-                                    <th>Zone</th>
-                                    <th>Room</th>
-                                    <th>Device</th>
+                                    <th>Name Zone</th>
+                                    <th>Name Room</th>
+                                    <th>Name Device</th>
+                                    <th>Ms</th>
+                                    <th>Phone</th>
+                                    <th>Session</th>
                                     <th>Clean_up</th>
                                     <th>Description</th>
+                                    <th>Registration Date</th>
                                     <th>admin_check</th>
                                     <th>function</th>
                                 </tr>
@@ -36,6 +40,15 @@
                                         {{ Str::of(\App\Models\Device::getDeviceUser($deviceId) . ', ')->rtrim('.') }}
                                         @endforeach
                                     </td>
+                                    <td>{{$his->ms}}</td>
+                                    <td>{{$his->phone}}</td>
+                                    <td>
+                                        @if($his->session == 1)
+                                            Chiều
+                                        @else
+                                            Sáng
+                                        @endif
+                                    </td>
                                     <td>
                                         @if($his->clean_up == 1)
                                         Đã dọn dẹp
@@ -50,6 +63,7 @@
                                         {{$his->description}}
                                         @endif
                                     </td>
+                                    <td>{{$his->created_at}}</td>
                                     <td>
                                         @if($his->admin_check == 1)
                                         Đã duyệt
@@ -105,6 +119,14 @@
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
+                        <div class="form-title">Session:</div>
+                        <select class="form-control" name="sesion" >
+                            <option value="0">Sáng</option>
+                            <option value="1">Chiều</option>
+                        </select>
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="form-group">
                         <div class="form-title">Name Zone:</div>
                         <select class="form-control" name="zone" id="Zone">
                             @foreach($history['zone'] as $zo)
@@ -125,12 +147,20 @@
                     <div class="form-group">
                         <div class="form-title">Name Device:</div>
                         @foreach($history['device'] as $de)
-                            <input type="checkbox"  value="{{$de->id}}" name="device[]"> :{{$de->name}}
+                            <input type="checkbox"  value="{{$de->id}}" name="device[]"> :{{$de->name}}<br>
                         @endforeach
                         <span class="error-slide"></span>
                     </div>
+                    <div class="form-group">
+                        <div class="form-title">Admin_check:</div>
+                        <select class="form-control" name="admincheck" >
+                            <option value="0">Chưa duyệt</option>
+                            <option value="1">Đã duyệt</option>
+                        </select>
+                        <span class="error-slide"></span>
+                    </div>
                     <div class="modal-footer">
-                        <button type="button" onclick="addRoom()" class="btn btn-primary">Thêm</button>
+                        <button type="button" onclick="addHistory()" class="btn btn-primary">Thêm</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
                     </div>
                 </div>
@@ -158,12 +188,12 @@
                     </div>
                     <div class="form-group">
                         <div class="form-title">Zone:</div>
-                        
+
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
                         <div class="form-title">Room:</div>
-                        
+
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
@@ -201,7 +231,19 @@
     function openModalEdit(){
             $("#edithistory").modal('show');
         }
-
+    function addHistory(){
+        event.preventDefault();
+        $.ajax({
+            url: 'history/addhistory',
+            method: 'POST',
+            data: new FormData($("#addhistory form")[0]),
+            contentType: false,
+            processData: false,
+            success:function(data){
+                window.location.reload(1000);
+            }
+        });
+    }
         function detailHistory(id){
             event.preventDefault();
             openModalEdit();

@@ -6,7 +6,9 @@ use App\Models\user;
 use App\Models\Room;
 use App\Models\Device;
 use App\Models\Zone;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class historyController extends Controller
@@ -25,6 +27,20 @@ class historyController extends Controller
         $history['zone']=DB::table('zone')->get();
         $history['device']=DB::table('device')->get();
         return view('admin/history/listhistory',['history'=>$history]);
+    }
+    public function addHistory(Request $request)
+    {
+        $history=new History;
+        $history->id_zone=$request->zone;
+        $history->id_user=Auth::user()->id;
+        $history->id_room=$request->room;
+        $history->id_device=implode(",",$request->device);
+        $history->ms=$request->ms;
+        $history->phone=$request->phone;
+        $history->session=$request->sesion;
+        $history->admin_check=$request->admincheck;
+        $history->save();
+        return redirect('admin/history');
     }
     public function detailHistory($id)
     {

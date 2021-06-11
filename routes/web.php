@@ -58,6 +58,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminCheck'], function () {
     });
     Route::group(['prefix' => 'history'], function () {
         Route::GET('/','App\Http\Controllers\historyController@index');
+        Route::post('addhistory','App\Http\Controllers\historyController@addHistory');
         Route::GET('detailhistory/{id}','App\Http\Controllers\historyController@detailHistory');
         Route::GET('deletehistory/{id}','App\Http\Controllers\historyController@deleteHistory');
         Route::POST('edithistory','App\Http\Controllers\historyController@editHistory');
