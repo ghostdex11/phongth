@@ -5,6 +5,7 @@ use App\Models\History;
 use App\Models\user;
 use App\Models\Room;
 use App\Models\Device;
+use App\Models\Zone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -21,6 +22,7 @@ class historyController extends Controller
         $history['history'] = History::all();
         $history['user']=DB::table('users')->get();
         $history['room']=DB::table('room')->get();
+        $history['zone']=DB::table('zone')->get();
         $history['device']=DB::table('device')->get();
         return view('admin/history/listhistory',['history'=>$history]);
     }
