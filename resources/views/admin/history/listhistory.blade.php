@@ -185,17 +185,45 @@
                     <input type="text" id="id" name="id" hidden>
                     <div class="form-group">
                         <div class="form-title">User name:</div>
-                        <input type="text" name="nameuser" id="nameuser" class="form-control" disabled>
+                        <input type="text" name="nameuser"   id="nameuser" class="form-control" disabled>
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Zone:</div>
-
+                        <div class="form-title">MS:</div>
+                        <input type="text" name="ms" id="ms" class="form-control">
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Room:</div>
-
+                        <div class="form-title">Phone:</div>
+                        <input type="text" name="phone" id="phone" class="form-control">
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-title">Session:</div>
+                        <select class="form-control" id="sesion" name="sesion" >
+                            <option value="0">Sáng</option>
+                            <option value="1">Chiều</option>
+                        </select>
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-title">Name Zone:</div>
+                        <select class="form-control" name="zone" id="zone">
+                            <option value="">--Chọn khu vực--</option>
+                            @foreach($history['zone'] as $zo)
+                                <option value="{{$zo->id}}">{{$zo->name}}</option>
+                            @endforeach
+                        </select>
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-title">Name Room:</div>
+                        <select class="form-control" name="room" id="room">
+                            <option value="">--Chọn phòng--</option>
+                            @foreach($history['room'] as $ro)
+                                <option value="{{$ro->id}}">{{$ro->name}}</option>
+                            @endforeach
+                        </select>
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
@@ -207,7 +235,7 @@
                     </div>
                     <div class="form-group">
                         <div class="form-title">Approval:</div>
-                        <select class="form-control" name="admin_check" id="admin_check">
+                        <select class="form-control" name="admincheck" id="admin_check">
                             <option value="1">Đã duyệt</option>
                             <option value="0" selected>Chưa duyệt</option>
                         </select>
@@ -262,9 +290,13 @@
                 success:function(data){
                     console.log(data);
                     $("#id").val(data.id);
-                    $("#name").val(data.name);
-                    $("#activity").val(data.activity);
-                    $("#editcomputer textarea[name=description]").val(data.description);
+                    $("#nameuser").val(data.id_user);
+                    $("#zone").val(data.id_zone);
+                    $("#room").val(data.id_room);
+                    $("#device").val(data.id_device);
+                    $("#ms").val(data.ms);
+                    $("#phone").val(data.phone);
+                    $("#admin_check").val(data.admin_check);
                 }
             });
         }
@@ -332,4 +364,24 @@
 </script>
 @endsection
 @section('script')
+    <script>
+        $(document).ready(function (){
+            $("#Zone").change(function (){
+                var id_zone = $(this).val();
+                $.get("ajax/addhistory/"+id_zone,function (data){
+                    $("#Room").html(data);
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function (){
+            $("#zone").change(function (){
+                var id_zone = $(this).val();
+                $.get("ajax/edithistory/"+id_zone,function (data){
+                    $("#room").html(data);
+                });
+            });
+        });
+    </script>
 @endsection

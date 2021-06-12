@@ -65,7 +65,7 @@
                                         @if($hom->admin_check == 1)
                                         Đang được sử dụng
                                         @else
-                                        Không được sử dụng
+                                        Chưa xét duyệt
                                         @endif
                                     </td>
                                     <td>{{$hom->created_at}}</td>
@@ -166,8 +166,27 @@
                     @csrf
                     <input type="text" id="id" name="id" hidden>
                     <div class="form-group">
+                        <div class="form-title">MS:</div>
+                        <input type="text" name="ms" id="ms" class="form-control">
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-title">Phone:</div>
+                        <input type="text" name="phone" id="phone" class="form-control">
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-title">Session:</div>
+                        <select class="form-control" name="sesion" id="sesion" >
+                            <option value="0">Sáng</option>
+                            <option value="1">Chiều</option>
+                        </select>
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="form-group">
                         <div class="form-title">Name Zone:</div>
                         <select class="form-control" name="zone" id="zone">
+                            <option value="">--Chọn khu vực--</option>
                             @foreach($home['zone'] as $zo)
                                 <option value="{{$zo->id}}">{{$zo->name}}</option>
                             @endforeach
@@ -177,6 +196,7 @@
                     <div class="form-group">
                         <div class="form-title">Name Room:</div>
                         <select class="form-control" name="room" id="room">
+                            <option value="">--Chọn phòng--</option>
                             @foreach($home['room'] as $ro)
                                 <option value="{{$ro->id}}">{{$ro->name}}</option>
                             @endforeach
@@ -241,6 +261,9 @@
                     $("#id").val(data.id);
                     $("#zone").val(data.id_zone);
                     $("#room").val(data.id_room);
+                    $("#ms").val(data.ms);
+                    $("#phone").val(data.phone);
+                    $("#sesion").val(data.session);
                     $("#device").val(data.id_device);
                 }
             });
