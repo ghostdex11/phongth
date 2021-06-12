@@ -44,6 +44,9 @@ class pageController extends Controller
         $history->id_user=Auth::user()->id;
         $history->id_room=$request->room;
         $history->id_device=implode(",",$request->device);
+        $history->ms=$request->ms;
+        $history->phone=$request->phone;
+        $history->session=$request->sesion;
         $history->save();
         return redirect('/regisroom');
     }
@@ -57,7 +60,10 @@ class pageController extends Controller
         History::where('id',$id)->update([
             'id_zone'=>$request->zone,
             'id_room'=>$request->room,
-            'id_device'=>implode(",",$request->device)
+            'id_device'=>implode(",",$request->device),
+            'ms'=>$request->ms,
+            'phone'=>$request->phone,
+            'session'=>$request->sesion,
         ]);
         return redirect('/regisroom');
     }

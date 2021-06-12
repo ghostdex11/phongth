@@ -51,6 +51,10 @@ class historyController extends Controller
         $id=$request->id;
         History::where('id',$id)->update([
             'id_zone'=>$request->zone,
+            'ms'=>$request->ms,
+            'phone'=>$request->phone,
+            'admin_check'=>$request->admincheck,
+            'session'=>$request->sesion,
             'id_room'=>$request->room,
             'id_device'=>implode(",",$request->device)
         ]);

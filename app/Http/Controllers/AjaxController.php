@@ -32,5 +32,21 @@ class AjaxController extends Controller
             echo "<option  value='".$ed->id."'>".$ed->name."</option>";
         }
     }
+    public function getaddhistory($id)
+    {
+        $room=Room::where('id_zone',$id)->get();
+        foreach($room as $rm)
+        {
+            echo "<option  value='".$rm->id."'>".$rm->name."</option>";
+        }
+    }
+    public function getedithistory($id)
+    {
+        $room=Room::where('id_zone',$id)->get();
+        foreach($room as $rm)
+        {
+            echo "<option  value='".$rm->id."'>".$rm->name."</option>";
+        }
+    }
 }
 ?>

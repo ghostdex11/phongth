@@ -56,6 +56,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminCheck'], function () {
         Route::GET('deleteuser/{id}','App\Http\Controllers\userController@deleteUser');
         Route::POST('edituser','App\Http\Controllers\userController@editUser');
     });
+    Route::group(['prefix'=>'ajax'],function (){
+        Route::get('addhistory/{id}','App\Http\Controllers\AjaxController@getaddhistory');
+        Route::get('edithistory/{id}','App\Http\Controllers\AjaxController@getedithistory');
+    });
     Route::group(['prefix' => 'history'], function () {
         Route::GET('/','App\Http\Controllers\historyController@index');
         Route::post('addhistory','App\Http\Controllers\historyController@addHistory');
@@ -74,6 +78,7 @@ Route::group(['prefix' => '/', 'middleware' => 'userCheck'], function () {
         Route::get('room/{id}','App\Http\Controllers\AjaxController@getroom');
         Route::get('floor/{id}','App\Http\Controllers\AjaxController@getfloor');
         Route::get('editroom/{id}','App\Http\Controllers\AjaxController@geteditroom');
+
     });
     Route::group(['prefix' => 'regisroom'], function () {
         Route::GET('/','App\Http\Controllers\pageController@gethome');
