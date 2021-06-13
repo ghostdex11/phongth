@@ -22,8 +22,6 @@
                                     <th>MS</th>
                                     <th>Phone</th>
                                     <th>Session</th>
-                                    <th>description</th>
-                                    <th>clean up</th>
                                     <th>approve</th>
                                     <th>Registration Date</th>
                                     <th>function</th>
@@ -47,25 +45,11 @@
                                             Sáng
                                         @endif
                                     </td>
-                                    <td>{{$hom->description}}
-                                    @if($hom->description == null)
-                                        k có mô tả
-                                        @else
-                                        {{$hom->description}}
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if($hom->clean_up == 1)
-                                        Đã dọn dẹp
-                                        @else
-                                        Chưa dọn dẹp
-                                        @endif
-                                    </td>
-                                    <td>
+                                    <td>                                    
                                         @if($hom->admin_check == 1)
-                                        Đang được sử dụng
+                                            Đã được duyệt
                                         @else
-                                        Chưa xét duyệt
+                                            Chưa được duyệt
                                         @endif
                                     </td>
                                     <td>{{$hom->created_at}}</td>
