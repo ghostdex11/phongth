@@ -75,7 +75,7 @@ class userController extends Controller
                 ]);
             User::where('id',$id)->update([ 'password'=>Hash::make($request->password)]);
         }
-        return redirect('admin/user');
+        return redirect('admin/user'.$id)->with('thongbao','Bạn đã sửa thành công');
     }
     public function deleteUser($id){
         User::find($id)->delete();

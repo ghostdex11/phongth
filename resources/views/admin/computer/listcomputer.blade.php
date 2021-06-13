@@ -76,6 +76,18 @@
     <!-- Modal -->
     <div class="modal fade" id="addcomputer" tabindex="-1" role="dialog" aria-labelledby="addcomputer" aria-hidden="true">
         <div class="modal-dialog" role="document">
+            @if(count($errors)>0)
+                <div class="alert alert-danger">
+                    @foreach($errors->all() as $err)
+                        {{$err}}<br>
+                    @endforeach
+                </div>
+            @endif
+            @if(session('thongbao'))
+                <div class="alert alert-success">
+                    {{session('thongbao')}}
+                </div>
+            @endif
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="tt">Add computer</h5>
@@ -83,7 +95,9 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+
                 <form method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="_token" value="{{csrf_token()}}" />
                     <div class="modal-body">
                         @csrf
                         <div class="form-group">

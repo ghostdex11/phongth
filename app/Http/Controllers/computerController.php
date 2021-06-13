@@ -18,11 +18,21 @@ class computerController extends Controller
 
     public function addComputer(Request $request)
     {
+       $this->validate($request,
+           [
+                'name'=>'required',
+               'id_room'=>'required'
+           ],
+           [
+                'name.required'=>'Bạn chưa nhập name',
+               'id_room'=>'Bạn chưa chọn thể loại'
+            ]);
+
         $computer=new Computer;
         $computer->name=$request->name;
         $computer->id_room=$request->id_room;
         $computer->save();
-        return redirect('admin/computer');
+        return redirect('admin/computer')->with('thongbao','Bạn thêm thành công');
     }
     public function detailComputer($id)
     {

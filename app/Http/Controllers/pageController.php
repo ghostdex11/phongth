@@ -63,7 +63,7 @@ class pageController extends Controller
             'id_device'=>implode(",",$request->device),
             'ms'=>$request->ms,
             'phone'=>$request->phone,
-            'session'=>$request->sesion,
+            'session'=>$request->sesion
         ]);
         return redirect('/regisroom');
     }

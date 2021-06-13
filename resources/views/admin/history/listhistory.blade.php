@@ -229,7 +229,7 @@
                     <div class="form-group">
                         <div class="form-title">Name Device:</div>
                         @foreach($history   ['device'] as $de)
-                            <input type="checkbox" id="device" value="{{$de->id}}"  name="device[]"> :{{$de->name}}
+                            <input type="checkbox" id="device" value="{{$de->id}}" name="device[]"> :{{$de->name}}
                         @endforeach
                         <span class="error-slide"></span>
                     </div>
