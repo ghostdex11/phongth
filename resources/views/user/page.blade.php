@@ -115,7 +115,7 @@
                         <select class="form-control" name="room" id="Room">
                             <option value="">--Chọn phòng--</option>
                             @foreach($home['room'] as $ro)
-                            <option value="{{$ro->id}}">{{$ro->name}}</option>
+                            <option value="{{$ro->id}}">{{$ro->room_name}}</option>
                             @endforeach
                         </select>
                         <span class="text-danger error-text room_error"></span> 
@@ -182,7 +182,7 @@
                         <select class="form-control" name="room" id="room">
                             <option value="">--Chọn phòng--</option>
                             @foreach($home['room'] as $ro)
-                                <option value="{{$ro->id}}">{{$ro->name}}</option>
+                                <option value="{{$ro->id}}">{{$ro->room_name}}</option>
                             @endforeach
                         </select>
                         <span class="error-slide"></span>

@@ -27,7 +27,7 @@
                                 <tbody>
                                 @foreach($computer['computer'] as $de)
                                     <tr>
-                                        <td>{{$de->name}}</td>
+                                        <td>{{$de->computer_name}}</td>
                                         <td>{{$de->roomname}}</td>
                                         <td>
                                             @if($de->mouse == 1)
@@ -96,7 +96,7 @@
                             <div class="form-title">Room:</div>
                             <select class="form-control" name="id_room">
                                 @foreach($computer['room'] as $td)
-                                    <option  value="{{$td->id}}">{{$td->name}}</option>
+                                    <option  value="{{$td->id}}">{{$td->room_name}}</option>
                                 @endforeach
                             </select>
                             <span class="error-slide"></span>
@@ -129,10 +129,10 @@
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Type Device:</div>
+                            <div class="form-title">Name Room:</div>
                             <select class="form-control" name="id_room">
                                 @foreach($computer['room'] as $td)
-                                    <option  value="{{$td->id}}">{{$td->name}}</option>
+                                    <option  value="{{$td->id}}">{{$td->room_name}}</option>
                                 @endforeach
                             </select>
                             <span class="error-slide"></span>
@@ -229,7 +229,7 @@
                 success:function(data){
                     console.log(data);
                     $("#id").val(data.id);
-                    $("#name").val(data.name);
+                    $("#name").val(data.computer_name);
                     $("#activity").val(data.activity);
                     $("#editcomputer textarea[name=description]").val(data.description);
                 }

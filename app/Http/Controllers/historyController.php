@@ -23,9 +23,9 @@ class historyController extends Controller
             ->join('room','room.id','=','history.id_room')
             ->join('device','device.id','=','history.id_device')
             ->where(['history.activity' => 0])
-            ->where(['users.id' => Auth::user()->id])
+            // ->where(['users.id' => Auth::user()->id])
             ->get();
-        $history['history'] = History::all();
+        // $history['history'] = History::all();
         $history['user']=DB::table('users')->get();
         $history['room']=DB::table('room')->get();
         $history['zone']=DB::table('zone')->get();
@@ -89,17 +89,18 @@ class historyController extends Controller
     }
     public function deleteHistory($id){
         $idroom = History::select('history.id_room')->where(['id' => $id])->get();
-        Room::where('id',$request->room)->update([
+        Room::where('id',$idroom)->update([
             'activity'=> 0,
         ]);
         History::find($id)->delete();
     }
-    public function Approval($id)
+    public function Approval($id,)
     {
         History::where('id',$id)->update([
             'admin_check'=> 1,
         ]);
-        Room::where('id',$request->room)->update([
+        $idroom = History::select('history.id_room')->where(['id' => $id])->get();
+        Room::where('id',$idroom)->update([
             'activity'=> 1,
         ]);
         return redirect('/admin/history');

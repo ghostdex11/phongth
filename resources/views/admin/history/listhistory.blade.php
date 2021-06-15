@@ -261,9 +261,9 @@
                     </div>
                     <div class="form-group">
                         <div class="form-title">Name Device:</div>
-                        @foreach(explode(",", $his->id_device) as $deviceId)
+                        {{-- @foreach(explode(",", $his->id_device) as $deviceId)
                             <input type="text" id="device" value="{{$de->name}}" class="form-control"  name="device[]" disabled>
-                        @endforeach
+                        @endforeach --}}
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">

@@ -32,7 +32,7 @@ class roomController extends Controller
             return response()->json(['status'=>0, 'error'=>$validator->errors()->toArray()]);
         }else{
             $room=new room;
-            $room->name=$request->name;
+            $room->room_name=$request->name;
             $room->id_zone=$request->zone;
             $room->floor=$request->floor;
             $room->description=$request->description;
@@ -52,7 +52,7 @@ class roomController extends Controller
     {
         $id=$request->id;
         Room::where('id',$id)->update([
-            'name'=>$request->name,
+            'room_name'=>$request->name,
             'id_zone'=>$request->id_zone,
             'floor'=>$request->floor,
             'clean_up'=>$request->clean_up,

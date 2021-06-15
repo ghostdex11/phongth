@@ -25,14 +25,15 @@ class pageController extends Controller
     public function gethome()
     {
         $home=[];
-        $home['history'] = History::select('history.*', 'users.name as nameuser' , 'room.name as nameroom', 'zone.name as namezone', 'device.name as namedevice')
+        $home['history'] = History::select('history.*', 'users.name as nameuser' , 'room.room_name as nameroom', 'zone.name as namezone', 'device.name as namedevice')
             ->join('users','users.id','=','history.id_user')
             ->join('zone','zone.id','=','history.id_zone')
             ->join('room','room.id','=','history.id_room')
             ->join('device','device.id','=','history.id_device')
+            ->where(['history.activity' => 0])
             ->where(['users.id' => Auth::user()->id])
             ->get();
-        $home['history']=History::all();
+        // $home['history']=History::all();
         $home['user']=DB::table('users')->get();
         $home['room']=DB::table('room')->get();
         $home['device']=DB::table('device')->get();
