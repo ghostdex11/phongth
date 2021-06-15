@@ -22,8 +22,6 @@
                                     <th>Ms</th>
                                     <th>Phone</th>
                                     <th>Session</th>
-                                    <th>Clean_up</th>
-                                    <th>Description</th>
                                     <th>Registration Date</th>
                                     <th>admin_check</th>
                                     <th>function</th>
@@ -49,20 +47,6 @@
                                             Sáng
                                         @endif
                                     </td>
-                                    <td>
-                                        @if($his->clean_up == 1)
-                                        Đã dọn dẹp
-                                        @else
-                                        Chưa dọn dẹp
-                                        @endif
-                                    </td>
-                                    <td>
-                                        @if($his->description == null)
-                                        Không có mô tả
-                                        @else
-                                        {{$his->description}}
-                                        @endif
-                                    </td>
                                     <td>{{$his->created_at}}</td>
                                     <td>
                                         @if($his->admin_check == 1)
@@ -76,8 +60,9 @@
                                             <button type="button" class="btn btn-white" onclick="approval({{$his->id}})">
                                             Duyệt</button>
                                         @else
-                                        <button type="button" class="btn btn-white" onclick="checkout({{$his->id}})">
-                                            Duyệt</button>
+                                        <button type="button" id="btnbk" onclick="Broken({{$his->id}});" class="btn btn-warning">Báo hỏng</button>
+                                        <button type="button" class="btn btn-primary" onclick="checkout({{$his->id}});Get({{$his->id}})">
+                                            Trả phòng</button>
                                         @endif
                                         <button type="button" class="btn btn-white"
                                             onclick="detailHistory({{$his->id}})">
@@ -153,14 +138,14 @@
                         @endforeach
                         <span class="error-slide"></span>
                     </div>
-                    <div class="form-group">
+                    {{-- <div class="form-group">
                         <div class="form-title">Admin_check:</div>
                         <select class="form-control" name="admincheck" >
                             <option value="0">Chưa duyệt</option>
                             <option value="1">Đã duyệt</option>
                         </select>
                         <span class="error-slide"></span>
-                    </div>
+                    </div> --}}
                     <div class="modal-footer">
                         <button type="button" onclick="addHistory()" class="btn btn-primary">Thêm</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
@@ -250,7 +235,89 @@
         </div>
     </div>
 </div>
-
+<div class="modal fade" id="apphistory" tabindex="-1" role="dialog" aria-labelledby="apphistory" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Check out Room</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    @csrf
+                    <input type="text" id="id1" name="id" hidden>
+                    <input type="text" id="id_room1" name="id_room" hidden>
+                    <div class="form-group">
+                        <div class="form-title">MS:</div>
+                        <input type="text" name="ms" id="ms1" class="form-control" disabled>
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-title">Phone:</div>
+                        <input type="text" name="phone" id="phone1" class="form-control" disabled>
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-title">Name Device:</div>
+                        @foreach(explode(",", $his->id_device) as $deviceId)
+                            <input type="text" id="device" value="{{$de->name}}" class="form-control"  name="device[]" disabled>
+                        @endforeach
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-title">Clean:</div>
+                        <select class="form-control" id="clean_up1" name="clean_up">
+                            <option value="0">Chưa dọn</option>
+                            <option value="1">Đã dọn dẹp</option>
+                        </select>
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" onclick="submitCheckOut()" class="btn btn-primary">Trả phòng</button>
+                        <button type="button" data-dismiss="modal" class="btn btn-danger">Hủy</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="brokenform" tabindex="-1" role="dialog" aria-labelledby="brokenform" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Báo lỗi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    @csrf
+                    <input type="text" id="id2" name="id">
+                    <input type="text" id="id_room2" name="id_room" >
+                    <div class="form-group">
+                        <div class="form-title">room:</div>
+                        <input type="text" name="id_room" id="id_roombk" class="form-control" disabled>
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-title">computer:</div>
+                        <select class="form-control" id="computer" name="computer">
+                            <option value="0"></option>
+                        </select>
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" onclick="submitBroken()" class="btn btn-primary">Báo lỗi</button>
+                        <button type="button" data-dismiss="modal" class="btn btn-danger">Hủy</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <script src="{{ asset('js/jquery-3.5.1.min.js') }}" language="JavaScript" type="text/javascript"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/3.5.1/js/toastr.min.js">
 </script>
@@ -259,8 +326,14 @@
         $("#addhistory").modal('show');
     }
     function openModalEdit(){
-            $("#edithistory").modal('show');
-        }
+        $("#edithistory").modal('show');
+    }
+    function openModalApp(){
+        $("#apphistory").modal('show');
+    }
+    function openModalBroken(){
+        $("#brokenform").modal('show');
+    }
     function addHistory(){
         event.preventDefault();
         $.ajax({
@@ -346,12 +419,31 @@
             }
         }
         function checkout(id){
+            openModalApp();
+            event.preventDefault();
+                $.ajax({
+                    url: 'history/detailcheckout/'+id,
+                    method: 'GET',
+                contentType: false,
+                processData: false,
+                success:function(data){
+                    console.log(data);
+                    $("#id1").val(data.id);
+                    $("#id_room1").val(data.id_room);
+                    $("#ms1").val(data.ms);
+                    $("#phone1").val(data.phone); 
+                    $("#clean_up1").val(data.clean_up);
+                }           
+            });
+        }
+
+        function submitCheckOut(){
             event.preventDefault();
             if(confirm("Bạn có chắc muốn trả phòng này?")){
                 $.ajax({
-                    url: 'history/checkout/'+id,
+                    url: 'history/checkout',
                     method: 'POST',
-                    data: new FormData($("#approval form")[0]),
+                    data: new FormData($("#apphistory form")[0]),
                     contentType: false,
                     processData: false,
                     success:function(data){
@@ -360,6 +452,22 @@
                     }
                 });
             }
+        }
+        function Broken(id){
+            openModalBroken();
+            event.preventDefault();
+                $.ajax({
+                    url: 'history/detailbroken/'+id,
+                    method: 'GET',
+                contentType: false,
+                processData: false,
+                success:function(data){
+                    console.log(data);
+                    $("#id2").val(id);
+                    $("#id_room2").val(data.id_room);
+                    $("#id_roombk").val(data.name);
+                }           
+            });
         }
 </script>
 @endsection
