@@ -23,13 +23,14 @@ class historyController extends Controller
             ->join('room','room.id','=','history.id_room')
             ->join('device','device.id','=','history.id_device')
             ->where(['history.activity' => 0])
-            ->where(['users.id' => Auth::user()->id])
+            // ->where(['users.id' => Auth::user()->id])
             ->get();
-        $history['history'] = History::all();
+        // $history['history'] = History::all();
         $history['user']=DB::table('users')->get();
         $history['room']=DB::table('room')->get();
         $history['zone']=DB::table('zone')->get();
         $history['device']=DB::table('device')->get();
+        $history['computer']=DB::table('computer')->get();
         return view('admin/history/listhistory',['history'=>$history]);
     }
     public function addHistory(Request $request)
@@ -88,9 +89,9 @@ class historyController extends Controller
         return redirect('/admin/history');
     }
     public function deleteHistory($id){
-        $idroom = History::select('history.id_room')->where(['id' => $id])->get();
-        Room::where('id',$request->room)->update([
-            'activity'=> 0,
+        $idroom = DB::table('history')->where('id', $id)->first();
+        Room::where('room.id' , $idroom -> id_room)->update([   
+            'room.activity' => 0,
         ]);
         History::find($id)->delete();
     }
@@ -99,14 +100,14 @@ class historyController extends Controller
         History::where('id',$id)->update([
             'admin_check'=> 1,
         ]);
-        Room::where('id',$request->room)->update([
-            'activity'=> 1,
+        $idroom = DB::table('history')->where('id', $id)->first();
+        Room::where('id', $idroom -> id_room)->update([
+            'room.activity'=> 1,
         ]);
         return redirect('/admin/history');
     }
     public function detailCheckOut($id)
     {
-        session()->push('idget',$id);
         return $historys = History::find($id);
     }
     public function submitCheckOut(Request $request)
@@ -115,10 +116,10 @@ class historyController extends Controller
         $idroom=$request->id_room;
         History::where('id',$id)->update([
             'clean_up'=>$request->clean_up,
-            'activity'=> 1 ,
+            'activity'=> 1
         ]);
         Room::where('id',$idroom)->update([
-            'activity'=> 0,
+            'activity'=> 0
         ]);
         return redirect('/admin/history');
     }

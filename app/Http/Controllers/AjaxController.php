@@ -13,7 +13,7 @@ class AjaxController extends Controller
         $addroom=Room::where('id_zone',$id)->where(['activity' => 0])->get();
         foreach($addroom as $add)
         {
-            echo "<option  value='".$add->id."'>".$add->name."</option>";
+            echo "<option  value='".$add->id."'>".$add->room_name."</option>";
         }
     }
     
@@ -22,7 +22,7 @@ class AjaxController extends Controller
         $editroom=Room::where('id_zone',$id)->where(['activity' => 0])->get();
         foreach($editroom as $ed)
         {
-            echo "<option  value='".$ed->id."'>".$ed->name."</option>";
+            echo "<option  value='".$ed->id."'>".$ed->room_name."</option>";
         }
     }
     public function getaddhistory($id)
@@ -30,7 +30,7 @@ class AjaxController extends Controller
         $room=Room::where('id_zone',$id)->where(['activity' => 0])->get();
         foreach($room as $rm)
         {
-            echo "<option  value='".$rm->id."'>".$rm->name."</option>";
+            echo "<option  value='".$rm->id."'>".$rm->room_name."</option>";
         }
     }
     public function getedithistory($id)
@@ -38,7 +38,7 @@ class AjaxController extends Controller
         $room=Room::where('id_zone',$id)->where(['activity' => 0])->get();
         foreach($room as $rm)
         {
-            echo "<option  value='".$rm->id."'>".$rm->name."</option>";
+            echo "<option  value='".$rm->id."'>".$rm->room_name."</option>";
         }
     }
 }

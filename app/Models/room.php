@@ -11,7 +11,7 @@ class Room extends Model
     public $table="room";
     protected $primaryKey = 'id';
     public static function getNameRoom($id) {
-        $room = Room::findOrFail($id)->name;
+        $room = Room::findOrFail($id)->room_name;
         return $room ? $room : "";
     }
 }

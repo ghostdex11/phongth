@@ -61,7 +61,7 @@
                                             Duyệt</button>
                                         @else
                                         <button type="button" id="btnbk" onclick="Broken({{$his->id}});" class="btn btn-warning">Báo hỏng</button>
-                                        <button type="button" class="btn btn-primary" onclick="checkout({{$his->id}});Get({{$his->id}})">
+                                        <button type="button" class="btn btn-primary" onclick="checkout({{$his->id}})">
                                             Trả phòng</button>
                                         @endif
                                         <button type="button" class="btn btn-white"
@@ -261,9 +261,7 @@
                     </div>
                     <div class="form-group">
                         <div class="form-title">Name Device:</div>
-                        @foreach(explode(",", $his->id_device) as $deviceId)
-                            <input type="text" id="device" value="{{$de->name}}" class="form-control"  name="device[]" disabled>
-                        @endforeach
+                      
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
@@ -302,10 +300,14 @@
                         <input type="text" name="id_room" id="id_roombk" class="form-control" disabled>
                         <span class="error-slide"></span>
                     </div>
+                    <select class="form-control" id="clean_up1" name="clean_up">
+                        <option value="0">Chưa dọn</option>
+                        <option value="1">Đã dọn dẹp</option>
+                    </select>
                     <div class="form-group">
                         <div class="form-title">computer:</div>
-                        <select class="form-control" id="computer" name="computer">
-                            <option value="0"></option>
+                         <select class="form-control" id="id_computer" name="id_computer">
+                            <option value="0">--Chọn máy--</option>
                         </select>
                         <span class="error-slide"></span>
                     </div>
@@ -477,7 +479,10 @@
                     console.log(data);
                     $("#id2").val(id);
                     $("#id_room2").val(data.id_room);
-                    $("#id_roombk").val(data.name);
+                    $("#id_roombk").val(data.room_name);
+                    $("select[name='id_computer']").append(
+                            "<option value=" + data.id + ">" + data.computer_name + "</option>"
+                    );
                 }           
             });
         }
