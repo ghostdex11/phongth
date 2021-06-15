@@ -76,18 +76,6 @@
     <!-- Modal -->
     <div class="modal fade" id="addcomputer" tabindex="-1" role="dialog" aria-labelledby="addcomputer" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            @if(count($errors)>0)
-                <div class="alert alert-danger">
-                    @foreach($errors->all() as $err)
-                        {{$err}}<br>
-                    @endforeach
-                </div>
-            @endif
-            @if(session('thongbao'))
-                <div class="alert alert-success">
-                    {{session('thongbao')}}
-                </div>
-            @endif
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="tt">Add computer</h5>
@@ -95,7 +83,6 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-
                 <form method="post" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{csrf_token()}}" />
                     <div class="modal-body">
@@ -103,7 +90,7 @@
                         <div class="form-group">
                             <div class="form-title">Name computer:</div>
                             <input type="text" name="name" class="form-control">
-                            <span class="error-slide"></span>
+                            <span class="text-danger error-text name_error"></span>
                         </div>
                         <div class="form-group">
                             <div class="form-title">Room:</div>
@@ -209,9 +196,21 @@
                 data: new FormData($("#addcomputer form")[0]),
                 contentType: false,
                 processData: false,
-                success:function(data){
-                    window.location.reload(1000);
-                }
+                beforeSend:function (){
+                        $(document).find('span.error-text').text('');        
+                },
+                    success:function(data){
+                        if(data.status == 0){
+                            $.each(data.error,function(prefix, val){
+                                   $('span.'+prefix+'_error').text(val[0]); 
+                            });
+                        }else{
+                            //    $('#addcomputer')[0].reset();
+                            //    alert(data.msg);
+                            window.location.reload(1000);
+                        }
+                        
+                    },
             });
         }
         function detailComputer(id){

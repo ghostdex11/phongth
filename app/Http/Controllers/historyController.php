@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Validator;
 
 class historyController extends Controller
 {
@@ -20,7 +21,9 @@ class historyController extends Controller
             ->join('users','users.id','=','history.id_user')
             ->join('zone','zone.id','=','history.id_zone')
             ->join('room','room.id','=','history.id_room')
-            ->join('device','device.id','=','history.id_device')->get();
+            ->join('device','device.id','=','history.id_device')
+            ->where(['users.id' => Auth::user()->id])
+            ->get();
         $history['history'] = History::all();
         $history['user']=DB::table('users')->get();
         $history['room']=DB::table('room')->get();
@@ -30,17 +33,38 @@ class historyController extends Controller
     }
     public function addHistory(Request $request)
     {
-        $history=new History;
-        $history->id_zone=$request->zone;
-        $history->id_user=Auth::user()->id;
-        $history->id_room=$request->room;
-        $history->id_device=implode(",",$request->device);
-        $history->ms=$request->ms;
-        $history->phone=$request->phone;
-        $history->session=$request->sesion;
-        $history->admin_check=$request->admincheck;
-        $history->save();
-        return redirect('admin/history');
+        $validator = Validator::make($request->all(),[
+            'ms'=>'required',
+            'phone'=>'required',
+            'zone'=>'required',
+            'room'=>'required',
+            'device'=>'required'
+        ],[
+            'ms.required'=>'Bạn chưa nhập mã số',
+            'phone.required'=>'Bạn chưa nhập số điện thoại',
+            'zone.required'=>'Bạn chưa chọn khu',
+            'room.required'=>'Bạn chưa chọn phòng',
+            'device.required'=>'Bạn chưa chọn thiết bị'
+        ]);
+        if(!$validator->passes()){
+            return response()->json(['status'=>0, 'error'=>$validator->errors()->toArray()]);
+        }else{
+            $history=new History;
+            $history->id_zone=$request->zone;
+            $history->id_user=Auth::user()->id;
+            $history->id_room=$request->room;
+            $history->id_device=implode(",",$request->device);
+            $history->ms=$request->ms;
+            $history->phone=$request->phone;
+            $history->session=$request->sesion;
+            $history->admin_check=$request->admincheck;
+            $history->save();
+            // return redirect('admin/history');
+           if( $history){
+               return response()->json(['status'=>1, 'msg'=>'Bạn đăng kí thành công']);
+                }
+        }
+       
     }
     public function detailHistory($id)
     {

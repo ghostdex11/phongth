@@ -75,8 +75,8 @@ Route::group(['prefix' => '/', 'middleware' => 'userCheck'], function () {
     Route::get('/','App\Http\Controllers\pageController@index');
     Route::get('home','App\Http\Controllers\pageController@index');
     Route::group(['prefix'=>'ajax'],function (){
-        Route::get('room/{id}','App\Http\Controllers\AjaxController@getroom');
-        Route::get('floor/{id}','App\Http\Controllers\AjaxController@getfloor');
+        Route::get('addroom/{id}','App\Http\Controllers\AjaxController@getaddroom');
+
         Route::get('editroom/{id}','App\Http\Controllers\AjaxController@geteditroom');
 
     });

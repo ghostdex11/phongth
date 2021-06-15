@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Computer;
 use App\Models\Room;
-    use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB;
+use Validator;
 class computerController extends Controller
 {
     public function index(){
@@ -18,21 +19,25 @@ class computerController extends Controller
 
     public function addComputer(Request $request)
     {
-       $this->validate($request,
-           [
-                'name'=>'required',
-               'id_room'=>'required'
-           ],
-           [
-                'name.required'=>'Bạn chưa nhập name',
-               'id_room'=>'Bạn chưa chọn thể loại'
-            ]);
-
-        $computer=new Computer;
-        $computer->name=$request->name;
-        $computer->id_room=$request->id_room;
-        $computer->save();
-        return redirect('admin/computer')->with('thongbao','Bạn thêm thành công');
+        $validator = Validator::make($request->all(),[
+            'name'=>'required'
+        ],[
+            'name.required'=>'Bạn chưa nhập tên máy',
+           
+        ]);
+        if(!$validator->passes()){
+            return response()->json(['status'=>0, 'error'=>$validator->errors()->toArray()]);
+        }else{
+            $computer=new Computer;
+            $computer->name=$request->name;
+            $computer->id_room=$request->id_room;
+            $computer->save();
+        // return redirect('admin/computer');
+           if( $computer){
+               return response()->json(['status'=>1, 'msg'=>'Bạn đăng kí thành công']);
+                }
+        }
+       
     }
     public function detailComputer($id)
     {
