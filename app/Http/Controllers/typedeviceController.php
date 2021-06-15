@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Typedevice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Validator;
 class typedeviceController extends Controller
 {
     public function index(){
@@ -13,10 +13,24 @@ class typedeviceController extends Controller
     }
     public function addtypedevice(Request $request)
     {
-        $typedevice=new Typedevice;
-        $typedevice->name=$request->name;
-        $typedevice->save();
-        return redirect('admin/typedevice');
+        $validator = Validator::make($request->all(),[
+            'name'=>'required'
+        ],[
+            'name.required'=>'Bạn chưa nhập tên loại thiết bị '
+           
+        ]);
+        if(!$validator->passes()){
+            return response()->json(['status'=>0, 'error'=>$validator->errors()->toArray()]);
+        }else{
+            $typedevice=new Typedevice;
+            $typedevice->name=$request->name;
+            $typedevice->save();
+            // return redirect('admin/typedevice');
+           if( $typedevice){
+               return response()->json(['status'=>1, 'msg'=>'Bạn đăng kí thành công']);
+                }
+        }
+       
 
     }
     public function detailTypedevice($id)

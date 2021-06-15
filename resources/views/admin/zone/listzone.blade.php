@@ -57,12 +57,12 @@
 					<div class="form-group">
 						<div class="form-title">Name Zone:</div>
 						<input type="text" name="name" class="form-control">
-						<span class="error-slide"></span>
+						<span class="text-danger text-error name_error"></span>
 					</div>
 					<div class="form-group">
 						<div class="form-title">Location:</div>
 						<input type="text" name="location" class="form-control">
-						<span class="error-slide"></span>
+						<span class="text-danger text-error location_error"></span>
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -125,10 +125,21 @@
 			data: new FormData($("#addzone form")[0]),
 			contentType: false,
 			processData: false,
-			success:function(data){
-
-				window.location.reload(1000);
-			}
+			beforeSend:function (){
+                        $(document).find('span.error-text').text('');        
+                },
+                    success:function(data){
+                        if(data.status == 0){
+                            $.each(data.error,function(prefix, val){
+                                   $('span.'+prefix+'_error').text(val[0]); 
+                            });
+                        }else{
+                            //    $('#addzone')[0].reset();
+                            //    alert(data.msg);
+                            window.location.reload(1000);
+                        }
+                        
+                    }
 		});
 	}
 	function detailZone(id){

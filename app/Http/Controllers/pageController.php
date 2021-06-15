@@ -9,6 +9,8 @@ use App\Models\Room;
 use App\Models\Device;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Validator;
+use Illuminate\Http\RedirectResponse;
 
 class pageController extends Controller
 {
@@ -35,20 +37,40 @@ class pageController extends Controller
         $home['room']=DB::table('room')->get();
         $home['device']=DB::table('device')->get();
         $home['zone']=DB::table('zone')->get();
-        return view('user.page',['home' => $home]);
+        return view('user/page',['home' => $home]);
     }
     public function regisRoom(Request $request)
     {
-        $history=new History;
-        $history->id_zone=$request->zone;
-        $history->id_user=Auth::user()->id;
-        $history->id_room=$request->room;
-        $history->id_device=implode(",",$request->device);
-        $history->ms=$request->ms;
-        $history->phone=$request->phone;
-        $history->session=$request->sesion;
-        $history->save();
-        return redirect('/regisroom');
+        $validator = Validator::make($request->all(),[
+            'ms'=>'required',
+            'phone'=>'required',
+            'zone'=>'required',
+            'room'=>'required',
+            'device'=>'required'
+        ],[
+            'ms.required'=>'Bạn chưa nhập mã số',
+            'phone.required'=>'Bạn chưa nhập số điện thoại',
+            'zone.required'=>'Bạn chưa chọn khu',
+            'room.required'=>'Bạn chưa chọn phòng',
+            'device.required'=>'Bạn chưa chọn thiết bị'
+        ]);
+        if(!$validator->passes()){
+            return response()->json(['status'=>0, 'error'=>$validator->errors()->toArray()]);
+        }else{
+            $history=new History;
+            $history->id_zone=$request->zone;
+            $history->id_user=Auth::user()->id;
+            $history->id_room=$request->room;
+            $history->id_device=implode(",",$request->device);
+            $history->ms=$request->ms;
+            $history->phone=$request->phone;
+            $history->session=$request->sesion;
+            $history->save();
+            // return redirect('/regisroom');
+           if( $history){
+               return response()->json(['status'=>1, 'msg'=>'Bạn đăng kí thành công']);
+                }
+        }
     }
     public function detailRoom($id)
     {
@@ -63,7 +85,7 @@ class pageController extends Controller
             'id_device'=>implode(",",$request->device),
             'ms'=>$request->ms,
             'phone'=>$request->phone,
-            'session'=>$request->sesion,
+            'session'=>$request->sesion
         ]);
         return redirect('/regisroom');
     }

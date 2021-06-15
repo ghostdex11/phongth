@@ -96,12 +96,12 @@
                     <div class="form-group">
                         <div class="form-title">MS:</div>
                         <input type="text" name="ms" class="form-control">
-                        <span class="error-slide"></span>
+                        <span class="text-danger text-error ms_error"></span>
                     </div>
                     <div class="form-group">
                         <div class="form-title">Phone:</div>
                         <input type="text" name="phone" class="form-control">
-                        <span class="error-slide"></span>
+                        <span class="text-danger text-error phone_error"></span>
                     </div>
                     <div class="form-group">
                         <div class="form-title">Session:</div>
@@ -119,24 +119,24 @@
                                 <option value="{{$zo->id}}">{{$zo->name}}</option>
                             @endforeach
                         </select>
-                        <span class="error-slide"></span>
+                        <span class="text-danger text-error zone_error"></span>
                     </div>
                     <div class="form-group">
                         <div class="form-title">Name Room:</div>
                         <select class="form-control" name="room" id="Room">
                             <option value="">--Chọn phòng--</option>
                             @foreach($history['room'] as $ro)
-                                <option value="{{$ro->id}}">{{$ro->name}}</option>
+                                <option value="{{$ro->id}}">{{$ro->room_name}}</option>
                             @endforeach
                         </select>
-                        <span class="error-slide"></span>
+                        <span class="text-danger text-error room_error"></span>
                     </div>
                     <div class="form-group">
                         <div class="form-title">Name Device:</div>
                         @foreach($history['device'] as $de)
                             <input type="checkbox"  value="{{$de->id}}" name="device[]"> :{{$de->name}}<br>
                         @endforeach
-                        <span class="error-slide"></span>
+                        <span class="text-danger text-error device_error"></span>
                     </div>
                     {{-- <div class="form-group">
                         <div class="form-title">Admin_check:</div>
@@ -206,7 +206,7 @@
                         <select class="form-control" name="room" id="room">
                             <option value="">--Chọn phòng--</option>
                             @foreach($history['room'] as $ro)
-                                <option value="{{$ro->id}}">{{$ro->name}}</option>
+                                <option value="{{$ro->id}}">{{$ro->room_name}}</option>
                             @endforeach
                         </select>
                         <span class="error-slide"></span>
@@ -214,7 +214,7 @@
                     <div class="form-group">
                         <div class="form-title">Name Device:</div>
                         @foreach($history   ['device'] as $de)
-                            <input type="checkbox" id="device" value="{{$de->id}}"  name="device[]"> :{{$de->name}}
+                            <input type="checkbox" id="device" value="{{$de->id}}" name="device[]"> :{{$de->name}}
                         @endforeach
                         <span class="error-slide"></span>
                     </div>
@@ -342,9 +342,21 @@
             data: new FormData($("#addhistory form")[0]),
             contentType: false,
             processData: false,
-            success:function(data){
-                window.location.reload(1000);
-            }
+            beforeSend:function (){
+                        $(document).find('span.error-text').text('');        
+                    },
+                    success:function(data){
+                        if(data.status == 0){
+                            $.each(data.error,function(prefix, val){
+                                   $('span.'+prefix+'_error').text(val[0]); 
+                            });
+                        }else{
+                            //    $('#addhistory')[0].reset();
+                            //    alert(data.msg);
+                            window.location.reload(1000);
+                        }
+                        
+                    },
         });
     }
         function detailHistory(id){

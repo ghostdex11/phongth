@@ -19,7 +19,7 @@
                                     <th>Name zone</th>
                                     <th>Floor</th>
                                     <th>Description</th>
-                                    <th>Clean_up</th>
+                                    <th>Clean_up</th>                                    
                                     <th>Activity</th>
                                     <th>Status</th>
                                     <th>function</th>
@@ -46,14 +46,14 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if($ro->status == 1)
+                                            @if($ro->activity == 1)
                                                 Đang được sử dụng
                                             @else
                                                 Không được sử dụng
                                             @endif
                                         </td>
                                         <td>
-                                            @if($ro->activity == 1)
+                                            @if($ro->status == 1)
                                                 Sử dụng được
                                             @else
                                                 Không sử dụng được
@@ -91,7 +91,7 @@
                         <div class="form-group">
                             <div class="form-title">Name Room:</div>
                             <input type="text" name="name" class="form-control">
-                            <span class="error-slide"></span>
+                            <span class="text-danger text-error name_error"></span>
                         </div>
                     </div>
                     <div class="modal-body">
@@ -109,7 +109,7 @@
                         <div class="form-group">
                             <div class="form-title">Floor:</div>
                             <input type="text" name="floor" class="form-control">
-                            <span class="error-slide"></span>
+                            <span class="text-danger text-error floor_error"></span>
                         </div>
                     </div>
                     <div class="modal-body">
@@ -170,16 +170,16 @@
                         <div class="form-group">
                             <div class="form-title">Activity:</div>
                             <select class="form-control" name="activity" id="activity">
-                                <option value="1">Sử dụng được</option>
-                                <option value="0">Không sử dụng được</option>
+                                <option value="1">Đang được sử dụng</option>
+                                <option value="0" selected>Không được sử dụng</option>
                             </select>
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">
                             <div class="form-title">Status:</div>
                             <select class="form-control" name="status" id="status">
-                                <option value="1">Đang được sử dụng</option>
-                                <option value="0" selected>Không được sử dụng</option>
+                                <option value="1">Sử dụng được</option>
+                                <option value="0">Không sử dụng được</option>
                             </select>
                             <span class="error-slide"></span>
                         </div>
@@ -217,9 +217,21 @@
                 data: new FormData($("#addroom form")[0]),
                 contentType: false,
                 processData: false,
-                success:function(data){
-                    window.location.reload(1000);
-                }
+                beforeSend:function (){
+                        $(document).find('span.error-text').text('');        
+                },
+                    success:function(data){
+                        if(data.status == 0){
+                            $.each(data.error,function(prefix, val){
+                                   $('span.'+prefix+'_error').text(val[0]); 
+                            });
+                        }else{
+                            //    $('#addroom')[0].reset();
+                            //    alert(data.msg);
+                            window.location.reload(1000);
+                        }
+                        
+                    }
             });
         }
         function detailRoom(id){
@@ -239,6 +251,7 @@
                     console.log(data);
                     $("#id").val(data.id);
                     $("#nameroom").val(data.name);
+                    $("#namezone").val(data.id_zone);
                     $("#floor").val(data.floor);
                     $("#clean_up").val(data.clean_up);
                     $("#activity").val(data.activity);

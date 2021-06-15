@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Validator;
 
 class userController extends Controller
 {
@@ -15,7 +16,7 @@ class userController extends Controller
     }
     public function addUser(Request $request)
     {
-        $this->validate($request,[
+        $validator = Validator::make($request->all(),[
             'name'=>'required',
             'msv'=>'required',
             'class'=>'required',
@@ -35,16 +36,24 @@ class userController extends Controller
             'passwordagain.required'=>'Bạn chưa nhập lại mật khẩu',
             'passwordagain.same'=>'Mật khẩu nhập lại không khớp'
         ]);
-        $user=new User;
-        $user->name=$request->name;
-        $user->msv=$request->msv;
-        $user->class=$request->class;
-        $user->faculty=$request->faculty;
-        $user->email=$request->email;
-        $user->password=Hash::make($request->password);
-        $user->type=$request->type;
-        $user->save();
-        return redirect('admin/user');
+        if(!$validator->passes()){
+            return response()->json(['status'=>0, 'error'=>$validator->errors()->toArray()]);
+        }else{
+            $user=new User;
+            $user->name=$request->name;
+            $user->msv=$request->msv;
+            $user->class=$request->class;
+            $user->faculty=$request->faculty;
+            $user->email=$request->email;
+            $user->password=Hash::make($request->password);
+            $user->type=$request->type;
+            $user->save();
+            // return redirect('admin/user');
+           if( $user){
+               return response()->json(['status'=>1, 'msg'=>'Bạn đăng kí thành công']);
+                }
+        }
+    
     }
     public function detailUser($id)
     {
@@ -65,17 +74,17 @@ class userController extends Controller
         {
             $this->validate($request,
                 [
-                    'password'=>'required|min:6',
+                    'password'=>'required|min:5',
                     'passwordagain'=>'required|same:password'
                 ],
                 [
-                    'password.min'=>'Mật khẩu phải có ít nhất 6 kí tự',
+                    'password.min'=>'Mật khẩu phải có ít nhất 5 kí tự',
                     'passwordagain.required'=>'Bạn chưa nhập lại mật khẩu',
                     'passwordagain.same'=>'Mật khẩu nhập lại không khớp'
                 ]);
             User::where('id',$id)->update([ 'password'=>Hash::make($request->password)]);
         }
-        return redirect('admin/user');
+        return redirect('admin/user'.$id)->with('thongbao','Bạn đã sửa thành công');
     }
     public function deleteUser($id){
         User::find($id)->delete();

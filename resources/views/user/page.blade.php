@@ -45,7 +45,7 @@
                                             Sáng
                                         @endif
                                     </td>
-                                    <td>                                    
+                                    <td>
                                         @if($hom->admin_check == 1)
                                             Đã được duyệt
                                         @else
@@ -85,12 +85,12 @@
                     <div class="form-group">
                         <div class="form-title">MS:</div>
                         <input type="text" name="ms" class="form-control">
-                        <span class="error-slide"></span>
+                        <span class="text-danger error-text ms_error"></span> 
                     </div>
                     <div class="form-group">
                         <div class="form-title">Phone:</div>
                         <input type="text" name="phone" class="form-control">
-                        <span class="error-slide"></span>
+                        <span class="text-danger error-text phone_error"></span>
                     </div>
                     <div class="form-group">
                         <div class="form-title">Session:</div>
@@ -98,7 +98,7 @@
                             <option value="0">Sáng</option>
                             <option value="1">Chiều</option>
                         </select>
-                        <span class="error-slide"></span>
+                       
                     </div>
                     <div class="form-group">
                         <div class="form-title">Name Zone:</div>
@@ -108,7 +108,7 @@
                             <option value="{{$zo->id}}">{{$zo->name}}</option>
                             @endforeach
                         </select>
-                        <span class="error-slide"></span>
+                        <span class="text-danger error-text zone_error"></span> 
                     </div>
                     <div class="form-group">
                         <div class="form-title">Name Room:</div>
@@ -118,14 +118,14 @@
                             <option value="{{$ro->id}}">{{$ro->name}}</option>
                             @endforeach
                         </select>
-                        <span class="error-slide"></span>
+                        <span class="text-danger error-text room_error"></span> 
                     </div>
                     <div class="form-group">
                         <div class="form-title">Name Device:</div>
                         @foreach($home['device'] as $de)
                         <input type="checkbox"  value="{{$de->id}}" name="device[]"> :{{$de->name}}<br>
                         @endforeach
-                        <span class="error-slide"></span>
+                        <span class="text-danger error-text device_error"></span> 
                     </div>
                     <div class="modal-footer">
                         <button type="button" onclick="addRoom()" class="btn btn-primary">Thêm</button>
@@ -222,10 +222,22 @@
                     data: new FormData($("#addroom form")[0]),
                     contentType: false,
                     processData: false,
+                    beforeSend:function (){
+                        $(document).find('span.error-text').text('');        
+                    },
                     success:function(data){
-                        window.location.reload(1000);
-                    }
-                });
+                        if(data.status == 0){
+                            $.each(data.error,function(prefix, val){
+                                   $('span.'+prefix+'_error').text(val[0]); 
+                            });
+                        }else{
+                            //    $('#addroom')[0].reset();
+                            //    alert(data.msg);
+                            window.location.reload(1000);
+                        }
+                        
+                    },
+                });    
         }
         function detailRoom(id){
             event.preventDefault();
@@ -288,20 +300,10 @@
     $(document).ready(function (){
            $("#Zone").change(function (){
             var id_zone = $(this).val();
-            $.get("ajax/room/"+id_zone,function (data){
+            $.get("ajax/addroom/"+id_zone,function (data){
                 $("#Room").html(data);
             });
            });
-        });
-</script>
-<script>
-    $(document).ready(function (){
-            $("#Room").change(function (){
-                var room = $(this).val();
-                $.get("ajax/floor/"+room,function (data){
-                    $("#Floor").html(data);
-                });
-            });
         });
 </script>
 <script>

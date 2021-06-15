@@ -71,37 +71,37 @@
                         <div class="form-group">
                             <div class="form-title">Name:</div>
                             <input type="text" name="name" class="form-control">
-                            <span class="error-slide"></span>
+                            <span class="text-danger text-error name_error"></span>
                         </div>
                         <div class="form-group">
                             <div class="form-title">Student code:</div>
                             <input type="text" name="msv" class="form-control">
-                            <span class="error-slide"></span>
+                            <span class="text-danger text-error msv_error"></span>
                         </div>
                         <div class="form-group">
                             <div class="form-title">Class:</div>
                             <input type="text" name="class" class="form-control">
-                            <span class="error-slide"></span>
+                            <span class="text-danger text-error class_error"></span>
                         </div>
                         <div class="form-group">
                             <div class="form-title">Faculty:</div>
                             <input type="text" name="faculty" class="form-control">
-                            <span class="error-slide"></span>
+                            <span class="text-danger text-error faculty_error"></span>
                         </div>
                         <div class="form-group">
                             <div class="form-title">Email:</div>
                             <input type="text" name="email" class="form-control">
-                            <span class="error-slide"></span>
+                            <span class="text-danger text-error email_error"></span>
                         </div>
                         <div class="form-group">
                             <div class="form-title">Password:</div>
                             <input type="password" name="password" class="form-control">
-                            <span class="error-slide"></span>
+                            <span class="text-danger text-error password_error"></span>
                         </div>
                         <div class="form-group">
                             <div class="form-title">PasswordAgain:</div>
                             <input type="password" name="passwordagain" class="form-control">
-                            <span class="error-slide"></span>
+                            <span class="text-danger text-error passwordagain_error"></span>
                         </div>
                         <div class="form-group">
                             <label>Type:</label>
@@ -130,6 +130,19 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                @if(count($errors)>0)
+                    <div class="alert alert-danger">
+                        @foreach($errors->all() as $err)
+                            {{$err}}<br>
+                        @endforeach
+                    </div>
+                @endif
+
+                @if(session('thongbao'))
+                    <div class="alert alert-success">
+                        {{session('thongbao')}}
+                    </div>
+                @endif
                 <form method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                         @csrf
@@ -163,12 +176,12 @@
                             <input type="checkbox" id="changePassword" name="changePassword">
                             <label>Change Password</label>
                             <input type="password" name="password" class="form-control password" disabled="" >
-                            <span class="error-slide"></span>
+                            <span class="text-danger text-error password_error"></span>
                         </div>
                         <div class="form-group">
                             <div class="form-title">PasswordAgain:</div>
                             <input type="password" name="passwordagain" class="form-control password" disabled="" >
-                            <span class="error-slide"></span>
+                            <span class="text-danger text-error password_error"></span>
                         </div>
                         <div class="form-group">
                             <label>Type:</label>
@@ -208,9 +221,21 @@
                 data: new FormData($("#adduser form")[0]),
                 contentType: false,
                 processData: false,
-                success:function(data){
-                    window.location.reload(1000);
-                }
+                beforeSend:function (){
+                        $(document).find('span.error-text').text('');        
+                },
+                    success:function(data){
+                        if(data.status == 0){
+                            $.each(data.error,function(prefix, val){
+                                   $('span.'+prefix+'_error').text(val[0]); 
+                            });
+                        }else{
+                            //    $('#adduser')[0].reset();
+                            //    alert(data.msg);
+                            window.location.reload(1000);
+                        }
+                        
+                    }
             });
         }
         function detailUser(id){
@@ -226,6 +251,9 @@
                 method: 'GET',
                 contentType: false,
                 processData: false,
+                beforeSend:function (){
+                        $(document).find('span.error-text').text('');        
+                },
                 success:function(data){
                     console.log(data);
                     $("#id").val(data.id);
@@ -235,6 +263,15 @@
                     $("#faculty").val(data.faculty);
                     $("#email").val(data.email);
                     $("#type").val(data.type);
+                    // if(data.status == 0){
+                    //         $.each(data.error,function(prefix, val){
+                    //                $('span.'+prefix+'_error').text(val[0]); 
+                    //         });
+                    //     }else{
+                    //         //    $('#edituser')[0].reset();
+                    //         //    alert(data.msg);
+                    //         // window.location.reload(1000);
+                    //     }
                 }
             });
         }

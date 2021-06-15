@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Device;
 use App\Models\Typedevice;
 use Illuminate\Support\Facades\DB;
+use Validator;
 
 class deviceController extends Controller
 {
@@ -19,11 +20,25 @@ class deviceController extends Controller
 
     public function adddevice(Request $request)
     {
-        $device=new device;
-        $device->name=$request->name;
-        $device->id_type_device=$request->typedevice;
-        $device->save();
-        return redirect('admin/device');
+        $validator = Validator::make($request->all(),[
+            'name'=>'required'
+        ],[
+            'name.required'=>'Bạn chưa nhập tên thiết bị '
+           
+        ]);
+        if(!$validator->passes()){
+            return response()->json(['status'=>0, 'error'=>$validator->errors()->toArray()]);
+        }else{
+            $device=new device;
+            $device->name=$request->name;
+            $device->id_type_device=$request->typedevice;
+            $device->save();
+        // return redirect('admin/device');
+           if( $device){
+               return response()->json(['status'=>1, 'msg'=>'Bạn đăng kí thành công']);
+                }
+        }
+       
     }
     public function detailDevice($id)
     {

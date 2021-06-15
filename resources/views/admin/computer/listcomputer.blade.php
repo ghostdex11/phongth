@@ -84,12 +84,13 @@
                     </button>
                 </div>
                 <form method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="_token" value="{{csrf_token()}}" />
                     <div class="modal-body">
                         @csrf
                         <div class="form-group">
                             <div class="form-title">Name computer:</div>
                             <input type="text" name="name" class="form-control">
-                            <span class="error-slide"></span>
+                            <span class="text-danger error-text name_error"></span>
                         </div>
                         <div class="form-group">
                             <div class="form-title">Room:</div>
@@ -195,9 +196,21 @@
                 data: new FormData($("#addcomputer form")[0]),
                 contentType: false,
                 processData: false,
-                success:function(data){
-                    window.location.reload(1000);
-                }
+                beforeSend:function (){
+                        $(document).find('span.error-text').text('');        
+                },
+                    success:function(data){
+                        if(data.status == 0){
+                            $.each(data.error,function(prefix, val){
+                                   $('span.'+prefix+'_error').text(val[0]); 
+                            });
+                        }else{
+                            //    $('#addcomputer')[0].reset();
+                            //    alert(data.msg);
+                            window.location.reload(1000);
+                        }
+                        
+                    },
             });
         }
         function detailComputer(id){

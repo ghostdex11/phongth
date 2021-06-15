@@ -6,6 +6,7 @@ use App\Models\Room;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Validator;
 
 class roomController extends Controller
 {
@@ -19,13 +20,29 @@ class roomController extends Controller
     }
     public function addroom(Request $request)
     {
-        $room=new room;
-        $room->name=$request->name;
-        $room->id_zone=$request->zone;
-        $room->floor=$request->floor;
-        $room->description=$request->description;
-        $room->save();
-        return redirect('admin/room');
+        $validator = Validator::make($request->all(),[
+            'name'=>'required',
+            'floor'=>'required'
+        ],[
+            'name.required'=>'Bạn chưa nhập tên phòng ',
+            'floor.required'=>'Bạn chưa nhập tầng'
+           
+        ]);
+        if(!$validator->passes()){
+            return response()->json(['status'=>0, 'error'=>$validator->errors()->toArray()]);
+        }else{
+            $room=new room;
+            $room->name=$request->name;
+            $room->id_zone=$request->zone;
+            $room->floor=$request->floor;
+            $room->description=$request->description;
+            $room->save();
+            // return redirect('admin/room');
+           if( $room){
+               return response()->json(['status'=>1, 'msg'=>'Bạn đăng kí thành công']);
+                }
+        }
+        
     }
     public function detailRoom($id)
     {
