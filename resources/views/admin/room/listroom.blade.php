@@ -28,7 +28,7 @@
                                 <tbody>
                                 @foreach($room['room'] as $ro)
                                     <tr>
-                                        <td>{{$ro->name}}</td>
+                                        <td>{{$ro->room_name}}</td>
                                         <td>{{$ro->namezone}}</td>
                                         <td>{{$ro->floor}}</td>
                                         <td>
@@ -56,7 +56,7 @@
                                             @if($ro->status == 1)
                                                 Sử dụng được
                                             @else
-                                                Không sử dụng được
+                                               Đang sửa
                                             @endif
                                         </td>
                                         <td>
@@ -179,7 +179,7 @@
                             <div class="form-title">Status:</div>
                             <select class="form-control" name="status" id="status">
                                 <option value="1">Sử dụng được</option>
-                                <option value="0">Không sử dụng được</option>
+                                <option value="0">Đang sửa</option>
                             </select>
                             <span class="error-slide"></span>
                         </div>
@@ -250,7 +250,7 @@
                 success:function(data){
                     console.log(data);
                     $("#id").val(data.id);
-                    $("#nameroom").val(data.name);
+                    $("#nameroom").val(data.room_name);
                     $("#namezone").val(data.id_zone);
                     $("#floor").val(data.floor);
                     $("#clean_up").val(data.clean_up);

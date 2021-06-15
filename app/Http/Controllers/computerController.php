@@ -11,7 +11,7 @@ class computerController extends Controller
 {
     public function index(){
         $computer=[];
-        $computer['computer'] = Computer::select('computer.*', 'room.name as roomname')
+        $computer['computer'] = Computer::select('computer.*', 'room.room_name as roomname')
             ->join('room','room.id','=','computer.id_room')->get();
         $computer['room']=db::table('room')->get();
         return view('admin\computer\listcomputer', ['computer' =>$computer]);
@@ -29,7 +29,7 @@ class computerController extends Controller
             return response()->json(['status'=>0, 'error'=>$validator->errors()->toArray()]);
         }else{
             $computer=new Computer;
-            $computer->name=$request->name;
+            $computer->computer_name=$request->name;
             $computer->id_room=$request->id_room;
             $computer->save();
         // return redirect('admin/computer');
@@ -47,7 +47,7 @@ class computerController extends Controller
     {
         $id=$request->id;
         Computer::where('id',$id)->update([
-            'name'=>$request->name,
+            'computer_name'=>$request->name,
             'id_room'=>$request->id_room,
             'mouse'=>$request->mouse,
             'keyboard'=>$request->keyboard,
