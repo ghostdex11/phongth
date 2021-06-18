@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <h5 class="card-title" style="float: left;margin-right: 15px;padding: 7px 0px;">List computer</h5>
                     <button type="button" class="btn btn-primary" onclick="openModalAdd()">
-                        Add computer
+                        Thêm máy tính
                     </button>
                     <div class="table-responsive">
                         <form action="/" method="get">
@@ -15,13 +15,13 @@
                             <table id="zero_config" class="table table-striped table-bordered">
                                 <thead>
                                 <tr>
-                                    <th>Name computer</th>
-                                    <th>Room</th>
-                                    <th>Mouse</th>
-                                    <th>keyboard</th>
-                                    <th>Description</th>
-                                    <th>Activity</th>
-                                    <th>function</th>
+                                    <th>Tên máy</th>
+                                    <th>Phòng</th>
+                                    <th>Chuột</th>
+                                    <th>Bàn phím</th>
+                                    <th>Mô tả</th>
+                                    <th>Trạng thái</th>
+                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -78,7 +78,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="tt">Add computer</h5>
+                    <h5 class="modal-title" id="tt">Thêm máy</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -88,12 +88,12 @@
                     <div class="modal-body">
                         @csrf
                         <div class="form-group">
-                            <div class="form-title">Name computer:</div>
+                            <div class="form-title">Tên máy:</div>
                             <input type="text" name="name" class="form-control">
                             <span class="text-danger error-text name_error"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Room:</div>
+                            <div class="form-title">Phòng:</div>
                             <select class="form-control" name="id_room">
                                 @foreach($computer['room'] as $td)
                                     <option  value="{{$td->id}}">{{$td->room_name}}</option>
@@ -114,7 +114,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit computer</h5>
+                    <h5 class="modal-title">Chỉnh sửa máy tính</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -124,12 +124,12 @@
                         @csrf
                         <input type="text" id="id" name="id" hidden>
                         <div class="form-group">
-                            <div class="form-title">Name computer:</div>
+                            <div class="form-title">Tên máy:</div>
                             <input type="text" name="name" id="name" class="form-control">
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Name Room:</div>
+                            <div class="form-title">Phòng:</div>
                             <select class="form-control" name="id_room">
                                 @foreach($computer['room'] as $td)
                                     <option  value="{{$td->id}}">{{$td->room_name}}</option>
@@ -138,7 +138,7 @@
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Mouse:</div>
+                            <div class="form-title">Chuột:</div>
                             <select class="form-control" name="mouse" id="mouse">
                                 <option value="1">Sử dụng được</option>
                                 <option value="0">Hỏng</option>
@@ -146,7 +146,7 @@
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Keyboard:</div>
+                            <div class="form-title">Bàn phím:</div>
                             <select class="form-control" name="keyboard" id="keyboard">
                                 <option value="1">Sử dụng được</option>
                                 <option value="0">Hỏng</option>
@@ -154,12 +154,12 @@
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Description:</div>
+                            <div class="form-title">Mô tả:</div>
                             <textarea name="description" id="description" cols="40" rows="5"></textarea>
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Activity:</div>
+                            <div class="form-title">Trạng thái:</div>
                             <select class="form-control" name="activity" id="activity">
                                 <option value="1">Sử dụng được</option>
                                 <option value="0">Hỏng</option>

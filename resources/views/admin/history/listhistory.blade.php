@@ -5,32 +5,30 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title" style="float: left;margin-right: 15px;padding: 7px 0px;">List History</h5>
+                <h5 class="card-title" style="float: left;margin-right: 15px;padding: 7px 0px;">Danh sách quản lý đặt phòng</h5>
                 <button type="button" class="btn btn-primary" onclick="openModalAdd()">
-                    Room Registration
+                    Đặt phòng
                 </button>
                 <div class="table-responsive" id="approval">
                     <form action="/" method="get">
                         @csrf
                         <table id="zero_config" class="table table-striped table-bordered">
                             <thead>
-                                <tr>
-                                    <th>Name user</th>
-                                    <th>Name Zone</th>
-                                    <th>Name Room</th>
-                                    <th>Name Device</th>
-                                    <th>Ms</th>
-                                    <th>Phone</th>
-                                    <th>Session</th>
-                                    <th>Registration Date</th>
-                                    <th>admin_check</th>
-                                    <th>function</th>
+                                <tr class="bg-primary">
+                                    <th class="text-center text-white">Tên khu</th>
+                                    <th class="text-center text-white">Tên phòng</th>
+                                    <th class="text-center text-white">Tên thiết bị</th>
+                                    <th class="text-center text-white">Ms</th>
+                                    <th class="text-center text-white">SĐT</th>
+                                    <th class="text-center text-white">Buổi</th>
+                                    <th class="text-center text-white">ngày tạo</th>
+                                    <th class="text-center text-white">Đã duyệt</th>
+                                    <th class="text-center text-white"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($history['history'] as $his)
                                 <tr>
-                                    <td>{{\App\Models\User::getNameUser($his->id_user)}}</td>
                                     <td>{{\App\Models\Zone::getNameZone($his->id_zone)}}</td>
                                     <td>{{\App\Models\Room::getNameRoom($his->id_room)}}</td>
                                     <td>
@@ -85,7 +83,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="tt">Room Registration</h5>
+                <h5 class="modal-title" id="tt">Đặt phòng</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -99,12 +97,12 @@
                         <span class="text-danger text-error ms_error"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Phone:</div>
+                        <div class="form-title">Số điện thoại:</div>
                         <input type="text" name="phone" class="form-control">
                         <span class="text-danger text-error phone_error"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Session:</div>
+                        <div class="form-title">Buổi:</div>
                         <select class="form-control" name="sesion" >
                             <option value="0">Sáng</option>
                             <option value="1">Chiều</option>
@@ -112,7 +110,7 @@
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Name Zone:</div>
+                        <div class="form-title">Tên khu:</div>
                         <select class="form-control" name="zone" id="Zone">
                             <option value="">--Chọn khu vực--</option>
                             @foreach($history['zone'] as $zo)
@@ -122,7 +120,7 @@
                         <span class="text-danger text-error zone_error"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Name Room:</div>
+                        <div class="form-title">Tên phòng:</div>
                         <select class="form-control" name="room" id="Room">
                             <option value="">--Chọn phòng--</option>
                             @foreach($history['room'] as $ro)
@@ -132,7 +130,7 @@
                         <span class="text-danger text-error room_error"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Name Device:</div>
+                        <div class="form-title">Tên thiết bị:</div>
                         @foreach($history['device'] as $de)
                             <input type="checkbox"  value="{{$de->id}}" name="device[]"> :{{$de->name}}<br>
                         @endforeach
@@ -159,7 +157,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Edit history</h5>
+                <h5 class="modal-title">chỉnh sửa đặt phòng</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -169,7 +167,7 @@
                     @csrf
                     <input type="text" id="id" name="id" hidden>
                     <div class="form-group">
-                        <div class="form-title">User name:</div>
+                        <div class="form-title">Tên người đặt:</div>
                         <input type="text" name="nameuser"   id="nameuser" class="form-control" disabled>
                         <span class="error-slide"></span>
                     </div>
@@ -179,12 +177,12 @@
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Phone:</div>
+                        <div class="form-title">Số điện thoại:</div>
                         <input type="text" name="phone" id="phone" class="form-control">
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Session:</div>
+                        <div class="form-title">Buổi:</div>
                         <select class="form-control" id="sesion" name="sesion" >
                             <option value="0">Sáng</option>
                             <option value="1">Chiều</option>
@@ -192,7 +190,7 @@
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Name Zone:</div>
+                        <div class="form-title">Tên khu:</div>
                         <select class="form-control" name="zone" id="zone">
                             <option value="">--Chọn khu vực--</option>
                             @foreach($history['zone'] as $zo)
@@ -202,7 +200,7 @@
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Name Room:</div>
+                        <div class="form-title">Tên phòng:</div>
                         <select class="form-control" name="room" id="room">
                             <option value="">--Chọn phòng--</option>
                             @foreach($history['room'] as $ro)
@@ -212,14 +210,14 @@
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Name Device:</div>
+                        <div class="form-title">Tên thiết bị:</div>
                         @foreach($history   ['device'] as $de)
                             <input type="checkbox" id="device" value="{{$de->id}}" name="device[]"> :{{$de->name}}
                         @endforeach
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Approval:</div>
+                        <div class="form-title">Duyệt:</div>
                         <select class="form-control" name="admincheck" id="admin_check">
                             <option value="1">Đã duyệt</option>
                             <option value="0" selected>Chưa duyệt</option>
@@ -239,7 +237,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Check out Room</h5>
+                <h5 class="modal-title">Trả phòng</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -255,19 +253,19 @@
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Phone:</div>
+                        <div class="form-title">Số điện thoại:</div>
                         <input type="text" name="phone" id="phone1" class="form-control" disabled>
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Name Device:</div>
+                        <div class="form-title">Tên thiết bị:</div>
                         {{-- @foreach(explode(",", $his->id_device) as $deviceId)
                             <input type="text" id="device" value="{{$de->name}}" class="form-control"  name="device[]" disabled>
                         @endforeach --}}
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Clean:</div>
+                        <div class="form-title">Dọn dẹp:</div>
                         <select class="form-control" id="clean_up1" name="clean_up">
                             <option value="0">Chưa dọn</option>
                             <option value="1">Đã dọn dẹp</option>
@@ -276,45 +274,6 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" onclick="submitCheckOut()" class="btn btn-primary">Trả phòng</button>
-                        <button type="button" data-dismiss="modal" class="btn btn-danger">Hủy</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="brokenform" tabindex="-1" role="dialog" aria-labelledby="brokenform" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Báo lỗi</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form method="post" enctype="multipart/form-data">
-                <div class="modal-body">
-                    @csrf
-                    <input type="text" id="id2" name="id">
-                    <input type="text" id="id_room2" name="id_room" >
-                    <div class="form-group">
-                        <div class="form-title">room:</div>
-                        <input type="text" name="id_room" id="id_roombk" class="form-control" disabled>
-                        <span class="error-slide"></span>
-                    </div>
-                    <select class="form-control" id="clean_up1" name="clean_up">
-                        <option value="0">Chưa dọn</option>
-                        <option value="1">Đã dọn dẹp</option>
-                    </select>
-                    <div class="form-group">
-                        <div class="form-title">computer:</div>
-                         <select class="form-control" id="id_computer" name="id_computer">
-                            <option value="0">--Chọn máy--</option>
-                        </select>
-                        <span class="error-slide"></span>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" onclick="submitBroken()" class="btn btn-primary">Báo lỗi</button>
                         <button type="button" data-dismiss="modal" class="btn btn-danger">Hủy</button>
                     </div>
                 </div>
@@ -334,9 +293,6 @@
     }
     function openModalApp(){
         $("#apphistory").modal('show');
-    }
-    function openModalBroken(){
-        $("#brokenform").modal('show');
     }
     function addHistory(){
         event.preventDefault();
@@ -468,25 +424,6 @@
                     }
                 });
             }
-        }
-        function Broken(id){
-            openModalBroken();
-            event.preventDefault();
-                $.ajax({
-                    url: 'history/detailbroken/'+id,
-                    method: 'GET',
-                contentType: false,
-                processData: false,
-                success:function(data){
-                    console.log(data);
-                    $("#id2").val(id);
-                    $("#id_room2").val(data.id_room);
-                    $("#id_roombk").val(data.room_name);
-                    $("select[name='id_computer']").append(
-                            "<option value=" + data.id + ">" + data.computer_name + "</option>"
-                    );
-                }           
-            });
         }
 </script>
 @endsection

@@ -59,6 +59,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminCheck'], function () {
     Route::group(['prefix'=>'ajax'],function (){
         Route::get('addhistory/{id}','App\Http\Controllers\AjaxController@getaddhistory');
         Route::get('edithistory/{id}','App\Http\Controllers\AjaxController@getedithistory');
+        Route::get('addbroken/{id}','App\Http\Controllers\AjaxController@getaddbroken');
+        Route::get('addcomputer/{id}','App\Http\Controllers\AjaxController@getaddcomputer');
     });
     Route::group(['prefix' => 'history'], function () {
         Route::GET('/','App\Http\Controllers\historyController@index');
@@ -71,6 +73,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminCheck'], function () {
         Route::POST('checkout','App\Http\Controllers\historyController@submitCheckOut');
         Route::GET('detailbroken/{id}','App\Http\Controllers\historyController@detailBroken');
         Route::POST('broken','App\Http\Controllers\historyController@submitBroken');
+    });
+    Route::group(['prefix' => 'broken'], function () {
+        Route::GET('/','App\Http\Controllers\brokenController@index');
+        Route::POST('addbroken','App\Http\Controllers\brokenController@addBroken');
+        Route::GET('detailbroken/{id}','App\Http\Controllers\brokenController@detailBroken');
+        Route::POST('editbroken','App\Http\Controllers\brokenController@editBroken');
     });
 });
 
