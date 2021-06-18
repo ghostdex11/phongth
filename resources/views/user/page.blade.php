@@ -190,7 +190,10 @@
                     <div class="form-group">
                         <div class="form-title">Name Device:</div>
                         @foreach($home['device'] as $de)
-                            <input type="checkbox" id="device" value="{{$de->id}}"  name="device[]"> :{{$de->name}}
+                            <input type="checkbox" id="device" value="{{$de->name}}"
+                             @if(is_array(old('device')) && in_array('{{$de->name}}', old('device'))){{"checked='checked'"}}
+                             @endif
+                               name="device[]"> :{{$de->name}}<br>
                         @endforeach
                         <span class="error-slide"></span>
                     </div>
