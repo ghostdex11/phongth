@@ -90,7 +90,7 @@ class approvalController extends Controller
             'date_time'=>$request->date_time,
             'id_device'=>implode(",",$request->device)
         ]);
-        return redirect('/admin/history');
+        return redirect('/admin/approval');
     }
     public function deleteHistory($id){
         $idroom = DB::table('history')->where('id', $id)->first();
@@ -108,7 +108,7 @@ class approvalController extends Controller
         Room::where('id', $idroom -> id_room)->update([
             'room.status'=> 1,
         ]);
-        return redirect('/admin/history');
+        return redirect('/admin/approval');
     }
     public function detailCheckOut($id)
     {
@@ -127,6 +127,6 @@ class approvalController extends Controller
         Room::where('id',$idroom)->update([
             'status'=> 0
         ]);
-        return redirect('/admin/history');
+        return redirect('/admin/approval');
     }
 }

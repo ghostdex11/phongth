@@ -6,15 +6,15 @@ use Illuminate\Http\Request;
 use PDF;
 class reportController extends Controller
 {
-    public function generatePDF()
+    public function reportPDF()
     {
         $data = [
             'title' => 'Welcome to ItSolutionStuff.com',
             'date' => date('m/d/Y')
         ];
           
-        $pdf = PDF::loadView('report.report', $data);
+        $pdf = PDF::loadView('admin.report.report', $data);
     
-        return $pdf->download('brokencomputer.pdf');
+        return $pdf->download('report.pdf');
     }
 }

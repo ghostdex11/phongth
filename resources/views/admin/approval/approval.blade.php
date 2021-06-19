@@ -1,5 +1,5 @@
 @extends('admin/layouts/index')
-@section('Admin', 'Computer')
+@section('Admin', 'Approval')
 @section('content')
 <div class="container-fluid">
     <div class="col-12">
@@ -306,7 +306,7 @@
     function addHistory(){
         event.preventDefault();
         $.ajax({
-            url: 'history/addhistory',
+            url: 'approval/addapproval',
             method: 'POST',
             data: new FormData($("#addhistory form")[0]),
             contentType: false,
@@ -337,7 +337,7 @@
                 }
             });
             $.ajax({
-                url: 'history/detailhistory/'+id,
+                url: 'approval/detailapproval/'+id,
                 method: 'GET',
                 contentType: false,
                 processData: false,
@@ -359,7 +359,7 @@
             event.preventDefault();
             if(confirm("Bạn có chắc muốn xóa sản phẩm này?")){
                 $.ajax({
-                    url: 'history/deletehistory/'+id,
+                    url: 'approval/deleteapproval/'+id,
                     method: 'GET',
                     contentType: false,
                     processData: false,
@@ -373,7 +373,7 @@
         function submitEditHistory(){
             event.preventDefault();
             $.ajax({
-                url: 'history/edithistory',
+                url: 'approval/editapproval',
                 method: 'POST',
                 data: new FormData($("#edithistory form")[0]),
                 contentType: false,
@@ -388,7 +388,7 @@
             event.preventDefault();
             if(confirm("Bạn có chắc muốn duyệt phòng này?")){
                 $.ajax({
-                    url: 'history/approval/'+id,
+                    url: 'approval/approval/'+id,
                     method: 'POST',
                     data: new FormData($("#approval form")[0]),
                     contentType: false,
@@ -404,7 +404,7 @@
             openModalApp();
             event.preventDefault();
                 $.ajax({
-                    url: 'history/detailcheckout/'+id,
+                    url: 'approval/detailcheckout/'+id,
                     method: 'GET',
                 contentType: false,
                 processData: false,
@@ -423,7 +423,7 @@
             event.preventDefault();
             if(confirm("Bạn có chắc muốn trả phòng này?")){
                 $.ajax({
-                    url: 'history/checkout',
+                    url: 'approval/checkout',
                     method: 'POST',
                     data: new FormData($("#apphistory form")[0]),
                     contentType: false,

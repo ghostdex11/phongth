@@ -78,6 +78,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminCheck'], function () {
         Route::GET('detailbroken/{id}','App\Http\Controllers\brokenController@detailBroken');
         Route::POST('editbroken','App\Http\Controllers\brokenController@editBroken');
     });
+    Route::get('report', 'App\Http\Controllers\reportController@reportPDF');
 });
 
 Route::group(['prefix' => '/', 'middleware' => 'userCheck'], function () {

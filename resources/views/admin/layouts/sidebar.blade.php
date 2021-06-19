@@ -14,6 +14,7 @@
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('/admin/computer')}}" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">Quản lý máy tính</span></a></li>
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('/admin/user')}}" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">Quản lý người dùng</span></a></li>
                 <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('/admin/history')}}" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">Lịch sử</span></a></li>
+                <li class="sidebar-item"> <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{url('/admin/report')}}" aria-expanded="false"><i class="mdi mdi-border-inside"></i><span class="hide-menu">test</span></a></li>
             </ul>
         </nav>
 
