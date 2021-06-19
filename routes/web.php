@@ -62,17 +62,15 @@ Route::group(['prefix' => 'admin', 'middleware' => 'adminCheck'], function () {
         Route::get('addbroken/{id}','App\Http\Controllers\AjaxController@getaddbroken');
         Route::get('addcomputer/{id}','App\Http\Controllers\AjaxController@getaddcomputer');
     });
-    Route::group(['prefix' => 'history'], function () {
-        Route::GET('/','App\Http\Controllers\historyController@index');
-        Route::post('addhistory','App\Http\Controllers\historyController@addHistory');
-        Route::GET('detailhistory/{id}','App\Http\Controllers\historyController@detailHistory');
-        Route::GET('deletehistory/{id}','App\Http\Controllers\historyController@deleteHistory');
-        Route::POST('edithistory','App\Http\Controllers\historyController@editHistory');
-        Route::POST('approval/{id}','App\Http\Controllers\historyController@Approval');
-        Route::GET('detailcheckout/{id}','App\Http\Controllers\historyController@detailCheckOut');
-        Route::POST('checkout','App\Http\Controllers\historyController@submitCheckOut');
-        Route::GET('detailbroken/{id}','App\Http\Controllers\historyController@detailBroken');
-        Route::POST('broken','App\Http\Controllers\historyController@submitBroken');
+    Route::group(['prefix' => 'approval'], function () {
+        Route::GET('/','App\Http\Controllers\approvalController@index');
+        Route::post('addapproval','App\Http\Controllers\approvalController@addApproval');
+        Route::GET('detailapproval/{id}','App\Http\Controllers\approvalController@detailApproval');
+        Route::GET('deleteapproval/{id}','App\Http\Controllers\approvalController@deleteApproval');
+        Route::POST('editapproval','App\Http\Controllers\approvalController@editApproval');
+        Route::POST('approval/{id}','App\Http\Controllers\approvalController@Approval');
+        Route::GET('detailcheckout/{id}','App\Http\Controllers\approvalController@detailCheckOut');
+        Route::POST('checkout','App\Http\Controllers\approvalController@submitCheckOut');
     });
     Route::group(['prefix' => 'broken'], function () {
         Route::GET('/','App\Http\Controllers\brokenController@index');

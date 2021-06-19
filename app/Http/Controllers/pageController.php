@@ -47,13 +47,15 @@ class pageController extends Controller
             'phone'=>'required',
             'zone'=>'required',
             'room'=>'required',
-            'device'=>'required'
+            'device'=>'required',
+            'date_time'=>'required'
         ],[
             'ms.required'=>'Bạn chưa nhập mã số',
             'phone.required'=>'Bạn chưa nhập số điện thoại',
             'zone.required'=>'Bạn chưa chọn khu',
             'room.required'=>'Bạn chưa chọn phòng',
-            'device.required'=>'Bạn chưa chọn thiết bị'
+            'device.required'=>'Bạn chưa chọn thiết bị',
+            'date_time.required'=>'Bạn chưa chọn ngày'
         ]);
         if(!$validator->passes()){
             return response()->json(['status'=>0, 'error'=>$validator->errors()->toArray()]);
@@ -66,6 +68,7 @@ class pageController extends Controller
             $history->ms=$request->ms;
             $history->phone=$request->phone;
             $history->session=$request->sesion;
+            $history->date_time=$request->date_time;
             $history->save();
             // return redirect('/regisroom');
            if( $history){
@@ -86,7 +89,8 @@ class pageController extends Controller
             'id_device'=>implode(",",$request->device),
             'ms'=>$request->ms,
             'phone'=>$request->phone,
-            'session'=>$request->sesion
+            'session'=>$request->sesion,
+            'date_time'=>$request->date_time,
         ]);
         return redirect('/regisroom');
     }

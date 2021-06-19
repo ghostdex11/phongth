@@ -5,9 +5,9 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title" style="float: left;margin-right: 15px;padding: 7px 0px;">List device</h5>
+                    <h5 class="card-title" style="float: left;margin-right: 15px;padding: 7px 0px;">Danh sách thiết bị</h5>
                     <button type="button" class="btn btn-primary" onclick="openModalAdd()">
-                        Add device
+                        Thêm thiết bị
                     </button>
                     <div class="table-responsive">
                         <form action="/" method="get">
@@ -15,11 +15,11 @@
                             <table id="zero_config" class="table table-striped table-bordered">
                                 <thead>
                                 <tr>
-                                    <th>Name device</th>
-                                    <th>Type device</th>
-                                    <th>Activity</th>
-                                    <th>Status</th>
-                                    <th>function</th>
+                                    <th>Tên</th>
+                                    <th>Loại</th>
+                                    <th>Trạng thái</th>
+                                    <th>Hoạt động</th>
+                                    <th>Chức năng</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -62,7 +62,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="tt">Add device</h5>
+                    <h5 class="modal-title" id="tt">Thêm thiết bị</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -71,14 +71,14 @@
                     <div class="modal-body">
                         @csrf
                         <div class="form-group">
-                            <div class="form-title">Name Device:</div>
+                            <div class="form-title">Tên:</div>
                             <input type="text" name="name" class="form-control">
                             <span class="text-danger text-error name_error"></span>
                         </div>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <div class="form-title">Type Device:</div>
+                            <div class="form-title">Loại thiết bị:</div>
                             <select class="form-control" name="typedevice">
                                 @foreach($typedevice['typedevice'] as $td)
                                     <option  value="{{$td->id}}">{{$td->name}}</option>
@@ -99,7 +99,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editdevice">Edit device</h5>
+                    <h5 class="modal-title" id="editdevice">Chỉnh sửa thiết bị</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -109,12 +109,12 @@
                         @csrf
                         <input type="text" id="id" name="id" hidden>
                         <div class="form-group">
-                            <div class="form-title">Name Device:</div>
+                            <div class="form-title">Tên:</div>
                             <input type="text" name="name" id="namedevice" class="form-control">
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Type Device:</div>
+                            <div class="form-title">Loại thiết bị:</div>
                             <select class="form-control" name="id_type_device" id="typedevice">
                                 @foreach($typedevice['typedevice'] as $td)
                                     <option  value="{{$td->id}}">{{$td->name}}</option>
@@ -123,7 +123,7 @@
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Activity:</div>
+                            <div class="form-title">Trạng thái:</div>
                             <select class="form-control" name="activity" id="activity">
                                 <option value="1">Sử dụng được</option>
                                 <option value="0">Hỏng</option>
@@ -131,7 +131,7 @@
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Status:</div>
+                            <div class="form-title">Hoạt động:</div>
                             <select class="form-control" name="status" id="status">
                                 <option value="1">Đang được sử dụng</option>
                                 <option value="0" selected>Chưa được sử dụng</option>

@@ -5,9 +5,9 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title" style="float: left;margin-right: 15px;padding: 7px 0px;">List User</h5>
+                    <h5 class="card-title" style="float: left;margin-right: 15px;padding: 7px 0px;">Danh sách người dùng</h5>
                     <button type="button" class="btn btn-primary" onclick="openModalAdd()">
-                        Add User
+                        Thêm người dùng
                     </button>
                     <div class="table-responsive">
                         <form action="/" method="get">
@@ -15,13 +15,13 @@
                             <table id="zero_config" class="table table-striped table-bordered">
                                 <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Student code</th>
-                                    <th>Class</th>
-                                    <th>Faculty</th>
+                                    <th>Tên</th>
+                                    <th>Mã số</th>
+                                    <th>Lớp</th>
+                                    <th>Khoa</th>
                                     <th>Email</th>
-                                    <th>Type</th>
-                                    <th>function</th>
+                                    <th>Loại</th>
+                                    <th>Chức năng</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -60,7 +60,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="tt">Add User</h5>
+                    <h5 class="modal-title" id="tt">Thêm người dùng</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -69,22 +69,22 @@
                     <div class="modal-body">
                         @csrf
                         <div class="form-group">
-                            <div class="form-title">Name:</div>
+                            <div class="form-title">Tên:</div>
                             <input type="text" name="name" class="form-control">
                             <span class="text-danger text-error name_error"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Student code:</div>
+                            <div class="form-title">Mã số:</div>
                             <input type="text" name="msv" class="form-control">
                             <span class="text-danger text-error msv_error"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Class:</div>
+                            <div class="form-title">Lớp:</div>
                             <input type="text" name="class" class="form-control">
                             <span class="text-danger text-error class_error"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Faculty:</div>
+                            <div class="form-title">Khoa:</div>
                             <input type="text" name="faculty" class="form-control">
                             <span class="text-danger text-error faculty_error"></span>
                         </div>
@@ -94,17 +94,17 @@
                             <span class="text-danger text-error email_error"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Password:</div>
+                            <div class="form-title">Mật khẩu:</div>
                             <input type="password" name="password" class="form-control">
                             <span class="text-danger text-error password_error"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">PasswordAgain:</div>
+                            <div class="form-title">Nhập lại mật khẩu:</div>
                             <input type="password" name="passwordagain" class="form-control">
                             <span class="text-danger text-error passwordagain_error"></span>
                         </div>
                         <div class="form-group">
-                            <label>Type:</label>
+                            <label>Loại:</label>
                             <label class="radio-inline">
                                 <input name="type" value="0" checked="" type="radio">:User
                             </label>
@@ -125,7 +125,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Edit User</h5>
+                    <h5 class="modal-title">Chỉnh sửa người dùng</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -148,22 +148,22 @@
                         @csrf
                         <input type="text" id="id" name="id" hidden>
                         <div class="form-group">
-                            <div class="form-title">Name:</div>
+                            <div class="form-title">Tên:</div>
                             <input type="text" id="name"  name="name" class="form-control">
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Student code:</div>
+                            <div class="form-title">Mã số:</div>
                             <input type="text" name="msv" id="msv" class="form-control">
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Class:</div>
+                            <div class="form-title">Lớp:</div>
                             <input type="text" name="class" id="class" class="form-control">
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Faculty:</div>
+                            <div class="form-title">Khoa:</div>
                             <input type="text" name="faculty" id="faculty" class="form-control">
                             <span class="error-slide"></span>
                         </div>
@@ -174,17 +174,17 @@
                         </div>
                         <div class="form-group">
                             <input type="checkbox" id="changePassword" name="changePassword">
-                            <label>Change Password</label>
+                            <label>Đổi mật khẩu</label>
                             <input type="password" name="password" class="form-control password" disabled="" >
                             <span class="text-danger text-error password_error"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">PasswordAgain:</div>
+                            <div class="form-title">Đổi lại mật khẩu:</div>
                             <input type="password" name="passwordagain" class="form-control password" disabled="" >
                             <span class="text-danger text-error password_error"></span>
                         </div>
                         <div class="form-group">
-                            <label>Type:</label>
+                            <label>Loại:</label>
                             <label class="radio-inline">
                                 <input name="type" value="0" checked="" id="type"  type="radio">:User
                             </label>

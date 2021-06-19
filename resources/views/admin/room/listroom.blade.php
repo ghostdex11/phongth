@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <h5 class="card-title" style="float: left;margin-right: 15px;padding: 7px 0px;">List room</h5>
                     <button type="button" class="btn btn-primary" onclick="openModalAdd()">
-                        Add room
+                        Thêm phòng
                     </button>
                     <div class="table-responsive">
                         <form action="/" method="get">
@@ -15,14 +15,14 @@
                             <table id="zero_config" class="table table-striped table-bordered">
                                 <thead>
                                 <tr>
-                                    <th>Name room</th>
-                                    <th>Name zone</th>
-                                    <th>Floor</th>
-                                    <th>Description</th>
-                                    <th>Clean_up</th>                                    
-                                    <th>Activity</th>
-                                    <th>Status</th>
-                                    <th>function</th>
+                                    <th>Phòng</th>
+                                    <th>Khu</th>
+                                    <th>Tầng</th>
+                                    <th>Mô tả</th>
+                                    <th>Dọn dẹp</th>                                    
+                                    <th>Trạng thái</th>
+                                    <th>Hoạt động</th>
+                                    <th>Chức năng</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -47,16 +47,16 @@
                                         </td>
                                         <td>
                                             @if($ro->activity == 1)
-                                                Đang được sử dụng
+                                                Sử dụng được
                                             @else
-                                                Không được sử dụng
+                                                Đang sửa
                                             @endif
                                         </td>
                                         <td>
                                             @if($ro->status == 1)
-                                                Sử dụng được
+                                                Đang sử dụng
                                             @else
-                                               Đang sửa
+                                                Chưa sử dụng
                                             @endif
                                         </td>
                                         <td>
@@ -80,7 +80,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="tt">Add room</h5>
+                    <h5 class="modal-title" id="tt">Thêm phòng</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -89,14 +89,14 @@
                     <div class="modal-body">
                         @csrf
                         <div class="form-group">
-                            <div class="form-title">Name Room:</div>
+                            <div class="form-title">Phòng:</div>
                             <input type="text" name="name" class="form-control">
                             <span class="text-danger text-error name_error"></span>
                         </div>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <div class="form-title">Name zone:</div>
+                            <div class="form-title">Khu:</div>
                             <select class="form-control" name="zone">
                                 @foreach($room['zone'] as $zo)
                                     <option  value="{{$zo->id}}">{{$zo->name}}</option>
@@ -107,14 +107,14 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <div class="form-title">Floor:</div>
+                            <div class="form-title">Tầng:</div>
                             <input type="text" name="floor" class="form-control">
                             <span class="text-danger text-error floor_error"></span>
                         </div>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <div class="form-title">Description:</div>
+                            <div class="form-title">Mô tả:</div>
                             <textarea name="description"  cols="40" rows="5"></textarea>
                             <span class="error-slide"></span>
                         </div>
@@ -131,7 +131,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editroom">Edit room</h5>
+                    <h5 class="modal-title" id="editroom">Chỉnh sửa phòng</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -141,12 +141,12 @@
                         @csrf
                         <input type="text" id="id" name="id" hidden>
                         <div class="form-group">
-                            <div class="form-title">Name Room:</div>
+                            <div class="form-title">Phòng:</div>
                             <input type="text" name="name" id="nameroom" class="form-control">
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Name zone:</div>
+                            <div class="form-title">Khu:</div>
                             <select class="form-control" name="id_zone" id="namezone">
                                 @foreach($room['zone'] as $ro)
                                     <option  value="{{$ro->id}}">{{$ro->name}}</option>
@@ -155,12 +155,12 @@
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Floor:</div>
+                            <div class="form-title">Tầng:</div>
                             <input type="text" name="floor" id="floor" class="form-control">
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Clean_up:</div>
+                            <div class="form-title">Dọn dẹp:</div>
                             <select class="form-control" name="clean_up" id="clean_up">
                                 <option value="1">Đã dọn dẹp</option>
                                 <option value="0">Chưa dọn dẹp</option>
@@ -168,23 +168,23 @@
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Activity:</div>
+                            <div class="form-title">Trạng thái:</div>
                             <select class="form-control" name="activity" id="activity">
-                                <option value="1">Đang được sử dụng</option>
-                                <option value="0" selected>Không được sử dụng</option>
+                                <option value="1"selected>Sử dụng được</option>
+                                <option value="0">Hỏng</option>
                             </select>
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Status:</div>
+                            <div class="form-title">Hoạt động:</div>
                             <select class="form-control" name="status" id="status">
-                                <option value="1">Sử dụng được</option>
-                                <option value="0">Đang sửa</option>
+                                <option value="1">Đang sử dụng</option>
+                                <option value="0">Chưa sử dụng</option>
                             </select>
                             <span class="error-slide"></span>
                         </div>
                         <div class="form-group">
-                            <div class="form-title">Description:</div>
+                            <div class="form-title">Mô tả:</div>
                             <textarea name="description" id="description" cols="40" rows="5"></textarea>
                             <span class="error-slide"></span>
                         </div>

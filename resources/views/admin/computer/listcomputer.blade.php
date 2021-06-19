@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title" style="float: left;margin-right: 15px;padding: 7px 0px;">List computer</h5>
+                    <h5 class="card-title" style="float: left;margin-right: 15px;padding: 7px 0px;">Danh sách máy tính</h5>
                     <button type="button" class="btn btn-primary" onclick="openModalAdd()">
                         Thêm máy tính
                     </button>

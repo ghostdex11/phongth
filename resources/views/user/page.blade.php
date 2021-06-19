@@ -5,9 +5,9 @@
     <div class="col-12">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title" style="float: left;margin-right: 15px;padding: 7px 0px;">Room List</h5>
+                <h5 class="card-title" style="float: left;margin-right: 15px;padding: 7px 0px;">Danh sách đặt phòng</h5>
                 <button type="button" class="btn btn-primary" onclick="openModalAdd()">
-                    Room Registration
+                    Đặt phòng
                 </button>
                 <div class="table-responsive">
                     <form action="/" method="get">
@@ -15,16 +15,16 @@
                         <table id="zero_config" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Name zone</th>
-                                    <th>Name Room</th>
-                                    <th>Name device</th>
+                                    <th>Tên</th>
+                                    <th>Khu</th>
+                                    <th>Phòng</th>
+                                    <th>Thiết bị</th>
                                     <th>MS</th>
-                                    <th>Phone</th>
-                                    <th>Session</th>
-                                    <th>approve</th>
-                                    <th>Registration Date</th>
-                                    <th>function</th>
+                                    <th>SĐT</th>
+                                    <th>Ngày đặt</th>
+                                    <th>Buổi</th>
+                                    <th>Duyệt</th>
+                                    <th>Chức năng</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -38,6 +38,7 @@
                                         @endforeach</td>
                                     <td>{{$hom->ms}}</td>
                                     <td>{{$hom->phone}}</td>
+                                    <td>{{$hom->date_time}}</td>
                                     <td>
                                         @if($hom->session == 1)
                                             Chiều
@@ -52,7 +53,6 @@
                                             Chưa được duyệt
                                         @endif
                                     </td>
-                                    <td>{{$hom->created_at}}</td>
                                     <td>
                                         <button type="button" class="btn btn-white" onclick="detailRoom({{$hom->id}})">
                                             <i class="fas fa-edit"></i></button>
@@ -74,7 +74,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="tt">Room Registration</h5>
+                <h5 class="modal-title" id="tt">Đặt phòng</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -88,12 +88,17 @@
                         <span class="text-danger error-text ms_error"></span> 
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Phone:</div>
+                        <div class="form-title">SĐT:</div>
                         <input type="text" name="phone" class="form-control">
                         <span class="text-danger error-text phone_error"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Session:</div>
+                        <div class="form-title">Ngày đặt:</div>
+                        <input type="date" name="date_time" class="form-control">
+                        <span class="text-danger error-text phone_error"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-title">Buổi:</div>
                         <select class="form-control" name="sesion" >
                             <option value="0">Sáng</option>
                             <option value="1">Chiều</option>
@@ -101,7 +106,7 @@
                        
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Name Zone:</div>
+                        <div class="form-title">Khu:</div>
                         <select class="form-control" name="zone" id="Zone">
                             <option value="">--Chọn khu vực--</option>
                             @foreach($home['zone'] as $zo)
@@ -111,7 +116,7 @@
                         <span class="text-danger error-text zone_error"></span> 
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Name Room:</div>
+                        <div class="form-title">Phòng:</div>
                         <select class="form-control" name="room" id="Room">
                             <option value="">--Chọn phòng--</option>
                             @foreach($home['room'] as $ro)
@@ -121,7 +126,7 @@
                         <span class="text-danger error-text room_error"></span> 
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Name Device:</div>
+                        <div class="form-title">Tên thiết bị:</div>
                         @foreach($home['device'] as $de)
                         <input type="checkbox"  value="{{$de->id}}" name="device[]"> :{{$de->name}}<br>
                         @endforeach
@@ -140,7 +145,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editroom">Edit room</h5>
+                <h5 class="modal-title" id="editroom">Chỉnh sửa đặt phòng</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -155,12 +160,17 @@
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Phone:</div>
+                        <div class="form-title">SĐT:</div>
                         <input type="text" name="phone" id="phone" class="form-control">
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Session:</div>
+                        <div class="form-title">Ngày đặt:</div>
+                        <input type="date" name="date_time" id="datetime" class="form-control">
+                        <span class="text-danger error-text phone_error"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-title">Buổi:</div>
                         <select class="form-control" name="sesion" id="sesion" >
                             <option value="0">Sáng</option>
                             <option value="1">Chiều</option>
@@ -168,7 +178,7 @@
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Name Zone:</div>
+                        <div class="form-title">Khu:</div>
                         <select class="form-control" name="zone" id="zone">
                             <option value="">--Chọn khu vực--</option>
                             @foreach($home['zone'] as $zo)
@@ -178,7 +188,7 @@
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Name Room:</div>
+                        <div class="form-title">Phòng:</div>
                         <select class="form-control" name="room" id="room">
                             <option value="">--Chọn phòng--</option>
                             @foreach($home['room'] as $ro)
@@ -188,7 +198,7 @@
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Name Device:</div>
+                        <div class="form-title">Tên thiết bị:</div>
                         @foreach($home['device'] as $de)
                             <input type="checkbox" id="device" value="{{$de->name}}"
                              @if(is_array(old('device')) && in_array('{{$de->name}}', old('device'))){{"checked='checked'"}}
@@ -263,6 +273,7 @@
                     $("#ms").val(data.ms);
                     $("#phone").val(data.phone);
                     $("#sesion").val(data.session);
+                    $("#datetime").val(data.date_time);
                     $("#device").val(data.id_device);
                 }
             });

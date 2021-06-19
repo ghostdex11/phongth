@@ -20,8 +20,8 @@
                                     <th class="text-center text-white">Tên thiết bị</th>
                                     <th class="text-center text-white">Ms</th>
                                     <th class="text-center text-white">SĐT</th>
+                                    <th class="text-center text-white">ngày đặt</th>
                                     <th class="text-center text-white">Buổi</th>
-                                    <th class="text-center text-white">ngày tạo</th>
                                     <th class="text-center text-white">Đã duyệt</th>
                                     <th class="text-center text-white"></th>
                                 </tr>
@@ -45,7 +45,7 @@
                                             Sáng
                                         @endif
                                     </td>
-                                    <td>{{$his->created_at}}</td>
+                                    <td>{{$his->date_time}}</td>
                                     <td>
                                         @if($his->admin_check == 1)
                                         Đã duyệt
@@ -58,7 +58,6 @@
                                             <button type="button" class="btn btn-white" onclick="approval({{$his->id}})">
                                             Duyệt</button>
                                         @else
-                                        <button type="button" id="btnbk" onclick="Broken({{$his->id}});" class="btn btn-warning">Báo hỏng</button>
                                         <button type="button" class="btn btn-primary" onclick="checkout({{$his->id}})">
                                             Trả phòng</button>
                                         @endif
@@ -100,6 +99,11 @@
                         <div class="form-title">Số điện thoại:</div>
                         <input type="text" name="phone" class="form-control">
                         <span class="text-danger text-error phone_error"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-title">Ngày:</div>
+                        <input type="date" name="date_time" id="datetime">
+                        <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
                         <div class="form-title">Buổi:</div>
@@ -167,11 +171,6 @@
                     @csrf
                     <input type="text" id="id" name="id" hidden>
                     <div class="form-group">
-                        <div class="form-title">Tên người đặt:</div>
-                        <input type="text" name="nameuser"   id="nameuser" class="form-control" disabled>
-                        <span class="error-slide"></span>
-                    </div>
-                    <div class="form-group">
                         <div class="form-title">MS:</div>
                         <input type="text" name="ms" id="ms" class="form-control">
                         <span class="error-slide"></span>
@@ -179,6 +178,11 @@
                     <div class="form-group">
                         <div class="form-title">Số điện thoại:</div>
                         <input type="text" name="phone" id="phone" class="form-control">
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-title">Ngày:</div>
+                        <input type="date" name="date_time" id="date_time">
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
@@ -248,6 +252,11 @@
                     <input type="text" id="id1" name="id" hidden>
                     <input type="text" id="id_room1" name="id_room" hidden>
                     <div class="form-group">
+                        <div class="form-title">Phòng:</div>
+                        <input type="text" name="roomname" id="roomname" class="form-control" disabled>
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="form-group">
                         <div class="form-title">MS:</div>
                         <input type="text" name="ms" id="ms1" class="form-control" disabled>
                         <span class="error-slide"></span>
@@ -268,7 +277,7 @@
                         <div class="form-title">Dọn dẹp:</div>
                         <select class="form-control" id="clean_up1" name="clean_up">
                             <option value="0">Chưa dọn</option>
-                            <option value="1">Đã dọn dẹp</option>
+                            <option value="1" selected>Đã dọn dẹp</option>
                         </select>
                         <span class="error-slide"></span>
                     </div>
@@ -341,6 +350,7 @@
                     $("#device").val(data.id_device);
                     $("#ms").val(data.ms);
                     $("#phone").val(data.phone);
+                    $("#date_time").val(data.date_time)
                     $("#admin_check").val(data.admin_check);
                 }
             });
@@ -402,9 +412,9 @@
                     console.log(data);
                     $("#id1").val(data.id);
                     $("#id_room1").val(data.id_room);
+                    $("#roomname").val(data.room_name);
                     $("#ms1").val(data.ms);
                     $("#phone1").val(data.phone); 
-                    $("#clean_up1").val(data.clean_up);
                 }           
             });
         }

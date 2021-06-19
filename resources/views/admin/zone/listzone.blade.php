@@ -5,9 +5,9 @@
 	<div class="col-12">
 		<div class="card">
 			<div class="card-body">
-				<h5 class="card-title" style="float: left;margin-right: 15px;padding: 7px 0px;">List zone</h5>
+				<h5 class="card-title" style="float: left;margin-right: 15px;padding: 7px 0px;">Danh sách khu</h5>
 				<button type="button" class="btn btn-primary" onclick="openModalAdd()">
-					Add zone
+					Thêm khu vực
 				</button>
 				<div class="table-responsive">
 					<form action="/" method="get">
@@ -15,9 +15,9 @@
 						<table id="zero_config" class="table table-striped table-bordered">
 							<thead>
 								<tr>
-									<th>Name zone</th>
-									<th>Location</th>
-									<th>function</th>
+									<th>Tên khu</th>
+									<th>Vị trí</th>
+									<th>chức năng</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -46,7 +46,7 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="tt">Add zone</h5>
+				<h5 class="modal-title" id="tt">Thêm khu</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -55,12 +55,12 @@
 				<div class="modal-body">
 					@csrf
 					<div class="form-group">
-						<div class="form-title">Name Zone:</div>
+						<div class="form-title">Tên khu:</div>
 						<input type="text" name="name" class="form-control">
 						<span class="text-danger text-error name_error"></span>
 					</div>
 					<div class="form-group">
-						<div class="form-title">Location:</div>
+						<div class="form-title">Vị trí:</div>
 						<input type="text" name="location" class="form-control">
 						<span class="text-danger text-error location_error"></span>
 					</div>
@@ -77,7 +77,7 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="editzone">Edit zone</h5>
+				<h5 class="modal-title" id="editzone">Chỉnh sửa khu</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -87,12 +87,12 @@
 					@csrf
 					<input type="text" id="id" name="id" hidden>
 					<div class="form-group">
-						<div class="form-title">Name Zone:</div>
+						<div class="form-title">Tên khu:</div>
 						<input type="text" name="name" id="namezone" class="form-control">
 						<span class="error-slide"></span>
 					</div>
 					<div class="form-group">
-						<div class="form-title">Location:</div>
+						<div class="form-title">Vị trí:</div>
 						<input type="text" name="location" id="locationzone" class="form-control">
 						<span class="error-slide"></span>
 					</div>

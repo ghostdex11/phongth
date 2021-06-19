@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Validator;
 
-class historyController extends Controller
+class approvalController extends Controller
 {
     public function index(Request $request)
     {
@@ -22,7 +22,7 @@ class historyController extends Controller
             ->join('zone','zone.id','=','history.id_zone')
             ->join('room','room.id','=','history.id_room')
             ->join('device','device.id','=','history.id_device')
-            ->where(['history.activity' => 0])
+            ->where(['history.check_out' => 0])
             // ->where(['users.id' => Auth::user()->id])
             ->get();
         // $history['history'] = History::all();
@@ -31,7 +31,7 @@ class historyController extends Controller
         $history['zone']=DB::table('zone')->get();
         $history['device']=DB::table('device')->get();
         $history['computer']=DB::table('computer')->get();
-        return view('admin/history/listhistory',['history'=>$history]);
+        return view('admin/approval/approval',['history'=>$history]);
     }
     public function addHistory(Request $request)
     {
@@ -40,13 +40,15 @@ class historyController extends Controller
             'phone'=>'required',
             'zone'=>'required',
             'room'=>'required',
-            'device'=>'required'
+            'device'=>'required', 
+            'date_time'=>'required'
         ],[
             'ms.required'=>'Bạn chưa nhập mã số',
             'phone.required'=>'Bạn chưa nhập số điện thoại',
             'zone.required'=>'Bạn chưa chọn khu',
             'room.required'=>'Bạn chưa chọn phòng',
-            'device.required'=>'Bạn chưa chọn thiết bị'
+            'device.required'=>'Bạn chưa chọn thiết bị',
+            'date_time.required'=>'Bạn chưa chọn ngày'
         ]);
         if(!$validator->passes()){
             return response()->json(['status'=>0, 'error'=>$validator->errors()->toArray()]);
@@ -59,10 +61,11 @@ class historyController extends Controller
             $history->ms=$request->ms;
             $history->phone=$request->phone;
             $history->session=$request->sesion;
+            $history->date_time=$request->date_time;
             $history->admin_check= 1;
             $history->save();
             Room::where('id',$request->room)->update([
-                'activity'=> 1,
+                'status'=> 1,
             ]);
             if( $history){
                return response()->json(['status'=>1, 'msg'=>'Bạn đăng kí thành công']);
@@ -84,6 +87,7 @@ class historyController extends Controller
             'admin_check'=>$request->admincheck,
             'session'=>$request->sesion,
             'id_room'=>$request->room,
+            'date_time'=>$request->date_time,
             'id_device'=>implode(",",$request->device)
         ]);
         return redirect('/admin/history');
@@ -91,7 +95,7 @@ class historyController extends Controller
     public function deleteHistory($id){
         $idroom = DB::table('history')->where('id', $id)->first();
         Room::where('room.id' , $idroom -> id_room)->update([   
-            'room.activity' => 0,
+            'room.status' => 0,
         ]);
         History::find($id)->delete();
     }
@@ -102,13 +106,15 @@ class historyController extends Controller
         ]);
         $idroom = DB::table('history')->where('id', $id)->first();
         Room::where('id', $idroom -> id_room)->update([
-            'room.activity'=> 1,
+            'room.status'=> 1,
         ]);
         return redirect('/admin/history');
     }
     public function detailCheckOut($id)
     {
-        return $historys = History::find($id);
+        return $historys = History::select('history.*', 'room.*') 
+        ->join('room','room.id','=','history.id_room')
+        ->where(['history.id'=>$id])->first();
     }
     public function submitCheckOut(Request $request)
     {
@@ -116,20 +122,11 @@ class historyController extends Controller
         $idroom=$request->id_room;
         History::where('id',$id)->update([
             'clean_up'=>$request->clean_up,
-            'activity'=> 1
+            'check_out'=> 1
         ]);
         Room::where('id',$idroom)->update([
-            'activity'=> 0
+            'status'=> 0
         ]);
         return redirect('/admin/history');
-    }
-    public function detailBroken($id){
-        return $history = history::select('history.*', 'room.*','computer.*')
-        ->join('room','room.id','=','history.id_room')
-        ->join('computer','computer.id_room','=','room.id')
-        ->where(['history.id'=>$id])->get();
-    }
-    public function submitBroken(){
-        
     }
 }
