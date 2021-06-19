@@ -31,7 +31,7 @@
                             src="../../assets/images/users/1.jpg" alt="user" class="rounded-circle"
                             width="31"></a>
                     <div class="dropdown-menu dropdown-menu-right user-dd animated">
-                        <a class="dropdown-item" href=""><i class="ti-user m-r-5 m-l-5"></i>{{\App\Models\User::getNameUser($hom->id_user)}}</a>
+                        <a class="dropdown-item" href=""><i class="ti-user m-r-5 m-l-5"></i> My Profile</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{url('logout')}}"><i
                                 class="fa fa-power-off m-r-5 m-l-5"></i> Logout</a>
