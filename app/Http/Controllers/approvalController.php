@@ -112,7 +112,7 @@ class approvalController extends Controller
     }
     public function detailCheckOut($id)
     {
-        return $historys = History::select('history.*', 'room.*') 
+        return $historys = History::select('history.*', 'room.room_name') 
         ->join('room','room.id','=','history.id_room')
         ->where(['history.id'=>$id])->first();
     }

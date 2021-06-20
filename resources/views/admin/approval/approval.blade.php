@@ -29,31 +29,31 @@
                             <tbody>
                                 @foreach($history['history'] as $his)
                                 <tr>
-                                    <td>{{\App\Models\Zone::getNameZone($his->id_zone)}}</td>
-                                    <td>{{\App\Models\Room::getNameRoom($his->id_room)}}</td>
-                                    <td>
+                                    <td class="text-center">{{\App\Models\Zone::getNameZone($his->id_zone)}}</td>
+                                    <td class="text-center">{{\App\Models\Room::getNameRoom($his->id_room)}}</td>
+                                    <td class="text-center">
                                         @foreach(explode(",", $his->id_device) as $deviceId)
                                         {{ Str::of(\App\Models\Device::getDeviceUser($deviceId) . ', ')->rtrim('.') }}
                                         @endforeach
                                     </td>
-                                    <td>{{$his->ms}}</td>
-                                    <td>{{$his->phone}}</td>
-                                    <td>
+                                    <td class="text-center">{{$his->ms}}</td>
+                                    <td class="text-center">{{$his->phone}}</td>
+                                    <td class="text-center">{{$his->date_time}}</td>
+                                    <td class="text-center">
                                         @if($his->session == 1)
                                             Chiều
                                         @else
                                             Sáng
                                         @endif
                                     </td>
-                                    <td>{{$his->date_time}}</td>
-                                    <td>
+                                    <td class="text-center">
                                         @if($his->admin_check == 1)
                                         Đã duyệt
                                         @else
                                         Chưa duyệt
                                         @endif
                                     </td>
-                                    <td>
+                                    <td class="text-center">
                                         @if($his->admin_check == 0)
                                             <button type="button" class="btn btn-white" onclick="approval({{$his->id}})">
                                             Duyệt</button>

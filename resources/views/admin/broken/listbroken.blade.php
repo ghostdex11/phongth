@@ -9,6 +9,7 @@
                     <button type="button" class="btn btn-primary" onclick="openModalAdd()">
                         Báo hỏng
                     </button>
+                    <a class="btn btn-info" href="{{url('/admin/report')}}" target="_blank">In lỗi</a>
                     <div class="table-responsive">
                         <form action="/" method="get">
                             @csrf
