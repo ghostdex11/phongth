@@ -33,7 +33,7 @@ class approvalController extends Controller
         $history['computer']=DB::table('computer')->get();
         return view('admin/approval/approval',['history'=>$history]);
     }
-    public function addHistory(Request $request)
+    public function addApproval(Request $request)
     {
         $validator = Validator::make($request->all(),[
             'ms'=>'required',
@@ -73,11 +73,11 @@ class approvalController extends Controller
         }
        
     }
-    public function detailHistory($id)
+    public function detailApproval($id)
     {
         return $history = History::find($id);
     }
-    public function editHistory(Request $request)
+    public function editApproval(Request $request)
     {
         $id=$request->id;
         History::where('id',$id)->update([
@@ -92,7 +92,7 @@ class approvalController extends Controller
         ]);
         return redirect('/admin/approval');
     }
-    public function deleteHistory($id){
+    public function deleteApproval($id){
         $idroom = DB::table('history')->where('id', $id)->first();
         Room::where('room.id' , $idroom -> id_room)->update([   
             'room.status' => 0,

@@ -215,7 +215,7 @@
                     </div>
                     <div class="form-group">
                         <div class="form-title">Tên thiết bị:</div>
-                        @foreach($history   ['device'] as $de)
+                        @foreach($history['device'] as $de)
                             <input type="checkbox" id="device" value="{{$de->id}}" name="device[]"> :{{$de->name}}<br>
                         @endforeach
                         <span class="error-slide"></span>
@@ -268,9 +268,9 @@
                     </div>
                     <div class="form-group">
                         <div class="form-title">Tên thiết bị:</div>
-                        {{-- @foreach(explode(",", $his->id_device) as $deviceId)
+                        @foreach(explode(",", $his->id_device) as $deviceId)
                             <input type="text" id="device" value="{{$de->name}}" class="form-control"  name="device[]" disabled>
-                        @endforeach --}}
+                        @endforeach
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
@@ -415,6 +415,7 @@
                     $("#roomname").val(data.room_name);
                     $("#ms1").val(data.ms);
                     $("#phone1").val(data.phone); 
+                    $("#device").val(data.id_device);
                 }           
             });
         }
