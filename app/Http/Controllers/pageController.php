@@ -95,6 +95,10 @@ class pageController extends Controller
         return redirect('/regisroom');
     }
     public function deleteRoom($id){
+        // $idroom = DB::table('history')->where('id', $id)->first();
+        // Room::where('room.id' , $idroom -> id_room)->update([   
+        //     'room.status' => 0,
+        // ]);
         History::find($id)->delete();
     }
 }
