@@ -18,6 +18,7 @@
 <body>
     <div class="container">
         <div class="table-responsive">
+            <center><h1>Báo cáo máy hỏng</h1></center>
             <table class="table">
                 <tr>
                     <th>Tên máy</th>

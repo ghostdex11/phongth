@@ -11,6 +11,9 @@
 body{
     background-color: none;
 }
+.fas{
+    font-size: 18px !important;
+}
 @media screen and (max-width: 600px) {
     .logo-ht{
         width: 100%;

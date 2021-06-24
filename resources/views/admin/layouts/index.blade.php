@@ -16,6 +16,7 @@
     <!-- Custom CSS -->
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
     <link href="{{asset('dist/css/style.min.css')}}" rel="stylesheet">
+    <link href="{{asset('css/font-awesome.min.css')}}" rel="stylesheet">
 </head>
 
 <body>

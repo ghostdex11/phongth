@@ -17,6 +17,7 @@
 </style>
 <body>
     <div class="container">
+        <center><h1>Báo cáo lịch sử đặt phòng</h1></center>
         <div class="table-responsive">
             <table class="table ">
                 <thead>
