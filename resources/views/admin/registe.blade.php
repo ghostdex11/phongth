@@ -113,8 +113,8 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <div class="p-t-20">
-                                    <button class="btn btn-success float-right" type="submit">Sign Up</button>
-                                    <a class="btn btn-success" href="#" id="to-login" name="action">Back To Login</a>
+                                    <button class="btn btn-success float-right" type="submit">Đăng kí</button>
+                                    <a class="btn btn-success" href="#" id="to-login" name="action">Quay lại đăng nhập</a>
                                 </div>
                             </div>
                         </div>
