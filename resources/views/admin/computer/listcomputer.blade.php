@@ -21,7 +21,7 @@
                                     <th>Bàn phím</th>
                                     <th>Mô tả</th>
                                     <th>Trạng thái</th>
-                                    <th></th>
+                                    <th>Chức năng</th>
                                 </tr>
                                 </thead>
                                 <tbody>

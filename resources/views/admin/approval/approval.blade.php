@@ -23,7 +23,7 @@
                                     <th class="text-center text-white">ngày đặt</th>
                                     <th class="text-center text-white">Buổi</th>
                                     <th class="text-center text-white">Đã duyệt</th>
-                                    <th class="text-center text-white"></th>
+                                    <th class="text-center text-white">Chức năng</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -267,10 +267,13 @@
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">
-                        <div class="form-title">Tên thiết bị:</div>
-                        {{-- @foreach(explode(",", $history['history']->id_device) as $deviceId)
-                            <input type="text" id="device" value="{{$de->name}}" class="form-control"  name="device[]" disabled>
-                        @endforeach --}}
+                        <div class="form-title">Tên thiết bị:</div> 
+                        {{-- @dd($his); --}}
+                            <input type="text" id="device[]" value="
+                            @foreach(explode(",", $his->id_device) as $deviceId)
+                                        {{ Str::of(\App\Models\Device::getDeviceUser($deviceId) . ', ')->rtrim('.') }}
+                            @endforeach"
+                            class="form-control"  name="device[]" disabled>
                         <span class="error-slide"></span>
                     </div>
                     <div class="form-group">

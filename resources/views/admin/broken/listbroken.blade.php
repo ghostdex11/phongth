@@ -21,7 +21,7 @@
                                     <th>Tên máy</th>
                                     <th>Trạng thái</th>
                                     <th>Mô tả</th>     
-                                    <th></th>                              
+                                    <th>Chức năng</th>                              
                                 </tr>
                                 </thead>
                                 <tbody>

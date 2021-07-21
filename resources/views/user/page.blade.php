@@ -200,10 +200,8 @@
                     <div class="form-group">
                         <div class="form-title">Tên thiết bị:</div>
                         @foreach($home['device'] as $de)
-                            <input type="checkbox" id="device" value="13"
-                             @if(is_array(old('device')) && in_array('13', old('device')))
-                             {{"checked='checked'"}}
-                             @endif
+                    <input type="checkbox" id="device" value="{{ $de->id }}"
+                    {{-- @if(is_array(old('device')) && in_array('{{ $home['history']->id_device }}', old('device'))){{"checked='checked'"}}@endif --}}
                                name="device[]"> :{{$de->name}}<br>
                         @endforeach
                         <span class="error-slide"></span>

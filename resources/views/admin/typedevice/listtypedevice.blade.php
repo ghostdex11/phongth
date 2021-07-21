@@ -15,8 +15,8 @@
                             <table id="zero_config" class="table table-striped table-bordered">
                                 <thead>
                                 <tr>
-                                    <th>Name Type Device</th>
-                                    <th>function</th>
+                                    <th>Tên loại thiết bị</th>
+                                    <th>Chức năng</th>
                                 </tr>
                                 </thead>
                                 <tbody>
