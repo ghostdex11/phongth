@@ -54,7 +54,7 @@
 
                 @if(session('thongbao'))
 
-                    {{session('thongbao')}}
+                <p style="color: white;">{{session('thongbao')}}</P>
 
                 @endif
                 <form class="form-horizontal m-t-20" id="loginform" action="login" method="post">

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\History;
 class historyController extends Controller
 {
@@ -14,8 +13,8 @@ class historyController extends Controller
             ->join('zone','zone.id','=','history.id_zone')
             ->join('room','room.id','=','history.id_room')
             ->join('device','device.id','=','history.id_device')
-            ->where(['history.check_out' => 1])
-            ->get();
+            ->where(['history.check_out' => 1])->paginate(10)->withQueryString();
+            
         return view('admin.history.history',['history'=>$history]);
     }
 }

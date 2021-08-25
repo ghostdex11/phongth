@@ -31,10 +31,12 @@
                                 <tr>
                                     <td class="text-center">{{\App\Models\Zone::getNameZone($his->id_zone)}}</td>
                                     <td class="text-center">{{\App\Models\Room::getNameRoom($his->id_room)}}</td>
+                                    @php
+                                        $devices = explode(',', $his->id_device);
+                                        $device = App\Models\Device::whereIn('id', $devices)->pluck('name')->implode(', ');
+                                    @endphp
                                     <td class="text-center">
-                                        @foreach(explode(",", $his->id_device) as $deviceId)
-                                        {{ Str::of(\App\Models\Device::getDeviceUser($deviceId) . ', ')->rtrim('.') }}
-                                        @endforeach
+                                        {{$device}}
                                     </td>
                                     <td class="text-center">{{$his->ms}}</td>
                                     <td class="text-center">{{$his->phone}}</td>
@@ -58,8 +60,9 @@
                                             <button type="button" class="btn btn-white" onclick="approval({{$his->id}})">
                                             Duyệt</button>
                                         @else
-                                        <button type="button" class="btn btn-primary" onclick="checkout({{$his->id}})">
-                                            Trả phòng</button>
+                                        <button type="button" class="btn btn-primary" data-target="#apphistory{{$his->id}}" data-toggle="modal">
+                                            Trả phòng
+                                        </button>
                                         @endif
                                         <button type="button" class="btn btn-white"
                                             onclick="detailHistory({{$his->id}})">
@@ -68,6 +71,59 @@
                                             onclick="deleteHistory({{$his->id}})"><i class="fas fa-trash"></i></button>
                                     </td>
                                 </tr>
+                                <!-- modal -->
+                                <div class="modal fade" id="apphistory{{$his->id}}" role="dialog" tabindex="-1" aria-labelledby="apphistory" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Trả phòng</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <form method="post" enctype="multipart/form-data">
+                                                <div class="modal-body">
+                                                    @csrf
+                                                    <input type="text" id="id1" name="id" value="" hidden>
+                                                    <input type="text" id="id_room1" name="id_room" value="" hidden>
+                                                    <div class="form-group">
+                                                        <div class="form-title">Phòng:</div>
+                                                        <input type="text" name="roomname" id="roomname" class="form-control" disabled>
+                                                        <span class="error-slide"></span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="form-title">MS:</div>
+                                                        <input type="text" name="ms" id="ms1" class="form-control" disabled>
+                                                        <span class="error-slide"></span>
+                                                    </div>
+                                                    <!-- <div class="form-group">
+                                                        <div class="form-title">Số điện thoại:</div>
+                                                        <input type="text" name="phone" id="phone1" class="form-control" disabled>
+                                                        <span class="error-slide"></span>
+                                                    </div> -->
+                                                    <div class="form-group">
+                                                        <div class="form-title">Tên thiết bị:</div> 
+                                                            <input type="text" id="device[]" value="{{$device}}"
+                                                            class="form-control"  name="device[]" disabled>
+                                                        <span class="error-slide"></span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="form-title">Dọn dẹp:</div>
+                                                        <select class="form-control" id="clean_up1" name="clean_up">
+                                                            <option value="0">Chưa dọn</option>
+                                                            <option value="1" selected>Đã dọn dẹp</option>
+                                                        </select>
+                                                        <span class="error-slide"></span>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" onclick="submitCheckOut()" class="btn btn-primary">Trả phòng</button>
+                                                        <button type="button" data-dismiss="modal" class="btn btn-danger">Hủy</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
                                 @endforeach
                             </tbody>
                         </table>
@@ -237,62 +293,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="apphistory" tabindex="-1" role="dialog" aria-labelledby="apphistory" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Trả phòng</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form method="post" enctype="multipart/form-data">
-                <div class="modal-body">
-                    @csrf
-                    <input type="text" id="id1" name="id" hidden>
-                    <input type="text" id="id_room1" name="id_room" hidden>
-                    <div class="form-group">
-                        <div class="form-title">Phòng:</div>
-                        <input type="text" name="roomname" id="roomname" class="form-control" disabled>
-                        <span class="error-slide"></span>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-title">MS:</div>
-                        <input type="text" name="ms" id="ms1" class="form-control" disabled>
-                        <span class="error-slide"></span>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-title">Số điện thoại:</div>
-                        <input type="text" name="phone" id="phone1" class="form-control" disabled>
-                        <span class="error-slide"></span>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-title">Tên thiết bị:</div> 
-                        {{-- @dd($his); --}}
-                            <input type="text" id="device[]" value="
-                            @foreach(explode(",", $his->id_device) as $deviceId)
-                                        {{ Str::of(\App\Models\Device::getDeviceUser($deviceId) . ', ')->rtrim('.') }}
-                            @endforeach"
-                            class="form-control"  name="device[]" disabled>
-                        <span class="error-slide"></span>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-title">Dọn dẹp:</div>
-                        <select class="form-control" id="clean_up1" name="clean_up">
-                            <option value="0">Chưa dọn</option>
-                            <option value="1" selected>Đã dọn dẹp</option>
-                        </select>
-                        <span class="error-slide"></span>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" onclick="submitCheckOut()" class="btn btn-primary">Trả phòng</button>
-                        <button type="button" data-dismiss="modal" class="btn btn-danger">Hủy</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+
 <script src="{{ asset('js/jquery-3.5.1.min.js') }}" language="JavaScript" type="text/javascript"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/3.5.1/js/toastr.min.js">
 </script>

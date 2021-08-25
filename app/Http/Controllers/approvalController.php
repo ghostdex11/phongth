@@ -81,6 +81,10 @@ class approvalController extends Controller
     {
         $id=$request->id;
         History::where('id',$id)->update([
+            'id_device'=>"",
+        ]);
+        // History::where('id',$id)->delete('id_device');
+        History::where('id',$id)->update([
             'id_zone'=>$request->zone,
             'ms'=>$request->ms,
             'phone'=>$request->phone,

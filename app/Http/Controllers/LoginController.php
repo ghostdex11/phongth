@@ -46,7 +46,7 @@ class LoginController extends Controller
         }
         else
         {
-            return redirect('login')->with('thongbao','Sai mật Email hoặc Mật Khẩu');
+            return redirect('login')->with('thongbao','Sai Email hoặc Mật Khẩu');
         }
     }
     public function getdangxuatAdmin()
