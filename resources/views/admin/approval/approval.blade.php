@@ -11,6 +11,7 @@
                 </button>
                 <div class="table-responsive" id="approval">
                     <form action="/" method="get">
+                        
                         @csrf
                         <table id="zero_config" class="table table-striped table-bordered">
                             <thead>
@@ -84,16 +85,17 @@
                                             <form method="post" enctype="multipart/form-data">
                                                 <div class="modal-body">
                                                     @csrf
-                                                    <input type="text" id="id1" name="id" value="" hidden>
-                                                    <input type="text" id="id_room1" name="id_room" value="" hidden>
+                                                    
+                                                    <input type="text" id="id1" name="id" value="{{ $his->id}}" hidden>
+                                                    <input type="text" id="id_room1" name="id_room"  value="{{ $his->id_room }}" hidden>
                                                     <div class="form-group">
                                                         <div class="form-title">Phòng:</div>
-                                                        <input type="text" name="roomname" id="roomname" class="form-control" disabled>
+                                                        <input type="text" name="roomname" id="roomname" value="{{\App\Models\Room::getNameRoom($his->id_room)}}" class="form-control" disabled>
                                                         <span class="error-slide"></span>
                                                     </div>
                                                     <div class="form-group">
                                                         <div class="form-title">MS:</div>
-                                                        <input type="text" name="ms" id="ms1" class="form-control" disabled>
+                                                        <input type="text" name="ms" id="ms1" value="{{$his->ms}}" class="form-control" disabled>
                                                         <span class="error-slide"></span>
                                                     </div>
                                                     <!-- <div class="form-group">
@@ -426,6 +428,11 @@
 
         function submitCheckOut(){
             event.preventDefault();
+             $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
             if(confirm("Bạn có chắc muốn trả phòng này?")){
                 $.ajax({
                     url: 'approval/checkout',
