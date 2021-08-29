@@ -6,6 +6,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title" style="float: left;margin-right: 15px;padding: 7px 0px;">Danh sách máy tính</h5>
+                    <input id="myInput" type="text" placeholder="Search..">
                     <button type="button" class="btn btn-primary" onclick="openModalAdd()">
                         Thêm máy tính
                     </button>
@@ -24,7 +25,7 @@
                                     <th>Chức năng</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="search">
                                 @foreach($computer['computer'] as $de)
                                     <tr>
                                         <td>{{$de->computer_name}}</td>
@@ -179,6 +180,16 @@
 
     <script src="{{ asset('js/jquery-3.5.1.min.js') }}" language="JavaScript" type="text/javascript"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/3.5.1/js/toastr.min.js">
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#search tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
     </script>
     <script>
 

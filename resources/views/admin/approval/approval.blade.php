@@ -1,4 +1,5 @@
 @extends('admin/layouts/index')
+
 @section('Admin', 'Approval')
 @section('content')
 <div class="container-fluid">
@@ -61,7 +62,7 @@
                                             <button type="button" class="btn btn-white" onclick="approval({{$his->id}})">
                                             Duyệt</button>
                                         @else
-                                        <button type="button" class="btn btn-primary" data-target="#apphistory{{$his->id}}" data-toggle="modal">
+                                        <button type="button" class="btn btn-primary" onclick="checkout({{$his->id}})">
                                             Trả phòng
                                         </button>
                                         @endif
@@ -72,60 +73,6 @@
                                             onclick="deleteHistory({{$his->id}})"><i class="fas fa-trash"></i></button>
                                     </td>
                                 </tr>
-                                <!-- modal -->
-                                <div class="modal fade" id="apphistory{{$his->id}}" role="dialog" tabindex="-1" aria-labelledby="apphistory" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title">Trả phòng</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <form method="post" enctype="multipart/form-data">
-                                                <div class="modal-body">
-                                                    @csrf
-                                                    
-                                                    <input type="text" id="id1" name="id" value="{{ $his->id}}" hidden>
-                                                    <input type="text" id="id_room1" name="id_room"  value="{{ $his->id_room }}" hidden>
-                                                    <div class="form-group">
-                                                        <div class="form-title">Phòng:</div>
-                                                        <input type="text" name="roomname" id="roomname" value="{{\App\Models\Room::getNameRoom($his->id_room)}}" class="form-control" disabled>
-                                                        <span class="error-slide"></span>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <div class="form-title">MS:</div>
-                                                        <input type="text" name="ms" id="ms1" value="{{$his->ms}}" class="form-control" disabled>
-                                                        <span class="error-slide"></span>
-                                                    </div>
-                                                    <!-- <div class="form-group">
-                                                        <div class="form-title">Số điện thoại:</div>
-                                                        <input type="text" name="phone" id="phone1" class="form-control" disabled>
-                                                        <span class="error-slide"></span>
-                                                    </div> -->
-                                                    <div class="form-group">
-                                                        <div class="form-title">Tên thiết bị:</div> 
-                                                            <input type="text" id="device[]" value="{{$device}}"
-                                                            class="form-control"  name="device[]" disabled>
-                                                        <span class="error-slide"></span>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <div class="form-title">Dọn dẹp:</div>
-                                                        <select class="form-control" id="clean_up1" name="clean_up">
-                                                            <option value="0">Chưa dọn</option>
-                                                            <option value="1" selected>Đã dọn dẹp</option>
-                                                        </select>
-                                                        <span class="error-slide"></span>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" onclick="submitCheckOut()" class="btn btn-primary">Trả phòng</button>
-                                                        <button type="button" data-dismiss="modal" class="btn btn-danger">Hủy</button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
                                 @endforeach
                             </tbody>
                         </table>
@@ -295,7 +242,48 @@
         </div>
     </div>
 </div>
-
+<!-- modal -->
+<div class="modal fade" id="apphistory" role="dialog" tabindex="-1" aria-labelledby="apphistory" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Trả phòng</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" enctype="multipart/form-data">
+                <div class="modal-body">
+                    @csrf
+                    <input type="text" id="id1" name="id" value="" hidden>
+                    <input type="text" id="id_room1" name="id_room"  value="" hidden>
+                    <div class="form-group">
+                        <div class="form-title">Phòng:</div>
+                        <input type="text" name="roomname" id="roomname" value="" class="form-control" disabled>
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-title">MS:</div>
+                        <input type="text" name="ms" id="ms1" value="" class="form-control" disabled>
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-title">Dọn dẹp:</div>
+                        <select class="form-control" id="clean_up1" name="clean_up">
+                            <option value="0">Chưa dọn</option>
+                            <option value="1" selected>Đã dọn dẹp</option>
+                        </select>
+                        <span class="error-slide"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" onclick="submitCheckOut()" class="btn btn-primary">Trả phòng</button>
+                        <button type="button" data-dismiss="modal" class="btn btn-danger">Hủy</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <script src="{{ asset('js/jquery-3.5.1.min.js') }}" language="JavaScript" type="text/javascript"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/toastr.js/3.5.1/js/toastr.min.js">
 </script>
@@ -420,19 +408,13 @@
                     $("#id_room1").val(data.id_room);
                     $("#roomname").val(data.room_name);
                     $("#ms1").val(data.ms);
-                    $("#phone1").val(data.phone); 
+                    $("#phone1").val(data.phone);
                     $("#device").val(data.id_device);
                 }           
             });
         }
-
         function submitCheckOut(){
             event.preventDefault();
-             $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
             if(confirm("Bạn có chắc muốn trả phòng này?")){
                 $.ajax({
                     url: 'approval/checkout',
@@ -441,7 +423,6 @@
                     contentType: false,
                     processData: false,
                     success:function(data){
-
                         window.location.reload(1000);
                     }
                 });
