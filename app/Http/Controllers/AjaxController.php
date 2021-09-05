@@ -10,7 +10,7 @@ class AjaxController extends Controller
 {
     public function getaddroom($id)
     {
-        $addroom=Room::where('id_zone',$id)->where(['status' => 0])->get();
+        $addroom=Room::where('id_zone',$id)->get();
         foreach($addroom as $add)
         {
             echo "<option  value='".$add->id."'>".$add->room_name."</option>";
@@ -19,7 +19,7 @@ class AjaxController extends Controller
     
     public function geteditroom($id)
     {
-        $editroom=Room::where('id_zone',$id)->where(['status' => 0])->get();
+        $editroom=Room::where('id_zone',$id)->get();
         foreach($editroom as $ed)
         {
             echo "<option  value='".$ed->id."'>".$ed->room_name."</option>";
@@ -27,7 +27,7 @@ class AjaxController extends Controller
     }
     public function getaddhistory($id)
     {
-        $room=Room::where('id_zone',$id)->where(['status' => 0])->get();
+        $room=Room::where('id_zone',$id)->get();
         foreach($room as $rm)
         {
             echo "<option  value='".$rm->id."'>".$rm->room_name."</option>";
@@ -35,7 +35,7 @@ class AjaxController extends Controller
     }
     public function getedithistory($id)
     {
-        $room=Room::where('id_zone',$id)->where(['status' => 0])->get();
+        $room=Room::where('id_zone',$id)->get();
         foreach($room as $rm)
         {
             echo "<option  value='".$rm->id."'>".$rm->room_name."</option>";

@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 use Validator;
 
 class approvalController extends Controller
@@ -23,9 +24,7 @@ class approvalController extends Controller
             ->join('room','room.id','=','history.id_room')
             ->join('device','device.id','=','history.id_device')
             ->where(['history.check_out' => 0])
-            // ->where(['users.id' => Auth::user()->id])
             ->get();
-        // $history['history'] = History::all();
         $history['user']=DB::table('users')->get();
         $history['room']=DB::table('room')->get();
         $history['zone']=DB::table('zone')->get();
@@ -35,6 +34,7 @@ class approvalController extends Controller
     }
     public function addApproval(Request $request)
     {
+        
         $validator = Validator::make($request->all(),[
             'ms'=>'required',
             'phone'=>'required',
@@ -52,26 +52,35 @@ class approvalController extends Controller
         ]);
         if(!$validator->passes()){
             return response()->json(['status'=>0, 'error'=>$validator->errors()->toArray()]);
-        }else{        
+        }
+        else
+        {   
             $history=new History;
-            $history->id_zone=$request->zone;
-            $history->id_user=Auth::user()->id;
-            $history->id_room=$request->room;
-            $history->id_device=implode(",",$request->device);
-            $history->ms=$request->ms;
-            $history->phone=$request->phone;
-            $history->session=$request->sesion;
-            $history->date_time=$request->date_time;
-            $history->admin_check= 1;
-            $history->save();
-            Room::where('id',$request->room)->update([
-                'status'=> 1,
-            ]);
-            if( $history){
-               return response()->json(['status'=>1, 'msg'=>'Bạn đăng kí thành công']);
+            $a = DB::table('history')->select(['id_room','date_time','session'])->where(['check_out' => 0])->get();
+            for($i=0;$i<count($a);$i++){
+                $d='false'; 
+                $m = $a[$i];
+                if($m->id_room == $request->room && $m->date_time == $request->date_time && $m->session == $request->sesion){
+                   $d='true';
+                }
+            }
+            if($d == 'true'){
+                return response()->json(['status'=>2, 'msg'=>'Phòng đã có người đặt']);
+            }
+            else{
+                $history->id_zone=$request->zone;
+                $history->id_user=Auth::user()->id;
+                $history->id_room=$request->room;
+                $history->id_device=implode(",",$request->device);
+                $history->ms=$request->ms;
+                $history->phone=$request->phone;
+                $history->session=$request->sesion;
+                $history->date_time=$request->date_time;
+                $history->admin_check= 1;
+                $history->save();
+                return response()->json(['status'=>1, 'msg'=>'Bạn đăng kí thành công']);
             }
         }
-       
     }
     public function detailApproval($id)
     {

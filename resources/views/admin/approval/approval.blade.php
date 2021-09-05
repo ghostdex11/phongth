@@ -306,70 +306,60 @@
             contentType: false,
             processData: false,
             beforeSend:function (){
-                        $(document).find('span.error-text').text('');        
-                    },
-                    success:function(data){
-                        if(data.status == 0){
-                            $.each(data.error,function(prefix, val){
-                                   $('span.'+prefix+'_error').text(val[0]); 
-                            });
-                        }else{
-                            //    $('#addhistory')[0].reset();
-                            //    alert(data.msg);
-                            window.location.reload(1000);
-                        }
-                        
-                    },
+                $(document).find('span.error-text').text('');        
+            },
+            success:function(data){
+                if(data.status == 0){
+                    $.each(data.error,function(prefix, val){
+                            $('span.'+prefix+'_error').text(val[0]); 
+                    });
+                }
+                else if(data.status == 1){
+                    $('#addhistory')[0].reset();
+                    alert(data.msg);
+                    window.location.reload(1000);
+                }
+                else{
+                    $(".alert").alert('open')
+                    // alert(data.msg);
+                }
+                
+            },
         });
     }
-        function detailHistory(id){
-            event.preventDefault();
-            openModalEdit();
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                url: 'approval/detailapproval/'+id,
-                method: 'GET',
-                contentType: false,
-                processData: false,
-                success:function(data){
-                    console.log(data);
-                    $("#id").val(data.id);
-                    $("#nameuser").val(data.id_user);
-                    $("#zone").val(data.id_zone);
-                    $("#room").val(data.id_room);
-                    $("#device").val(data.id_device);
-                    $("#ms").val(data.ms);
-                    $("#phone").val(data.phone);
-                    $("#date_time").val(data.date_time)
-                    $("#admin_check").val(data.admin_check);
-                }
-            });
-        }
-        function deleteHistory(id){
-            event.preventDefault();
-            if(confirm("Bạn có chắc muốn xóa sản phẩm này?")){
-                $.ajax({
-                    url: 'approval/deleteapproval/'+id,
-                    method: 'GET',
-                    contentType: false,
-                    processData: false,
-                    success:function(data){
-
-                        window.location.reload(1000);
-                    }
-                });
+    function detailHistory(id){
+        event.preventDefault();
+        openModalEdit();
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
-        }
-        function submitEditHistory(){
-            event.preventDefault();
+        });
+        $.ajax({
+            url: 'approval/detailapproval/'+id,
+            method: 'GET',
+            contentType: false,
+            processData: false,
+            success:function(data){
+                console.log(data);
+                $("#id").val(data.id);
+                $("#nameuser").val(data.id_user);
+                $("#zone").val(data.id_zone);
+                $("#room").val(data.id_room);
+                $("#device").val(data.id_device);
+                $("#ms").val(data.ms);
+                $("#phone").val(data.phone);
+                $("#date_time").val(data.date_time)
+                $("#admin_check").val(data.admin_check);
+            }
+        });
+    }
+    function deleteHistory(id){
+        event.preventDefault();
+        if(confirm("Bạn có chắc muốn xóa sản phẩm này?")){
             $.ajax({
-                url: 'approval/editapproval',
-                method: 'POST',
-                data: new FormData($("#edithistory form")[0]),
+                url: 'approval/deleteapproval/'+id,
+                method: 'GET',
                 contentType: false,
                 processData: false,
                 success:function(data){
@@ -378,56 +368,71 @@
                 }
             });
         }
-        function approval(id){
-            event.preventDefault();
-            if(confirm("Bạn có chắc muốn duyệt phòng này?")){
-                $.ajax({
-                    url: 'approval/approval/'+id,
-                    method: 'POST',
-                    data: new FormData($("#approval form")[0]),
-                    contentType: false,
-                    processData: false,
-                    success:function(data){
+    }
+    function submitEditHistory(){
+        event.preventDefault();
+        $.ajax({
+            url: 'approval/editapproval',
+            method: 'POST',
+            data: new FormData($("#edithistory form")[0]),
+            contentType: false,
+            processData: false,
+            success:function(data){
 
-                        window.location.reload(1000);
-                    }
-                });
+                window.location.reload(1000);
             }
-        }
-        function checkout(id){
-            openModalApp();
-            event.preventDefault();
-                $.ajax({
-                    url: 'approval/detailcheckout/'+id,
-                    method: 'GET',
+        });
+    }
+    function approval(id){
+        event.preventDefault();
+        if(confirm("Bạn có chắc muốn duyệt phòng này?")){
+            $.ajax({
+                url: 'approval/approval/'+id,
+                method: 'POST',
+                data: new FormData($("#approval form")[0]),
                 contentType: false,
                 processData: false,
                 success:function(data){
-                    console.log(data);
-                    $("#id1").val(data.id);
-                    $("#id_room1").val(data.id_room);
-                    $("#roomname").val(data.room_name);
-                    $("#ms1").val(data.ms);
-                    $("#phone1").val(data.phone);
-                    $("#device").val(data.id_device);
-                }           
+
+                    window.location.reload(1000);
+                }
             });
         }
-        function submitCheckOut(){
-            event.preventDefault();
-            if(confirm("Bạn có chắc muốn trả phòng này?")){
-                $.ajax({
-                    url: 'approval/checkout',
-                    method: 'POST',
-                    data: new FormData($("#apphistory form")[0]),
-                    contentType: false,
-                    processData: false,
-                    success:function(data){
-                        window.location.reload(1000);
-                    }
-                });
-            }
+    }
+    function checkout(id){
+        openModalApp();
+        event.preventDefault();
+            $.ajax({
+                url: 'approval/detailcheckout/'+id,
+                method: 'GET',
+            contentType: false,
+            processData: false,
+            success:function(data){
+                console.log(data);
+                $("#id1").val(data.id);
+                $("#id_room1").val(data.id_room);
+                $("#roomname").val(data.room_name);
+                $("#ms1").val(data.ms);
+                $("#phone1").val(data.phone);
+                $("#device").val(data.id_device);
+            }           
+        });
+    }
+    function submitCheckOut(){
+        event.preventDefault();
+        if(confirm("Bạn có chắc muốn trả phòng này?")){
+            $.ajax({
+                url: 'approval/checkout',
+                method: 'POST',
+                data: new FormData($("#apphistory form")[0]),
+                contentType: false,
+                processData: false,
+                success:function(data){
+                    window.location.reload(1000);
+                }
+            });
         }
+    }
 </script>
 @endsection
 @section('script')
