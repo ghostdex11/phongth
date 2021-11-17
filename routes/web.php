@@ -8,7 +8,6 @@ Route::get('logout','App\Http\Controllers\LoginController@getdangxuatAdmin');
 Route::get('register','App\Http\Controllers\LoginController@getDangky');
 Route::post('register','App\Http\Controllers\LoginController@postDangky');
 Route::get('admin/logout','App\Http\Controllers\LoginController@getdangxuatAdmin');
-// Route::get('/','App\Http\Controllers\pageController@index');
 
 Route::group(['prefix' => 'admin', 'middleware' => 'adminCheck'], function () {
     Route::get('/',function(){

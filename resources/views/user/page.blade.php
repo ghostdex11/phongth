@@ -242,12 +242,13 @@
                             $.each(data.error,function(prefix, val){
                                    $('span.'+prefix+'_error').text(val[0]); 
                             });
-                        }else{
-                            //    $('#addroom')[0].reset();
-                            //    alert(data.msg);
-                            window.location.reload(1000);
-                        }
-                        
+                        }  else if(data.status == 1){
+                                window.location.reload(1000);
+                            }
+                            else{
+                                $(".alert").alert('open')
+                                alert(data.msg);
+                            }
                     },
                 });    
         }

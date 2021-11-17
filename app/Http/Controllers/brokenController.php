@@ -1,15 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\History;
-use App\Models\user;
-use App\Models\Room;
-use App\Models\Device;
-use App\Models\Zone;
 use App\Models\computer;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class brokenController extends Controller

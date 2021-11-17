@@ -2,20 +2,15 @@
 
 namespace App\Http\Controllers;
 use App\Models\History;
-use App\Models\user;
 use App\Models\Room;
-use App\Models\Device;
-use App\Models\Zone;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Collection;
 use Validator;
 
 class approvalController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         $history=[];
         $history['history'] = History::select('history.*', 'users.name as nameuser','zone.name as namezone','room.room_name as nameroom')
@@ -25,11 +20,6 @@ class approvalController extends Controller
             ->join('device','device.id','=','history.id_device')
             ->where(['history.check_out' => 0])
             ->get();
-        $history['user']=DB::table('users')->get();
-        $history['room']=DB::table('room')->get();
-        $history['zone']=DB::table('zone')->get();
-        $history['device']=DB::table('device')->get();
-        $history['computer']=DB::table('computer')->get();
         return view('admin/approval/approval',['history'=>$history]);
     }
     public function addApproval(Request $request)
@@ -116,10 +106,6 @@ class approvalController extends Controller
     {
         History::where('id',$id)->update([
             'admin_check'=> 1,
-        ]);
-        $idroom = DB::table('history')->where('id', $id)->first();
-        Room::where('id', $idroom -> id_room)->update([
-            'room.status'=> 1,
         ]);
         return redirect('/admin/approval');
     }

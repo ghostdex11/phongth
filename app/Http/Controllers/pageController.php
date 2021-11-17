@@ -4,13 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\History;
-use App\Models\User;
-use App\Models\Room;
-use App\Models\Device;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Validator;
-use Illuminate\Http\RedirectResponse;
 
 class pageController extends Controller
 {
@@ -33,11 +29,6 @@ class pageController extends Controller
             ->where(['users.id'=> Auth::user()->id])
             ->where(['history.check_out' => 0])
             ->get();
-        // $home['history']=History::all();
-        $home['user']=DB::table('users')->get();
-        $home['room']=DB::table('room')->get();
-        $home['device']=DB::table('device')->get();
-        $home['zone']=DB::table('zone')->get();
         return view('user/page',['home' => $home]);
     }
     public function regisRoom(Request $request)
@@ -59,21 +50,33 @@ class pageController extends Controller
         ]);
         if(!$validator->passes()){
             return response()->json(['status'=>0, 'error'=>$validator->errors()->toArray()]);
-        }else{
+        }
+        else
+        {
             $history=new History;
-            $history->id_zone=$request->zone;
-            $history->id_user=Auth::user()->id;
-            $history->id_room=$request->room;
-            $history->id_device=implode(",",$request->device);
-            $history->ms=$request->ms;
-            $history->phone=$request->phone;
-            $history->session=$request->sesion;
-            $history->date_time=$request->date_time;
-            $history->save();
-            // return redirect('/regisroom');
-           if( $history){
-               return response()->json(['status'=>1, 'msg'=>'Bạn đăng kí thành công']);
+            $a = DB::table('history')->select(['id_room','date_time','session'])->where(['check_out' => 0])->get();
+            for($i=0;$i<count($a);$i++){
+                $d='false'; 
+                $m = $a[$i];
+                if($m->id_room == $request->room && $m->date_time == $request->date_time && $m->session == $request->sesion){
+                   $d='true';
                 }
+            }
+            if($d =='true'){
+                return response()->json(['status'=>2, 'msg'=>'Phòng đã có người đặt']);
+            }
+            else{
+                $history->id_zone=$request->zone;
+                $history->id_user=Auth::user()->id;
+                $history->id_room=$request->room;
+                $history->id_device=implode(",",$request->device);
+                $history->ms=$request->ms;
+                $history->phone=$request->phone;
+                $history->session=$request->sesion;
+                $history->date_time=$request->date_time;
+                $history->save();
+                return response()->json(['status'=>1, 'msg'=>'Bạn đăng kí thành công']);
+            }
         }
     }
     public function detailRoom($id)
@@ -95,10 +98,6 @@ class pageController extends Controller
         return redirect('/regisroom');
     }
     public function deleteRoom($id){
-        // $idroom = DB::table('history')->where('id', $id)->first();
-        // Room::where('room.id' , $idroom -> id_room)->update([   
-        //     'room.status' => 0,
-        // ]);
         History::find($id)->delete();
     }
 }
