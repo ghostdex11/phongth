@@ -30,8 +30,6 @@ class typedeviceController extends Controller
                return response()->json(['status'=>1, 'msg'=>'Bạn đăng kí thành công']);
                 }
         }
-       
-
     }
     public function detailTypedevice($id)
     {
