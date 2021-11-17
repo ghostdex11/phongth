@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Room;
-use App\Models\Zone;
 use App\Models\Computer;
 class AjaxController extends Controller
 {

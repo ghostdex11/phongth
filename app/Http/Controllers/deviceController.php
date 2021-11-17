@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Device;
-use App\Models\Typedevice;
 use Illuminate\Support\Facades\DB;
 use Validator;
 

@@ -316,12 +316,11 @@
                 }
                 else if(data.status == 1){
                     $('#addhistory')[0].reset();
-                    alert(data.msg);
                     window.location.reload(1000);
                 }
                 else{
                     $(".alert").alert('open')
-                    // alert(data.msg);
+                    alert(data.msg);
                 }
                 
             },
@@ -346,7 +345,6 @@
                 $("#nameuser").val(data.id_user);
                 $("#zone").val(data.id_zone);
                 $("#room").val(data.id_room);
-                $("#device").val(data.id_device);
                 $("#ms").val(data.ms);
                 $("#phone").val(data.phone);
                 $("#date_time").val(data.date_time)
