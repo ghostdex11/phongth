@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 use App\Models\History;
 use App\Models\Room;
+use App\Models\Zone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+
 use Validator;
 
 class approvalController extends Controller
@@ -20,6 +22,9 @@ class approvalController extends Controller
             ->join('device','device.id','=','history.id_device')
             ->where(['history.check_out' => 0])
             ->get();
+            $history['zone'] = db::table('zone')->get();
+            $history['room'] = db::table('room')->get();
+            $history['device'] = db::table('device')->get();
         return view('admin/approval/approval',['history'=>$history]);
     }
     public function addApproval(Request $request)

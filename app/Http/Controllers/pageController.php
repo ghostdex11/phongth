@@ -29,6 +29,9 @@ class pageController extends Controller
             ->where(['users.id'=> Auth::user()->id])
             ->where(['history.check_out' => 0])
             ->get();
+            $home['zone'] = db::table('zone')->get();
+            $home['room'] = db::table('room')->get();
+            $home['device'] = db::table('device')->get();
         return view('user/page',['home' => $home]);
     }
     public function regisRoom(Request $request)
